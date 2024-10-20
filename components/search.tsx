@@ -1,105 +1,115 @@
 'use client';
 
-import { Autocomplete, AutocompleteItem } from '@nextui-org/autocomplete';
-import React, { Key } from 'react';
+import { Autocomplete, AutocompleteItem, MenuTriggerAction } from '@nextui-org/autocomplete';
+import React from 'react';
+import { useFilter } from '@react-aria/i18n';
 
-import { Tag } from '@/app/docs/page';
+import { Tag } from '@/app/page';
 
-export const animals = [
-    {
-        label: 'Cat',
-        value: 'cat',
-        description: 'The second most popular pet in the world',
-    },
-    {
-        label: 'Dog',
-        value: 'dog',
-        description: 'The most popular pet in the world',
-    },
-    {
-        label: 'Elephant',
-        value: 'elephant',
-        description: 'The largest land animal',
-    },
-    { label: 'Lion', value: 'lion', description: 'The king of the jungle' },
-    { label: 'Tiger', value: 'tiger', description: 'The largest cat species' },
-    {
-        label: 'Giraffe',
-        value: 'giraffe',
-        description: 'The tallest land animal',
-    },
-    {
-        label: 'Dolphin',
-        value: 'dolphin',
-        description: 'A widely distributed and diverse group of aquatic mammals',
-    },
-    {
-        label: 'Penguin',
-        value: 'penguin',
-        description: 'A group of aquatic flightless birds',
-    },
-    {
-        label: 'Zebra',
-        value: 'zebra',
-        description: 'A several species of African equids',
-    },
-    {
-        label: 'Shark',
-        value: 'shark',
-        description: 'A group of elasmobranch fish characterized by a cartilaginous skeleton',
-    },
-    {
-        label: 'Whale',
-        value: 'whale',
-        description: 'Diverse group of fully aquatic placental marine mammals',
-    },
-    {
-        label: 'Otter',
-        value: 'otter',
-        description: 'A carnivorous mammal in the subfamily Lutrinae',
-    },
-    {
-        label: 'Crocodile',
-        value: 'crocodile',
-        description: 'A large semiaquatic reptile',
-    },
-];
+type Item = {
+    key: string;
+    type: string;
+    label: string;
+};
+
+type FieldState = {
+    selectedKey: React.Key | null;
+    inputValue: string;
+    items: Item[];
+};
 
 type SearchProps = {
     tags: Tag[];
 };
 
 export const Search = ({ tags }: SearchProps) => {
-    const [value, setValue] = React.useState('');
-    const [selectedKey, setSelectedKey] = React.useState<Key | null>(null);
+    const items = tags.map<Item>((tag) => ({ key: `tag-${tag.tag}`, type: 'tag', label: tag.tag }));
 
-    const onSelectionChange = (id: Key | null) => {
-        setSelectedKey(id);
+    items.push({ type: 'create', label: 'Create card', key: 'create' });
+
+    const [fieldState, setFieldState] = React.useState<FieldState>({
+        selectedKey: '',
+        inputValue: '',
+        items,
+    });
+
+    const { contains } = useFilter({ sensitivity: 'base' });
+
+    const onSelectionChange = (key: React.Key | null) => {
+        if (key === null) {
+            return;
+        }
+
+        setFieldState((prevState) => {
+            let selectedItem = prevState.items.find((option) => option.key === key);
+
+            const filteredItems = selectedItem
+                ? items.filter((item) => contains(item.label, selectedItem.label))
+                : [];
+            const createItem = items.find((item) => item.type === 'create');
+            const newItems =
+                filteredItems.length > 0 ? filteredItems : createItem ? [createItem] : [];
+
+            return {
+                inputValue: selectedItem?.label || '',
+                selectedKey: key,
+                items: newItems,
+            };
+        });
     };
 
     const onInputChange = (value: string) => {
-        setValue(value);
+        const filteredItems = items.filter((item) => contains(item.label, value));
+        const createItem = items.find((item) => item.type === 'create');
+        const newItems = filteredItems.length > 0 ? filteredItems : createItem ? [createItem] : [];
+
+        setFieldState((prevState) => ({
+            inputValue: value,
+            selectedKey: value === '' ? null : prevState.selectedKey,
+            items: newItems,
+        }));
+    };
+
+    const onOpenChange = (isOpen: boolean, menuTrigger: MenuTriggerAction) => {
+        if (menuTrigger === 'manual' && isOpen) {
+            setFieldState((prevState) => ({
+                inputValue: prevState.inputValue,
+                selectedKey: prevState.selectedKey,
+                items: items,
+            }));
+        }
     };
 
     return (
         <>
-            <p className="mt-1 text-small text-default-500">
-                Current selected animal: {selectedKey}
-            </p>
-            <p className="text-small text-default-500">Current input text: {value}</p>
+            <div>
+                <p>input value: {fieldState.inputValue}</p>
+                <p>selected key: {fieldState.selectedKey}</p>
+                <p>items: {fieldState.items.map((item) => item.label).length}</p>
+            </div>
             <Autocomplete
                 allowsCustomValue={true}
                 className="max-w-xs"
+                inputValue={fieldState.inputValue}
+                items={fieldState.items}
                 listboxProps={{
                     emptyContent: 'Create new card',
                 }}
+                selectedKey={fieldState.selectedKey}
                 selectorIcon={null}
                 onInputChange={onInputChange}
+                onOpenChange={onOpenChange}
                 onSelectionChange={onSelectionChange}
             >
-                {tags.map((tag) => (
-                    <AutocompleteItem key={tag.tag}>{tag.tag}</AutocompleteItem>
-                ))}
+                {(item) => {
+                    if (item.type === 'tag') {
+                        return <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>;
+                    } else if (item.type === 'create') {
+                        return <AutocompleteItem key={item.type}>Create</AutocompleteItem>;
+                    } else {
+                        return <AutocompleteItem key={item.type}>Can&apos;t find</AutocompleteItem>;
+                    }
+                }}
             </Autocomplete>
         </>
     );
