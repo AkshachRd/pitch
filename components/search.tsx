@@ -7,6 +7,8 @@ import { useFilter } from '@react-aria/i18n';
 import { useRouter } from 'next/navigation';
 import { Button } from '@nextui-org/button';
 
+import { ForwardLogo } from './icons';
+
 import { Tag } from '@/app/page';
 
 const useFilterItems = () => {
@@ -153,7 +155,17 @@ export const Search = ({ tags }: SearchProps) => {
                     }
                 }}
             </Autocomplete>
-            {isCreating && <Input placeholder="Back side" variant="bordered" />}
+            {isCreating && (
+                <Input
+                    endContent={
+                        <Button isIconOnly radius="full" size="sm">
+                            <ForwardLogo />
+                        </Button>
+                    }
+                    placeholder="Back side"
+                    variant="bordered"
+                />
+            )}
             {isCreating && <Button onClick={cancelCreating}>Cancel</Button>}
         </>
     );
