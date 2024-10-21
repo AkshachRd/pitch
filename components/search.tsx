@@ -68,11 +68,11 @@ export const Search = ({ tags }: SearchProps) => {
         }
 
         if (key === 'create') {
-            setFieldState({
-                inputValue: '',
+            setFieldState((prevState) => ({
+                inputValue: prevState.inputValue,
                 selectedKey: key,
                 items: [],
-            });
+            }));
             setIsCreating(true);
 
             return;
