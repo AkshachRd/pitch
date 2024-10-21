@@ -2,12 +2,29 @@
 
 import { Autocomplete, AutocompleteItem, MenuTriggerAction } from '@nextui-org/autocomplete';
 import { Input } from '@nextui-org/input';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useFilter } from '@react-aria/i18n';
 import { useRouter } from 'next/navigation';
 import { Button } from '@nextui-org/button';
 
 import { Tag } from '@/app/page';
+
+const useFilterItems = () => {
+    const { startsWith } = useFilter({ sensitivity: 'base' });
+
+    const filter = useCallback(
+        (items: Item[], selectedLabel: string) => {
+            return items.filter((item) =>
+                item.label.split('/').some((lablePart) => startsWith(lablePart, selectedLabel)),
+            );
+        },
+        [startsWith],
+    );
+
+    return {
+        filter,
+    };
+};
 
 type Item = {
     key: string;
@@ -38,7 +55,7 @@ export const Search = ({ tags }: SearchProps) => {
     const [isCreating, setIsCreating] = React.useState(false);
     const router = useRouter();
 
-    const { contains } = useFilter({ sensitivity: 'base' });
+    const { filter } = useFilterItems();
 
     const onSelectionChange = (key: React.Key | null) => {
         if (key === null) {
@@ -59,9 +76,7 @@ export const Search = ({ tags }: SearchProps) => {
         setFieldState((prevState) => {
             let selectedItem = prevState.items.find((option) => option.key === key);
 
-            const filteredItems = selectedItem
-                ? items.filter((item) => contains(item.label, selectedItem.label))
-                : [];
+            const filteredItems = selectedItem ? filter(items, selectedItem.label) : [];
             const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
 
             return {
@@ -83,7 +98,7 @@ export const Search = ({ tags }: SearchProps) => {
             return;
         }
 
-        const filteredItems = items.filter((item) => contains(item.label, value));
+        const filteredItems = filter(items, value);
         const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
 
         setFieldState((prevState) => ({
