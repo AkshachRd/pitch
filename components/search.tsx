@@ -10,6 +10,7 @@ import { Button } from '@nextui-org/button';
 import { ForwardLogo } from './icons';
 
 import { Tag } from '@/app/page';
+import { useCardStore } from '@/store/store';
 
 const useFilterItems = () => {
     const { startsWith } = useFilter({ sensitivity: 'base' });
@@ -54,9 +55,11 @@ export const Search = ({ tags }: SearchProps) => {
         inputValue: '',
         items,
     });
+    const [backSide, setBackSide] = React.useState('');
     const [isCreating, setIsCreating] = React.useState(false);
     const router = useRouter();
 
+    const addCard = useCardStore((state) => state.addCard);
     const { filter } = useFilterItems();
 
     const onSelectionChange = (key: React.Key | null) => {
@@ -125,6 +128,11 @@ export const Search = ({ tags }: SearchProps) => {
         setFieldState((prevState) => ({ ...prevState, selectedKey: '' }));
     };
 
+    const handleCreateCard = () => {
+        addCard({ id: '1', frontSide: fieldState.inputValue, backSide });
+        router.push('/cards');
+    };
+
     return (
         <>
             <div>
@@ -158,12 +166,13 @@ export const Search = ({ tags }: SearchProps) => {
             {isCreating && (
                 <Input
                     endContent={
-                        <Button isIconOnly radius="full" size="sm">
+                        <Button isIconOnly radius="full" size="sm" onClick={handleCreateCard}>
                             <ForwardLogo />
                         </Button>
                     }
                     placeholder="Back side"
                     variant="bordered"
+                    onValueChange={(value) => setBackSide(value)}
                 />
             )}
             {isCreating && <Button onClick={cancelCreating}>Cancel</Button>}
