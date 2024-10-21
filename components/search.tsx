@@ -5,6 +5,7 @@ import { Input } from '@nextui-org/input';
 import React from 'react';
 import { useFilter } from '@react-aria/i18n';
 import { useRouter } from 'next/navigation';
+import { Button } from '@nextui-org/button';
 
 import { Tag } from '@/app/page';
 
@@ -93,13 +94,18 @@ export const Search = ({ tags }: SearchProps) => {
     };
 
     const onOpenChange = (isOpen: boolean, menuTrigger: MenuTriggerAction) => {
-        if (menuTrigger === 'manual' && isOpen) {
+        if (menuTrigger === 'manual' && isOpen && !isCreating) {
             setFieldState((prevState) => ({
                 inputValue: prevState.inputValue,
                 selectedKey: prevState.selectedKey,
                 items: items,
             }));
         }
+    };
+
+    const cancelCreating = () => {
+        setIsCreating(false);
+        setFieldState((prevState) => ({ ...prevState, selectedKey: '' }));
     };
 
     return (
@@ -133,6 +139,7 @@ export const Search = ({ tags }: SearchProps) => {
                 }}
             </Autocomplete>
             {isCreating && <Input placeholder="Back side" variant="bordered" />}
+            {isCreating && <Button onClick={cancelCreating}>Cancel</Button>}
         </>
     );
 };
