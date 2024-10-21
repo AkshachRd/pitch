@@ -97,6 +97,7 @@ export const Search = ({ tags }: SearchProps) => {
                 }}
                 selectedKey={fieldState.selectedKey}
                 selectorIcon={null}
+                variant="bordered"
                 onInputChange={onInputChange}
                 onOpenChange={onOpenChange}
                 onSelectionChange={onSelectionChange}
