@@ -92,9 +92,6 @@ export const Search = ({ tags }: SearchProps) => {
                 className="max-w-xs"
                 inputValue={fieldState.inputValue}
                 items={fieldState.items}
-                listboxProps={{
-                    emptyContent: 'Create new card',
-                }}
                 selectedKey={fieldState.selectedKey}
                 selectorIcon={null}
                 variant="bordered"
