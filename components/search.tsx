@@ -3,6 +3,7 @@
 import { Autocomplete, AutocompleteItem, MenuTriggerAction } from '@nextui-org/autocomplete';
 import React from 'react';
 import { useFilter } from '@react-aria/i18n';
+import { useRouter } from 'next/navigation';
 
 import { Tag } from '@/app/page';
 
@@ -32,12 +33,17 @@ export const Search = ({ tags }: SearchProps) => {
         inputValue: '',
         items,
     });
+    const router = useRouter();
 
     const { contains } = useFilter({ sensitivity: 'base' });
 
     const onSelectionChange = (key: React.Key | null) => {
         if (key === null) {
             return;
+        }
+
+        if (key === 'create') {
+            router.push('/cards');
         }
 
         setFieldState((prevState) => {
