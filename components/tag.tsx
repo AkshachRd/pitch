@@ -8,7 +8,7 @@ type TagProps = {
 };
 export const Tag = ({ children, onClose, color }: TagProps) => {
     return (
-        <Chip color={color} variant="dot" onClose={onClose}>
+        <Chip className="cursor-pointer" color={color} variant="dot" onClose={onClose}>
             {children}
         </Chip>
     );

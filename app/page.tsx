@@ -126,7 +126,7 @@ export default function HomePage() {
             <div>
                 <Search tags={tags} />
             </div>
-            <div className="flex flex-wrap justify-center">
+            <div className="flex flex-wrap justify-center gap-2">
                 {tags.map((tag) => (
                     <Tag key={tag.tag} color={tag.color}>
                         {tag.tag}
