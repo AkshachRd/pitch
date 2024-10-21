@@ -1,6 +1,7 @@
 'use client';
 
 import { Autocomplete, AutocompleteItem, MenuTriggerAction } from '@nextui-org/autocomplete';
+import { Input } from '@nextui-org/input';
 import React from 'react';
 import { useFilter } from '@react-aria/i18n';
 import { useRouter } from 'next/navigation';
@@ -12,6 +13,8 @@ type Item = {
     type: string;
     label: string;
 };
+
+const createItem: Item = { type: 'create', label: 'Create card', key: 'create' };
 
 type FieldState = {
     selectedKey: React.Key | null;
@@ -26,13 +29,12 @@ type SearchProps = {
 export const Search = ({ tags }: SearchProps) => {
     const items = tags.map<Item>((tag) => ({ key: `tag-${tag.tag}`, type: 'tag', label: tag.tag }));
 
-    items.push({ type: 'create', label: 'Create card', key: 'create' });
-
     const [fieldState, setFieldState] = React.useState<FieldState>({
         selectedKey: '',
         inputValue: '',
         items,
     });
+    const [isCreating, setIsCreating] = React.useState(false);
     const router = useRouter();
 
     const { contains } = useFilter({ sensitivity: 'base' });
@@ -43,7 +45,14 @@ export const Search = ({ tags }: SearchProps) => {
         }
 
         if (key === 'create') {
-            router.push('/cards');
+            setFieldState({
+                inputValue: '',
+                selectedKey: key,
+                items: [],
+            });
+            setIsCreating(true);
+
+            return;
         }
 
         setFieldState((prevState) => {
@@ -52,9 +61,7 @@ export const Search = ({ tags }: SearchProps) => {
             const filteredItems = selectedItem
                 ? items.filter((item) => contains(item.label, selectedItem.label))
                 : [];
-            const createItem = items.find((item) => item.type === 'create');
-            const newItems =
-                filteredItems.length > 0 ? filteredItems : createItem ? [createItem] : [];
+            const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
 
             return {
                 inputValue: selectedItem?.label || '',
@@ -65,9 +72,18 @@ export const Search = ({ tags }: SearchProps) => {
     };
 
     const onInputChange = (value: string) => {
+        if (isCreating) {
+            setFieldState((prevState) => ({
+                inputValue: value,
+                selectedKey: prevState.selectedKey,
+                items: prevState.items,
+            }));
+
+            return;
+        }
+
         const filteredItems = items.filter((item) => contains(item.label, value));
-        const createItem = items.find((item) => item.type === 'create');
-        const newItems = filteredItems.length > 0 ? filteredItems : createItem ? [createItem] : [];
+        const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
 
         setFieldState((prevState) => ({
             inputValue: value,
@@ -98,6 +114,7 @@ export const Search = ({ tags }: SearchProps) => {
                 className="max-w-xs"
                 inputValue={fieldState.inputValue}
                 items={fieldState.items}
+                placeholder={isCreating ? 'Front side' : 'Search, create, tag...'}
                 selectedKey={fieldState.selectedKey}
                 selectorIcon={null}
                 variant="bordered"
@@ -115,6 +132,7 @@ export const Search = ({ tags }: SearchProps) => {
                     }
                 }}
             </Autocomplete>
+            {isCreating && <Input placeholder="Back side" variant="bordered" />}
         </>
     );
 };
