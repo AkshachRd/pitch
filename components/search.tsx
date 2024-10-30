@@ -170,7 +170,7 @@ export const Search = ({ tags }: SearchProps) => {
                 {isCreating && (
                     <Button
                         isIconOnly
-                        className="absolute right-full"
+                        className="animate-slideInFromRight absolute right-full"
                         radius="full"
                         size="md"
                         onClick={cancelCreating}
@@ -189,7 +189,7 @@ export const Search = ({ tags }: SearchProps) => {
                     />
                     <Button
                         isIconOnly
-                        className="absolute left-full top-0"
+                        className="animate-slideInFromLeft absolute left-full top-0"
                         radius="full"
                         size="md"
                         onClick={handleCreateCard}

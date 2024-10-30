@@ -18,9 +18,19 @@ module.exports = {
                     '0%': { transform: 'translateY(-50%)' },
                     '100%': { transform: 'translateY(0)' },
                 },
+                slideInFromRight: {
+                    '0%': { transform: 'translateX(100%)' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+                slideInFromLeft: {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(0)' },
+                },
             },
             animation: {
                 slideInFromTop: 'slideInFromTop 0.5s ease',
+                slideInFromRight: 'slideInFromRight 0.5s ease',
+                slideInFromLeft: 'slideInFromLeft 0.5s ease',
             },
         },
     },
