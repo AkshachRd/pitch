@@ -124,12 +124,12 @@ export const Search = ({ tags }: SearchProps) => {
         }
     };
 
-    const cancelCreating = () => {
+    const cancelCreatingCard = () => {
         setIsCreating(false);
         setFieldState((prevState) => ({ ...prevState, selectedKey: '' }));
     };
 
-    const handleCreateCard = () => {
+    const createCard = () => {
         addCard({ id: '1', frontSide: fieldState.inputValue, backSide });
         router.push('/cards');
     };
@@ -151,7 +151,7 @@ export const Search = ({ tags }: SearchProps) => {
                             initial={{ x: '100%' }}
                             transition={{ type: 'tween' }}
                         >
-                            <Button isIconOnly radius="full" size="md" onClick={cancelCreating}>
+                            <Button isIconOnly radius="full" size="md" onClick={cancelCreatingCard}>
                                 <CloseLogo />
                             </Button>
                         </motion.div>
@@ -209,7 +209,7 @@ export const Search = ({ tags }: SearchProps) => {
                             initial={{ x: '-100%' }}
                             transition={{ type: 'tween', delay: 0.2 }}
                         >
-                            <Button isIconOnly radius="full" size="md" onClick={handleCreateCard}>
+                            <Button isIconOnly radius="full" size="md" onClick={createCard}>
                                 <ForwardLogo />
                             </Button>
                         </motion.div>
