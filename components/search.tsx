@@ -7,7 +7,7 @@ import { useFilter } from '@react-aria/i18n';
 import { useRouter } from 'next/navigation';
 import { Button } from '@nextui-org/button';
 
-import { ForwardLogo } from './icons';
+import { CloseLogo, ForwardLogo } from './icons';
 
 import { Tag } from '@/app/page';
 import { useCardStore } from '@/store/store';
@@ -38,7 +38,7 @@ type Item = {
 const createItem: Item = { type: 'create', label: 'Create card', key: 'create' };
 
 type FieldState = {
-    selectedKey: React.Key | null;
+    selectedKey: string | number | null;
     inputValue: string;
     items: Item[];
 };
@@ -62,7 +62,7 @@ export const Search = ({ tags }: SearchProps) => {
     const addCard = useCardStore((state) => state.addCard);
     const { filter } = useFilterItems();
 
-    const onSelectionChange = (key: React.Key | null) => {
+    const onSelectionChange = (key: string | number | null) => {
         if (key === null) {
             return;
         }
@@ -140,40 +140,56 @@ export const Search = ({ tags }: SearchProps) => {
                 <p>selected key: {fieldState.selectedKey}</p>
                 <p>items: {fieldState.items.map((item) => item.label).length}</p>
             </div>
-            <Autocomplete
-                fullWidth
-                allowsCustomValue={true}
-                className="z-10 bg-background"
-                classNames={{ selectorButton: 'hidden' }}
-                inputValue={fieldState.inputValue}
-                isClearable={false}
-                items={fieldState.items}
-                placeholder={isCreating ? 'Front side' : 'Search, create, tag...'}
-                selectedKey={fieldState.selectedKey}
-                variant="bordered"
-                onInputChange={onInputChange}
-                onOpenChange={onOpenChange}
-                onSelectionChange={onSelectionChange}
-            >
-                {(item) => {
-                    if (item.type === 'tag') {
-                        return <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>;
-                    } else if (item.type === 'create') {
-                        return <AutocompleteItem key={item.type}>Create</AutocompleteItem>;
-                    } else {
-                        return <AutocompleteItem key={item.type}>Can&apos;t find</AutocompleteItem>;
-                    }
-                }}
-            </Autocomplete>
+            <div className="relative">
+                <Autocomplete
+                    fullWidth
+                    allowsCustomValue={true}
+                    className="z-10 bg-background"
+                    classNames={{ selectorButton: 'hidden' }}
+                    inputValue={fieldState.inputValue}
+                    isClearable={false}
+                    items={fieldState.items}
+                    placeholder={isCreating ? 'Front side' : 'Search, create, tag...'}
+                    selectedKey={fieldState.selectedKey}
+                    variant="bordered"
+                    onInputChange={onInputChange}
+                    onOpenChange={onOpenChange}
+                    onSelectionChange={onSelectionChange}
+                >
+                    {(item) => {
+                        if (item.type === 'tag') {
+                            return <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>;
+                        } else if (item.type === 'create') {
+                            return <AutocompleteItem key={item.type}>Create</AutocompleteItem>;
+                        } else {
+                            return (
+                                <AutocompleteItem key={item.type}>Can&apos;t find</AutocompleteItem>
+                            );
+                        }
+                    }}
+                </Autocomplete>
+                {isCreating && (
+                    <Button isIconOnly className="absolute right-full" radius="full" size="md">
+                        <CloseLogo />
+                    </Button>
+                )}
+            </div>
+
             {isCreating && (
                 <div className="animate-slideIn z-0 flex flex-col">
-                    <div className="flex items-center">
+                    <div className="relative flex items-center">
                         <Input
                             placeholder="Back side"
                             variant="bordered"
                             onValueChange={(value) => setBackSide(value)}
                         />
-                        <Button isIconOnly radius="full" size="md" onClick={handleCreateCard}>
+                        <Button
+                            isIconOnly
+                            className="absolute left-full"
+                            radius="full"
+                            size="md"
+                            onClick={handleCreateCard}
+                        >
                             <ForwardLogo />
                         </Button>
                     </div>

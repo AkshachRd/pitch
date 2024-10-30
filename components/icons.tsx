@@ -178,3 +178,35 @@ export const ForwardLogo = (props: IconSvgProps) => {
         </svg>
     );
 };
+
+export const CloseLogo = (props: IconSvgProps) => {
+    return (
+        <svg
+            fill="none"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <line
+                stroke="black"
+                strokeLinecap="round"
+                strokeWidth="1.5"
+                x1="6"
+                x2="18"
+                y1="6"
+                y2="18"
+            />
+            <line
+                stroke="black"
+                strokeLinecap="round"
+                strokeWidth="1.5"
+                x1="6"
+                x2="18"
+                y1="18"
+                y2="6"
+            />
+        </svg>
+    );
+};
