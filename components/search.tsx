@@ -134,15 +134,16 @@ export const Search = ({ tags }: SearchProps) => {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex w-96 flex-col">
             <div>
                 <p>input value: {fieldState.inputValue}</p>
                 <p>selected key: {fieldState.selectedKey}</p>
                 <p>items: {fieldState.items.map((item) => item.label).length}</p>
             </div>
             <Autocomplete
+                fullWidth
                 allowsCustomValue={true}
-                className="z-10 max-w-xs bg-background"
+                className="z-10 bg-background"
                 classNames={{ selectorButton: 'hidden' }}
                 inputValue={fieldState.inputValue}
                 isClearable={false}
