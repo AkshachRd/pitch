@@ -134,7 +134,7 @@ export const Search = ({ tags }: SearchProps) => {
     };
 
     return (
-        <>
+        <div className="flex flex-col">
             <div>
                 <p>input value: {fieldState.inputValue}</p>
                 <p>selected key: {fieldState.selectedKey}</p>
@@ -142,12 +142,13 @@ export const Search = ({ tags }: SearchProps) => {
             </div>
             <Autocomplete
                 allowsCustomValue={true}
-                className="max-w-xs"
+                className="z-10 max-w-xs bg-background"
+                classNames={{ selectorButton: 'hidden' }}
                 inputValue={fieldState.inputValue}
+                isClearable={false}
                 items={fieldState.items}
                 placeholder={isCreating ? 'Front side' : 'Search, create, tag...'}
                 selectedKey={fieldState.selectedKey}
-                selectorIcon={null}
                 variant="bordered"
                 onInputChange={onInputChange}
                 onOpenChange={onOpenChange}
@@ -164,18 +165,20 @@ export const Search = ({ tags }: SearchProps) => {
                 }}
             </Autocomplete>
             {isCreating && (
-                <Input
-                    endContent={
-                        <Button isIconOnly radius="full" size="sm" onClick={handleCreateCard}>
+                <div className="animate-slideIn z-0 flex flex-col">
+                    <div className="flex items-center">
+                        <Input
+                            placeholder="Back side"
+                            variant="bordered"
+                            onValueChange={(value) => setBackSide(value)}
+                        />
+                        <Button isIconOnly radius="full" size="md" onClick={handleCreateCard}>
                             <ForwardLogo />
                         </Button>
-                    }
-                    placeholder="Back side"
-                    variant="bordered"
-                    onValueChange={(value) => setBackSide(value)}
-                />
+                    </div>
+                    <Button onClick={cancelCreating}>Cancel</Button>
+                </div>
             )}
-            {isCreating && <Button onClick={cancelCreating}>Cancel</Button>}
-        </>
+        </div>
     );
 };
