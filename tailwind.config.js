@@ -14,13 +14,13 @@ module.exports = {
                 mono: ['var(--font-mono)'],
             },
             keyframes: {
-                slideIn: {
+                slideInFromTop: {
                     '0%': { transform: 'translateY(-50%)' },
                     '100%': { transform: 'translateY(0)' },
                 },
             },
             animation: {
-                slideIn: 'slideIn 0.5s ease',
+                slideInFromTop: 'slideInFromTop 0.5s ease',
             },
         },
     },

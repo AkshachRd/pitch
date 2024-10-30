@@ -140,11 +140,10 @@ export const Search = ({ tags }: SearchProps) => {
                 <p>selected key: {fieldState.selectedKey}</p>
                 <p>items: {fieldState.items.map((item) => item.label).length}</p>
             </div>
-            <div className="relative">
+            <div className="relative z-10 bg-background">
                 <Autocomplete
                     fullWidth
                     allowsCustomValue={true}
-                    className="z-10 bg-background"
                     classNames={{ selectorButton: 'hidden' }}
                     inputValue={fieldState.inputValue}
                     isClearable={false}
@@ -169,31 +168,34 @@ export const Search = ({ tags }: SearchProps) => {
                     }}
                 </Autocomplete>
                 {isCreating && (
-                    <Button isIconOnly className="absolute right-full" radius="full" size="md">
+                    <Button
+                        isIconOnly
+                        className="absolute right-full"
+                        radius="full"
+                        size="md"
+                        onClick={cancelCreating}
+                    >
                         <CloseLogo />
                     </Button>
                 )}
             </div>
 
             {isCreating && (
-                <div className="animate-slideIn z-0 flex flex-col">
-                    <div className="relative flex items-center">
-                        <Input
-                            placeholder="Back side"
-                            variant="bordered"
-                            onValueChange={(value) => setBackSide(value)}
-                        />
-                        <Button
-                            isIconOnly
-                            className="absolute left-full"
-                            radius="full"
-                            size="md"
-                            onClick={handleCreateCard}
-                        >
-                            <ForwardLogo />
-                        </Button>
-                    </div>
-                    <Button onClick={cancelCreating}>Cancel</Button>
+                <div className="animate-slideInFromTop relative z-0">
+                    <Input
+                        placeholder="Back side"
+                        variant="bordered"
+                        onValueChange={(value) => setBackSide(value)}
+                    />
+                    <Button
+                        isIconOnly
+                        className="absolute left-full top-0"
+                        radius="full"
+                        size="md"
+                        onClick={handleCreateCard}
+                    >
+                        <ForwardLogo />
+                    </Button>
                 </div>
             )}
         </div>
