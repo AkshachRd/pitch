@@ -20,7 +20,7 @@ module.exports = {
                 },
             },
             animation: {
-                slideIn: 'slideIn 1s ease',
+                slideIn: 'slideIn 0.5s ease',
             },
         },
     },
