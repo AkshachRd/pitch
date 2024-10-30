@@ -166,6 +166,7 @@ export const Search = ({ tags }: SearchProps) => {
                     isClearable={false}
                     items={fieldState.items}
                     placeholder={isCreating ? 'Front side' : 'Search, create, tag...'}
+                    radius="full"
                     selectedKey={fieldState.selectedKey}
                     variant="bordered"
                     onInputChange={onInputChange}
@@ -196,6 +197,7 @@ export const Search = ({ tags }: SearchProps) => {
                     >
                         <Input
                             placeholder="Back side"
+                            radius="full"
                             variant="bordered"
                             onValueChange={(value) => setBackSide(value)}
                         />
