@@ -3,6 +3,7 @@
 import { Autocomplete, AutocompleteItem, MenuTriggerAction } from '@nextui-org/autocomplete';
 import { Input } from '@nextui-org/input';
 import React, { useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useFilter } from '@react-aria/i18n';
 import { useRouter } from 'next/navigation';
 import { Button } from '@nextui-org/button';
@@ -140,11 +141,27 @@ export const Search = ({ tags }: SearchProps) => {
                 <p>selected key: {fieldState.selectedKey}</p>
                 <p>items: {fieldState.items.map((item) => item.label).length}</p>
             </div>
-            <div className="relative z-10 bg-background">
+            <div className="relative">
+                <AnimatePresence>
+                    {isCreating && (
+                        <motion.div
+                            animate={{ x: 0 }}
+                            className="absolute right-full top-0"
+                            exit={{ x: '100%' }}
+                            initial={{ x: '100%' }}
+                            transition={{ type: 'tween' }}
+                        >
+                            <Button isIconOnly radius="full" size="md" onClick={cancelCreating}>
+                                <CloseLogo />
+                            </Button>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
                 <Autocomplete
                     fullWidth
                     allowsCustomValue={true}
                     classNames={{ selectorButton: 'hidden' }}
+                    inputProps={{ classNames: { inputWrapper: 'bg-background z-10' } }}
                     inputValue={fieldState.inputValue}
                     isClearable={false}
                     items={fieldState.items}
@@ -167,37 +184,36 @@ export const Search = ({ tags }: SearchProps) => {
                         }
                     }}
                 </Autocomplete>
-                {isCreating && (
-                    <Button
-                        isIconOnly
-                        className="animate-slideInFromRight absolute right-full"
-                        radius="full"
-                        size="md"
-                        onClick={cancelCreating}
-                    >
-                        <CloseLogo />
-                    </Button>
-                )}
             </div>
-
-            {isCreating && (
-                <div className="animate-slideInFromTop relative z-0">
-                    <Input
-                        placeholder="Back side"
-                        variant="bordered"
-                        onValueChange={(value) => setBackSide(value)}
-                    />
-                    <Button
-                        isIconOnly
-                        className="animate-slideInFromLeft absolute left-full top-0"
-                        radius="full"
-                        size="md"
-                        onClick={handleCreateCard}
+            <AnimatePresence>
+                {isCreating && (
+                    <motion.div
+                        animate={{ y: 0 }}
+                        className="relative"
+                        exit={{ y: '-100%' }}
+                        initial={{ y: '-100%' }}
+                        transition={{ type: 'tween' }}
                     >
-                        <ForwardLogo />
-                    </Button>
-                </div>
-            )}
+                        <Input
+                            placeholder="Back side"
+                            variant="bordered"
+                            onValueChange={(value) => setBackSide(value)}
+                        />
+
+                        <motion.div
+                            animate={{ x: 0 }}
+                            className="absolute left-full top-0"
+                            exit={{ x: '-100%' }}
+                            initial={{ x: '-100%' }}
+                            transition={{ type: 'tween', delay: 0.2 }}
+                        >
+                            <Button isIconOnly radius="full" size="md" onClick={handleCreateCard}>
+                                <ForwardLogo />
+                            </Button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
