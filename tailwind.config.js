@@ -13,6 +13,9 @@ module.exports = {
                 sans: ['var(--font-sans)'],
                 mono: ['var(--font-mono)'],
             },
+            spacing: {
+                'full-0.5': 'calc(100% + 0.5rem)',
+            },
         },
     },
     darkMode: 'class',

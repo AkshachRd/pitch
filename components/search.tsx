@@ -146,7 +146,7 @@ export const Search = ({ tags }: SearchProps) => {
                     {isCreating && (
                         <motion.div
                             animate={{ x: 0 }}
-                            className="absolute right-full top-0"
+                            className="end-full-0.5 absolute top-0"
                             exit={{ x: '100%' }}
                             initial={{ x: '100%' }}
                             transition={{ type: 'tween' }}
@@ -204,7 +204,7 @@ export const Search = ({ tags }: SearchProps) => {
 
                         <motion.div
                             animate={{ x: 0 }}
-                            className="absolute left-full top-0"
+                            className="start-full-0.5 absolute top-0"
                             exit={{ x: '-100%' }}
                             initial={{ x: '-100%' }}
                             transition={{ type: 'tween', delay: 0.2 }}
