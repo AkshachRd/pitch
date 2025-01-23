@@ -1,13 +1,13 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { Card } from '@/types/card';
+import { Card } from "@/types/card";
 
 export type CardsState = {
-    cards: Card[];
-    addCard: (card: Card) => void;
+  cards: Card[];
+  addCard: (card: Card) => void;
 };
 
 export const useCardStore = create<CardsState>((set) => ({
-    cards: [],
-    addCard: (card) => set((state) => ({ cards: [...state.cards, card] })),
+  cards: [],
+  addCard: (card) => set((state) => ({ cards: [...state.cards, card] })),
 }));
