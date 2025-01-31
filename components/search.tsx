@@ -6,7 +6,7 @@ import {
   MenuTriggerAction,
 } from "@heroui/autocomplete";
 import { Input } from "@heroui/input";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFilter } from "react-aria";
 import { useRouter } from "next/navigation";
@@ -72,7 +72,14 @@ export const Search = ({ tags }: SearchProps) => {
   });
   const [backSide, setBackSide] = React.useState("");
   const [isCreating, setIsCreating] = React.useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (isCreating) {
+      inputRef.current?.focus();
+    }
+  },[isCreating])
 
   const addCard = useCardStore((state) => state.addCard);
   const { filter } = useFilterItems();
@@ -223,6 +230,7 @@ export const Search = ({ tags }: SearchProps) => {
             transition={{ type: "tween" }}
           >
             <Input
+              ref={inputRef}
               placeholder="Back side"
               radius="full"
               variant="bordered"
