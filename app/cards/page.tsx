@@ -12,7 +12,7 @@ export default function CardsPage() {
             {cards.map((card) => (
                 <Card>
                     <CardBody>
-                        <div key={card.id + card.frontSide + card.backSide} className="border-2">
+                        <div key={card.id + card.frontSide + card.backSide}>
                             <p>Id: {card.id}</p>
                             <p>Front side: {card.frontSide}</p>
                             <p>Back side: {card.backSide}</p>
