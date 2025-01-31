@@ -178,7 +178,7 @@ export const Search = ({ tags }: SearchProps) => {
                 isIconOnly
                 radius="full"
                 size="md"
-                onClick={cancelCreatingCard}
+                onPress={cancelCreatingCard}
               >
                 <CloseLogo />
               </Button>
@@ -244,7 +244,7 @@ export const Search = ({ tags }: SearchProps) => {
               initial={{ x: "-100%" }}
               transition={{ type: "tween", delay: 0.2 }}
             >
-              <Button isIconOnly radius="full" size="md" onClick={createCard}>
+              <Button isIconOnly radius="full" size="md" onPress={createCard}>
                 <ForwardLogo />
               </Button>
             </motion.div>
