@@ -1,8 +1,10 @@
 'use client';
 
+import { Card, CardFooter, CardHeader, Divider } from '@heroui/react';
+
 import { title } from '@/components/primitives';
 import { useCardStore } from '@/store/store';
-import { Card, CardBody } from '@heroui/react';
+
 export default function CardsPage() {
     const cards = useCardStore((state) => state.cards);
 
@@ -10,14 +12,10 @@ export default function CardsPage() {
         <div>
             <h1 className={title()}>Cards</h1>
             {cards.map((card) => (
-                <Card>
-                    <CardBody>
-                        <div key={card.id + card.frontSide + card.backSide}>
-                            <p>Id: {card.id}</p>
-                            <p>Front side: {card.frontSide}</p>
-                            <p>Back side: {card.backSide}</p>
-                        </div>
-                    </CardBody>
+                <Card key={card.id + card.frontSide + card.backSide}>
+                    <CardHeader>{card.frontSide}</CardHeader>
+                    <Divider />
+                    <CardFooter>{card.backSide}</CardFooter>
                 </Card>
             ))}
         </div>
