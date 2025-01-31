@@ -1,5 +1,5 @@
 export type Card = {
-  id: string;
-  frontSide: string;
-  backSide: string;
+    id: string;
+    frontSide: string;
+    backSide: string;
 };
