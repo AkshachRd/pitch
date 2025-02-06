@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import { AnimatedCard } from './animated-card';
 import { Card } from '@/types/card';
 import { AnimatePresence } from 'framer-motion';
+import { useKeyboard } from 'react-aria';
 
 export interface CardStackProps {
     className?: string;
@@ -13,9 +14,21 @@ export interface CardStackProps {
 
 export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) => {
     const [exitDirection, setExitDirection] = useState<number | undefined>(undefined);
+    const { keyboardProps } = useKeyboard({
+        onKeyDown: (e) => {
+            if (e.key === 'ArrowLeft') {
+                console.log('left')
+                setExitDirection(-1);
+                onRemove?.();
+            } else if (e.key === 'ArrowRight') {
+                setExitDirection(1);
+                onRemove?.();
+            }
+        },
+    });
 
     return (
-        <div className="relative">
+        <div className="relative" {...keyboardProps}>
             {cards.length > 2 && (
                 <AnimatedCard
                     key={cards[2].id}

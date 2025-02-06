@@ -13,9 +13,9 @@ const cardVariants = {
         rotate: rotation,
     }),
     exit: ({ exitDirection }: { exitDirection: number }) => ({
-        x: exitDirection < 0 ? 1000 : -1000,
+        x: exitDirection > 0 ? 1000 : -1000,
         opacity: 0,
-        rotate: exitDirection > 0 ? -15 : 15,
+        rotate: exitDirection > 0 ? 15 : -15,
     }),
 };
 
@@ -50,16 +50,16 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
         const swipe = swipePower(offset.x, velocity.x);
 
         if (swipe < -swipeConfidenceThreshold) {
-            setExitDirection?.(1);
+            setExitDirection?.(-1);
             onRemove?.();
         } else if (swipe > swipeConfidenceThreshold) {
-            setExitDirection?.(-1);
+            setExitDirection?.(1);
             onRemove?.();
         }
         setRotation(0);
     };
     const handleDrag = (event: any, info: any) => {
-        const rotate = info.offset.x / 25; // Adjust the divisor to control the tilt sensitivity
+        const rotate = info.offset.x / 25;
         setRotation(rotate);
     };
     return (
