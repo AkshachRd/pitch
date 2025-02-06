@@ -12,7 +12,7 @@ export interface CardStackProps {
 export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) => {
     const [direction, setDirection] = useState<string | undefined>(undefined);
 
-    const handleDragEnd = (event, info) => {
+    const handleDragEnd = (event: any, info: any) => {
         if (info.offset.x < -100) {
             setDirection('left');
             onRemove();
