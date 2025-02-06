@@ -6,23 +6,11 @@ import { AnimatePresence } from 'framer-motion';
 export interface CardStackProps {
     className?: string;
     cards: Card[];
-    onRemove: () => void;
+    onRemove?: () => void;
 }
 
 export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) => {
-    const [direction, setDirection] = useState<string | undefined>(undefined);
-
-    const handleDragEnd = (event: any, info: any) => {
-        if (info.offset.x < -100) {
-            setDirection('left');
-            onRemove();
-        } else if (info.offset.x > 100) {
-            setDirection('right');
-            onRemove();
-        } else {
-            setDirection(undefined);
-        }
-    };
+    const [exitDirection, setExitDirection] = useState<number | undefined>(undefined);
 
     return (
         <div className="relative">
@@ -42,7 +30,7 @@ export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) =>
                     delay={0.2}
                 />
             )}
-            <AnimatePresence initial={false} custom={{ exitDirection: direction }}>
+            <AnimatePresence initial={false} custom={{ exitDirection: exitDirection }}>
                 {cards.length > 0 && (
                     <AnimatedCard
                         key={cards[0].id}
@@ -51,8 +39,8 @@ export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) =>
                         headerContent={cards[0].frontSide}
                         footerContent={cards[0].backSide}
                         isDraggable={true}
-                        onDragEnd={handleDragEnd}
-                        exitDirection={direction}
+                        onRemove={onRemove}
+                        setExitDirection={setExitDirection}
                     />
                 )}
             </AnimatePresence>

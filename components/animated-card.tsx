@@ -1,12 +1,12 @@
 import { Card, CardFooter, CardHeader, Divider } from '@heroui/react';
-import { FC } from 'react';
 import { motion } from 'framer-motion';
+import { FC } from 'react';
 
 const cardVariants = {
     initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.5 }),
-    animate: ({ scale }: { scale: number }) => ({ scale }),
-    exit: ({ exitDirection }: { exitDirection?: string }) => ({
-        x: exitDirection === 'left' ? -1000 : exitDirection === 'right' ? 1000 : 0,
+    animate: ({ scale }: { scale: number }) => ({ scale, x: 0, opacity: 1 }),
+    exit: ({ exitDirection }: { exitDirection: number }) => ({
+        x: exitDirection < 0 ? 1000 : -1000,
         opacity: 0,
     }),
 };
@@ -18,9 +18,14 @@ interface AnimatedCardProps {
     headerContent?: string;
     footerContent?: string;
     isDraggable?: boolean;
-    onDragEnd?: (event: any, info: any) => void;
-    exitDirection?: string;
+    setExitDirection?: (value?: number) => void;
+    onRemove?: () => void;
 }
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+};
 
 export const AnimatedCard: FC<AnimatedCardProps> = ({
     scale,
@@ -28,25 +33,45 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
     delay,
     headerContent,
     footerContent,
-    exitDirection,
-    onDragEnd,
     isDraggable,
-}) => (
-    <motion.div
-        className={className}
-        initial="initial"
-        animate="animate"
-        custom={{ scale, exitDirection }}
-        variants={cardVariants}
-        transition={{ duration: 0.5, delay }}
-        exit="exit"
-        onDragEnd={onDragEnd}
-        drag={isDraggable ? 'x' : false}
-    >
-        <Card className="w-[400px]" shadow="lg">
-            <CardHeader className="h-24 justify-center">{headerContent}</CardHeader>
-            <Divider />
-            <CardFooter className="h-24 justify-center">{footerContent}</CardFooter>
-        </Card>
-    </motion.div>
-);
+    setExitDirection,
+    onRemove,
+}) => {
+    const handleDragEnd = (event: any, { offset, velocity }: any) => {
+        const swipe = swipePower(offset.x, velocity.x);
+        console.log(swipe);
+
+        if (swipe < -swipeConfidenceThreshold) {
+            setExitDirection?.(1);
+            onRemove?.();
+        } else if (swipe > swipeConfidenceThreshold) {
+            setExitDirection?.(-1);
+            onRemove?.();
+        }
+    };
+    return (
+        <motion.div
+            className={className}
+            initial="initial"
+            animate="animate"
+            custom={{ scale }}
+            variants={cardVariants}
+            transition={{
+                x: { type: 'spring', stiffness: 300, damping: 30 },
+                duration: 0.5,
+                delay,
+            }}
+            exit="exit"
+            onDragEnd={handleDragEnd}
+            drag={isDraggable ? 'x' : false}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+        >
+            <Card className="w-[400px]" shadow="lg">
+                <CardHeader className="h-24 justify-center">{headerContent}</CardHeader>
+                <Divider />
+                <CardFooter className="h-24 justify-center">{footerContent}</CardFooter>
+            </Card>
+        </motion.div>
+    );
+};
