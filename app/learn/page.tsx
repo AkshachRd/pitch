@@ -16,7 +16,6 @@ export default function LearnPage() {
 
     return (
         <div>
-            <h1 className={title()}>Cards</h1>
             <CardStack
                 cards={cards}
                 onRemove={() => {
