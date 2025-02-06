@@ -1,6 +1,5 @@
 'use client';
 
-import { title } from '@/components/primitives';
 import { useCardStore } from '@/store/store';
 import { CardStack } from '@/components/card-stack';
 import { useState } from 'react';
@@ -15,13 +14,13 @@ export default function LearnPage() {
     ]);
 
     return (
-        <div>
+        <>
             <CardStack
                 cards={cards}
                 onRemove={() => {
                     setCards((state) => state.slice(1));
                 }}
             />
-        </div>
+        </>
     );
 }
