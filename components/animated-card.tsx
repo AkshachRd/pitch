@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { FC } from 'react';
 
 const cardVariants = {
-    initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.5 }),
+    initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.05 }),
     animate: ({ scale }: { scale: number }) => ({ scale, x: 0, opacity: 1 }),
     exit: ({ exitDirection }: { exitDirection: number }) => ({
         x: exitDirection < 0 ? 1000 : -1000,
