@@ -26,7 +26,7 @@ interface AnimatedCardProps {
     headerContent?: string;
     footerContent?: string;
     isDraggable?: boolean;
-    setExitDirection?: (value?: number) => void;
+    setExitDirection?: (value: number) => void;
     onRemove?: () => void;
 }
 

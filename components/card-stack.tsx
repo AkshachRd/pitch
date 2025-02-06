@@ -13,7 +13,7 @@ export interface CardStackProps {
 }
 
 export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) => {
-    const [exitDirection, setExitDirection] = useState<number | undefined>(undefined);
+    const [exitDirection, setExitDirection] = useState<number>(0);
     const { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {
             if (e.key === 'ArrowLeft') {
