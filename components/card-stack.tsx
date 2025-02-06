@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useState } from 'react';
 import { AnimatedCard } from './animated-card';
 import { Card } from '@/types/card';
