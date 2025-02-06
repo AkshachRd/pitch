@@ -28,7 +28,7 @@ export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) =>
     });
 
     return (
-        <div className="relative" {...keyboardProps}>
+        <div className="relative w-[400px] h-[193px]" {...keyboardProps}>
             {cards.length > 2 && (
                 <AnimatedCard
                     key={cards[2].id}
