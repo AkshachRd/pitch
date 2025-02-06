@@ -4,6 +4,7 @@ import { Card, CardFooter, CardHeader, Divider } from '@heroui/react';
 
 import { title } from '@/components/primitives';
 import { useCardStore } from '@/store/store';
+import { CardStack } from '@/components/card-stack';
 
 export default function CardsPage() {
     const cards = useCardStore((state) => state.cards);
@@ -18,6 +19,7 @@ export default function CardsPage() {
                     <CardFooter>{card.backSide}</CardFooter>
                 </Card>
             ))}
+            <CardStack />
         </div>
     );
 }
