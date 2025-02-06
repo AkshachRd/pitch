@@ -15,7 +15,7 @@ export const CardStack: FC<CardStackProps> = () => {
     return (
         <div className="relative">
             <motion.div 
-                className='absolute top-10 scale-90'
+                className='absolute top-10'
                 initial={{ scale: 0 }}
                 animate="animate"
                 custom={0.9}
@@ -29,7 +29,7 @@ export const CardStack: FC<CardStackProps> = () => {
                 </Card>
             </motion.div>
             <motion.div 
-                className='absolute top-5 scale-95'
+                className='absolute top-5'
                 initial={{ scale: 0 }}
                 animate="animate"
                 custom={0.95}
