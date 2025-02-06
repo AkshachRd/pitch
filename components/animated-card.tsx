@@ -1,6 +1,6 @@
-import { Card, CardFooter, CardHeader, Divider } from "@heroui/react";
-import { FC } from "react";
-import { motion } from "framer-motion";
+import { Card, CardFooter, CardHeader, Divider } from '@heroui/react';
+import { FC } from 'react';
+import { motion } from 'framer-motion';
 
 const cardVariants = {
     initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.5 }),
@@ -22,24 +22,31 @@ interface AnimatedCardProps {
     exitDirection?: string;
 }
 
-export const AnimatedCard: FC<AnimatedCardProps> = ({ scale, className, delay, headerContent, footerContent, exitDirection, onDragEnd, isDraggable }) => (
-    <motion.div 
+export const AnimatedCard: FC<AnimatedCardProps> = ({
+    scale,
+    className,
+    delay,
+    headerContent,
+    footerContent,
+    exitDirection,
+    onDragEnd,
+    isDraggable,
+}) => (
+    <motion.div
         className={className}
         initial="initial"
         animate="animate"
         custom={{ scale, exitDirection }}
         variants={cardVariants}
         transition={{ duration: 0.5, delay }}
-        exit='exit'
+        exit="exit"
         onDragEnd={onDragEnd}
         drag={isDraggable ? 'x' : false}
     >
-        <Card className="w-[400px]" shadow='lg'>
-            <CardHeader className='h-24 justify-center'>{headerContent}</CardHeader>
+        <Card className="w-[400px]" shadow="lg">
+            <CardHeader className="h-24 justify-center">{headerContent}</CardHeader>
             <Divider />
-            <CardFooter className='h-24 justify-center'>{footerContent}</CardFooter>
+            <CardFooter className="h-24 justify-center">{footerContent}</CardFooter>
         </Card>
     </motion.div>
 );
-
-
