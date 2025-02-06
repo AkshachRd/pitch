@@ -12,6 +12,10 @@ export const siteConfig = {
             label: 'cards',
             href: '/cards',
         },
+        {
+            label: 'learn',
+            href: '/learn',
+        },
     ],
     navMenuItems: [
         {
