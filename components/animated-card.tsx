@@ -3,26 +3,36 @@ import { FC } from "react";
 import { motion } from "framer-motion";
 
 const cardVariants = {
-    initial: (custom: number) => ({ scale: custom - 0.5 }),
-    animate: (custom: number) => ({ scale: custom }),
+    initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.5 }),
+    animate: ({ scale }: { scale: number }) => ({ scale }),
+    exit: ({ exitDirection }: { exitDirection?: string }) => ({
+        x: exitDirection === 'left' ? -1000 : exitDirection === 'right' ? 1000 : 0,
+        opacity: 0,
+    }),
 };
 
 interface AnimatedCardProps {
+    scale: number;
     className?: string;
-    custom: number;
     delay: number;
     headerContent?: string;
     footerContent?: string;
+    isDraggable?: boolean;
+    onDragEnd?: (event: any, info: any) => void;
+    exitDirection?: string;
 }
 
-export const AnimatedCard: FC<AnimatedCardProps> = ({ custom, className, delay, headerContent, footerContent }) => (
+export const AnimatedCard: FC<AnimatedCardProps> = ({ scale, className, delay, headerContent, footerContent, exitDirection, onDragEnd, isDraggable }) => (
     <motion.div 
         className={className}
         initial="initial"
         animate="animate"
-        custom={custom}
+        custom={{ scale, exitDirection }}
         variants={cardVariants}
         transition={{ duration: 0.5, delay }}
+        exit='exit'
+        onDragEnd={onDragEnd}
+        drag={isDraggable ? 'x' : false}
     >
         <Card className="w-[400px]" shadow='lg'>
             <CardHeader className='h-24 justify-center'>{headerContent}</CardHeader>
