@@ -51,7 +51,7 @@ export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) =>
                         key={cards[0].id}
                         scale={1}
                         delay={0}
-                        className="absolute top-0"
+                        className="absolute top-0 z-10"
                         headerContent={cards[0].frontSide}
                         footerContent={cards[0].backSide}
                         isDraggable={true}

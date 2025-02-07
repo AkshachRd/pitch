@@ -16,7 +16,6 @@ const cardVariants = {
         x: exitDirection > 0 ? 1000 : -1000,
         opacity: 0,
         rotate: exitDirection > 0 ? 15 : -15,
-        zIndex: 10,
     }),
 };
 
