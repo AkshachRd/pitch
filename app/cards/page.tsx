@@ -5,6 +5,7 @@ import { useCardStore } from '@/store/store';
 import { CardStack } from '@/components/card-stack';
 import { useState } from 'react';
 import { Card } from '@/types/card';
+import { CoolButton } from '@/components/cool-button';
 
 export default function CardsPage() {
     // const cards = useCardStore((state) => state.cards);
@@ -23,6 +24,7 @@ export default function CardsPage() {
                     setCards((state) => state.slice(1));
                 }}
             />
+            <CoolButton></CoolButton>
         </div>
     );
 }

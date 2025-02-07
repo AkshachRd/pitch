@@ -16,6 +16,19 @@ module.exports = {
             spacing: {
                 'full-0.5': 'calc(100% + 0.5rem)',
             },
+            backgroundImage: {
+                'glow-gradient':
+                    'linear-gradient(to left, #ff5770, #e4428d, #c42da8, #9e16c3, #6501de, #9e16c3, #c42da8, #e4428d, #ff5770)',
+            },
+            keyframes: {
+                glow: {
+                    '0%': { backgroundPosition: '0% 50%' },
+                    '100%': { backgroundPosition: '200% 50%' },
+                },
+            },
+            animation: {
+                glow: 'glow 1.25s linear infinite',
+            },
         },
     },
     darkMode: 'class',
