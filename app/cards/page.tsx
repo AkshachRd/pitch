@@ -6,6 +6,7 @@ import { CardStack } from '@/components/card-stack';
 import { useState } from 'react';
 import { Card } from '@/types/card';
 import { CoolButton } from '@/components/cool-button';
+import { Button } from '@heroui/react';
 
 export default function CardsPage() {
     // const cards = useCardStore((state) => state.cards);
@@ -18,13 +19,10 @@ export default function CardsPage() {
     return (
         <div>
             <h1 className={title()}>Cards</h1>
-            <CardStack
-                cards={cards}
-                onRemove={() => {
-                    setCards((state) => state.slice(1));
-                }}
-            />
-            <CoolButton></CoolButton>
+            
+            <CoolButton>
+                <Button variant='light'>Helloaaaaaaaaaaaaaaaaa</Button>
+            </CoolButton>
         </div>
     );
 }
