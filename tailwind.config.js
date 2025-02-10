@@ -12,6 +12,7 @@ module.exports = {
             fontFamily: {
                 sans: ['var(--font-sans)'],
                 mono: ['var(--font-mono)'],
+                serif: ['var(--font-serif)'],
             },
             spacing: {
                 'full-0.5': 'calc(100% + 0.5rem)',
