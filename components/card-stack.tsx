@@ -52,6 +52,8 @@ export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) =>
                     key={cards[1].id}
                     className="absolute top-5"
                     delay={0.2}
+                    footerContent={cards[1].backSide}
+                    headerContent={cards[1].frontSide}
                     scale={0.95}
                 />
             )}
