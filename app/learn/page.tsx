@@ -1,12 +1,11 @@
 'use client';
 
-import { useCardStore } from '@/store/store';
-import { CardStack } from '@/components/card-stack';
 import { useState } from 'react';
-import { Card } from '@/types/card';
 import { Button } from '@heroui/react';
+
+import { CardStack } from '@/components/card-stack';
+import { Card } from '@/types/card';
 import { Side } from '@/components/side';
-import { CoolButton } from '@/components/cool-button';
 
 export default function LearnPage() {
     // const cards = useCardStore((state) => state.cards);
@@ -27,12 +26,9 @@ export default function LearnPage() {
                     setCards((state) => state.slice(1));
                 }}
             />
-
-            <CoolButton className="flex-auto h-full p-6">
-                <Side className='relative bg-white rounded-lg'>
-                    <Button variant="bordered">Yes</Button>
-                </Side>
-            </CoolButton>
+            <Side className="relative rounded-lg bg-white">
+                <Button variant="bordered">Yes</Button>
+            </Side>
         </div>
     );
 }
