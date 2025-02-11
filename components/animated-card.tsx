@@ -60,27 +60,29 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
     };
     const handleDrag = (event: any, info: any) => {
         const rotate = info.offset.x / 25;
+
         setRotation(rotate);
     };
+
     return (
         <motion.div
-            className={className}
-            initial="initial"
             animate="animate"
+            className={className}
             custom={{ scale, rotation }}
-            variants={cardVariants}
+            drag={isDraggable ? 'x' : false}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+            exit="exit"
+            initial="initial"
             transition={{
                 x: { type: 'spring', stiffness: 300, damping: 30 },
                 rotate: { type: 'spring', stiffness: 300, damping: 30 },
                 duration: 0.5,
                 delay,
             }}
-            exit="exit"
-            onDragEnd={handleDragEnd}
-            drag={isDraggable ? 'x' : false}
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={1}
+            variants={cardVariants}
             onDrag={handleDrag}
+            onDragEnd={handleDragEnd}
         >
             <Card className="w-[400px]" shadow="lg">
                 <CardHeader className="h-24 justify-center">{headerContent}</CardHeader>
