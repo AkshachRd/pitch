@@ -51,6 +51,9 @@ export default function LearnPage() {
                 <ShowAnswerButton
                     onPress={() => {
                         setRevealBack(true);
+                        setTimeout(() => {
+                            setRevealBack(false);
+                        }, 5000);
                     }}
                 />
             </div>
