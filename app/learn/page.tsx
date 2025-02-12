@@ -32,7 +32,9 @@ export default function LearnPage() {
 
     return (
         <div className="flex h-full w-full items-center justify-center">
-            <Side color="red" isActive={leftActive} />
+            <Side color="red" isActive={leftActive}>
+                No
+            </Side>
             <div className="flex h-full flex-col justify-evenly">
                 <CardStack
                     cards={cards}
@@ -57,7 +59,9 @@ export default function LearnPage() {
                     Show
                 </Button>
             </div>
-            <Side color="green" isActive={rightActive} />
+            <Side color="green" isActive={rightActive}>
+                Yes
+            </Side>
         </div>
     );
 }
