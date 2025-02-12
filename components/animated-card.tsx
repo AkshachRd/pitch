@@ -76,9 +76,9 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
             onDragEnd={handleDragEnd}
         >
             <Card className="w-[400px]" shadow="lg">
-                <CardHeader className="h-24 justify-center">{headerContent}</CardHeader>
+                <CardHeader className="h-24 justify-center text-xl">{headerContent}</CardHeader>
                 <Divider />
-                <CardFooter className="h-24 justify-center">
+                <CardFooter className="h-24 justify-center text-xl">
                     <Spoiler hidden={!revealBack}>{footerContent}</Spoiler>
                 </CardFooter>
             </Card>
