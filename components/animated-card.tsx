@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardFooter, CardHeader, Divider } from '@heroui/react';
-import { motion } from 'framer-motion';
+import { motion, PanInfo } from 'framer-motion';
 import { FC, useState } from 'react';
 
 const cardVariants = {
@@ -26,14 +26,9 @@ interface AnimatedCardProps {
     headerContent?: string;
     footerContent?: string;
     isDraggable?: boolean;
-    setExitDirection?: (value: number) => void;
-    onRemove?: () => void;
+    onDrag?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+    onDragEnd?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
 }
-
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity;
-};
 
 export const AnimatedCard: FC<AnimatedCardProps> = ({
     scale,
@@ -42,25 +37,19 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
     headerContent,
     footerContent,
     isDraggable,
-    setExitDirection,
-    onRemove,
+    onDrag,
+    onDragEnd,
 }) => {
     const [rotation, setRotation] = useState(0);
-    const handleDragEnd = (event: any, { offset, velocity }: any) => {
-        const swipe = swipePower(offset.x, velocity.x);
 
-        if (swipe < -swipeConfidenceThreshold) {
-            setExitDirection?.(-1);
-            onRemove?.();
-        } else if (swipe > swipeConfidenceThreshold) {
-            setExitDirection?.(1);
-            onRemove?.();
-        }
+    const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+        onDragEnd?.(event, info);
         setRotation(0);
     };
-    const handleDrag = (event: any, info: any) => {
-        const rotate = info.offset.x / 25;
 
+    const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+        onDrag?.(event, info);
+        const rotate = info.offset.x / 25;
         setRotation(rotate);
     };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, PanInfo } from 'framer-motion';
 import { useKeyboard } from 'react-aria';
 import clsx from 'clsx';
 
@@ -14,9 +14,22 @@ export interface CardStackProps {
     className?: string;
     cards: Card[];
     onRemove?: () => void;
+    onDrag?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+    onDragEnd?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
 }
 
-export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) => {
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+};
+
+export const CardStack: FC<CardStackProps> = ({
+    onDrag,
+    className,
+    cards,
+    onRemove,
+    onDragEnd,
+}) => {
     const [exitDirection, setExitDirection] = useState<number>(0);
     const { keyboardProps } = useKeyboard({
         onKeyDown: (e) => {
@@ -29,6 +42,19 @@ export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) =>
             }
         },
     });
+
+    const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+        onDragEnd?.(event, info);
+
+        const swipe = swipePower(info.offset.x, info.velocity.x);
+        if (swipe < -swipeConfidenceThreshold) {
+            setExitDirection?.(-1);
+            onRemove?.();
+        } else if (swipe > swipeConfidenceThreshold) {
+            setExitDirection?.(1);
+            onRemove?.();
+        }
+    };
 
     return (
         <div
@@ -61,14 +87,14 @@ export const CardStack: FC<CardStackProps> = ({ className, cards, onRemove }) =>
                 {cards.length > 0 && (
                     <AnimatedCard
                         key={cards[0].id}
+                        onDrag={onDrag}
                         className="absolute top-0 z-10"
                         delay={0}
                         footerContent={cards[0].backSide}
                         headerContent={cards[0].frontSide}
                         isDraggable={true}
                         scale={1}
-                        setExitDirection={setExitDirection}
-                        onRemove={onRemove}
+                        onDragEnd={handleDragEnd}
                     />
                 )}
             </AnimatePresence>
