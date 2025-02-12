@@ -32,7 +32,7 @@ export default function LearnPage() {
 
     return (
         <div className="flex h-full w-full items-center justify-center">
-            <Side color="red" isActive={leftActive}>
+            <Side color="danger" isActive={leftActive}>
                 No
             </Side>
             <div className="flex h-full flex-col justify-evenly">
@@ -54,7 +54,7 @@ export default function LearnPage() {
                     }}
                 />
             </div>
-            <Side color="green" isActive={rightActive}>
+            <Side color="success" isActive={rightActive}>
                 Yes
             </Side>
         </div>
