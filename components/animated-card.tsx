@@ -6,10 +6,9 @@ import { FC, useState } from 'react';
 import { Spoiler } from 'spoiled';
 
 const cardVariants = {
-    initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.05 }),
+    initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.05, opacity: 0 }),
     animate: ({ scale, rotation }: { scale: number; rotation: number }) => ({
         scale,
-        x: 0,
         opacity: 1,
         rotate: rotation,
     }),
