@@ -6,6 +6,7 @@ import { CardStack } from '@/components/card-stack';
 import { Card as CardType } from '@/types/card';
 import { Side } from '@/components/side';
 import { PanInfo } from 'framer-motion';
+import { Button } from '@heroui/react';
 
 export default function LearnPage() {
     // const cards = useCardStore((state) => state.cards);
@@ -16,6 +17,7 @@ export default function LearnPage() {
     ]);
     const [leftActive, setLeftActive] = useState(false);
     const [rightActive, setRightActive] = useState(false);
+    const [revealBack, setRevealBack] = useState(false);
 
     const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         const threshold = 100;
@@ -24,7 +26,6 @@ export default function LearnPage() {
     };
 
     const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        console.log(event, info);
         setLeftActive(false);
         setRightActive(false);
     };
@@ -32,16 +33,30 @@ export default function LearnPage() {
     return (
         <div className="flex h-full w-full items-center justify-center">
             <Side color="red" isActive={leftActive} />
-            <CardStack
-                cards={cards}
-                onDrag={handleDrag}
-                onDragEnd={handleDragEnd}
-                onRemove={() => {
-                    setCards((state) => state.slice(1));
-                    setLeftActive(false);
-                    setRightActive(false);
-                }}
-            />
+            <div className="flex h-full flex-col justify-evenly">
+                <CardStack
+                    cards={cards}
+                    onDrag={handleDrag}
+                    onDragEnd={handleDragEnd}
+                    onRemove={() => {
+                        setCards((state) => state.slice(1));
+                        setLeftActive(false);
+                        setRightActive(false);
+                        setRevealBack(false);
+                    }}
+                    revealBack={revealBack}
+                />
+                <Button
+                    onPress={() => {
+                        setRevealBack(true);
+                    }}
+                    disableRipple
+                    className="border-black"
+                    variant="bordered"
+                >
+                    Show
+                </Button>
+            </div>
             <Side color="green" isActive={rightActive} />
         </div>
     );

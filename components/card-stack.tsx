@@ -16,6 +16,7 @@ export interface CardStackProps {
     onRemove?: () => void;
     onDrag?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
     onDragEnd?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+    revealBack?: boolean;
 }
 
 const swipeConfidenceThreshold = 10000;
@@ -29,6 +30,7 @@ export const CardStack: FC<CardStackProps> = ({
     cards,
     onRemove,
     onDragEnd,
+    revealBack,
 }) => {
     const [exitDirection, setExitDirection] = useState<number>(0);
     const { keyboardProps } = useKeyboard({
@@ -95,6 +97,7 @@ export const CardStack: FC<CardStackProps> = ({
                         isDraggable={true}
                         scale={1}
                         onDragEnd={handleDragEnd}
+                        revealBack={revealBack}
                     />
                 )}
             </AnimatePresence>

@@ -29,6 +29,7 @@ interface AnimatedCardProps {
     isDraggable?: boolean;
     onDrag?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
     onDragEnd?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+    revealBack?: boolean;
 }
 
 export const AnimatedCard: FC<AnimatedCardProps> = ({
@@ -40,6 +41,7 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
     isDraggable,
     onDrag,
     onDragEnd,
+    revealBack = false
 }) => {
     const [rotation, setRotation] = useState(0);
 
@@ -78,7 +80,7 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
                 <CardHeader className="h-24 justify-center">{headerContent}</CardHeader>
                 <Divider />
                 <CardFooter className="h-24 justify-center">
-                    <Spoiler>{footerContent}</Spoiler>
+                    <Spoiler hidden={!revealBack}>{footerContent}</Spoiler>
                 </CardFooter>
             </Card>
         </motion.div>
