@@ -49,11 +49,12 @@ export default function LearnPage() {
                     revealBack={revealBack}
                 />
                 <ShowAnswerButton
+                    disabled={revealBack}
                     onPress={() => {
                         setRevealBack(true);
-                        setTimeout(() => {
-                            setRevealBack(false);
-                        }, 5000);
+                    }}
+                    onCountDown={() => {
+                        setRevealBack(false);
                     }}
                 />
             </div>
