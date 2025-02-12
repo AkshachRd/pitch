@@ -3,6 +3,7 @@
 import { Card, CardFooter, CardHeader, Divider } from '@heroui/react';
 import { motion, PanInfo } from 'framer-motion';
 import { FC, useState } from 'react';
+import { Spoiler } from 'spoiled';
 
 const cardVariants = {
     initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.05 }),
@@ -76,7 +77,9 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
             <Card className="w-[400px]" shadow="lg">
                 <CardHeader className="h-24 justify-center">{headerContent}</CardHeader>
                 <Divider />
-                <CardFooter className="h-24 justify-center">{footerContent}</CardFooter>
+                <CardFooter className="h-24 justify-center">
+                    <Spoiler>{footerContent}</Spoiler>
+                </CardFooter>
             </Card>
         </motion.div>
     );
