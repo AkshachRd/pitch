@@ -17,12 +17,8 @@ export interface CardStackProps {
     onDrag?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
     onDragEnd?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
     revealBack?: boolean;
+    swipeConfidenceThreshold: number;
 }
-
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity;
-};
 
 export const CardStack: FC<CardStackProps> = ({
     onDrag,
@@ -31,6 +27,7 @@ export const CardStack: FC<CardStackProps> = ({
     onRemove,
     onDragEnd,
     revealBack,
+    swipeConfidenceThreshold,
 }) => {
     const [exitDirection, setExitDirection] = useState<number>(0);
     const { keyboardProps } = useKeyboard({
@@ -48,11 +45,10 @@ export const CardStack: FC<CardStackProps> = ({
     const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         onDragEnd?.(event, info);
 
-        const swipe = swipePower(info.offset.x, info.velocity.x);
-        if (swipe < -swipeConfidenceThreshold) {
+        if (info.offset.x < -swipeConfidenceThreshold) {
             setExitDirection?.(-1);
             onRemove?.();
-        } else if (swipe > swipeConfidenceThreshold) {
+        } else if (info.offset.x > swipeConfidenceThreshold) {
             setExitDirection?.(1);
             onRemove?.();
         }

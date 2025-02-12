@@ -8,6 +8,8 @@ import { Side } from '@/components/side';
 import { PanInfo } from 'framer-motion';
 import { ShowAnswerButton } from '@/components/show-answer-button';
 
+const swipeConfidenceThreshold = 200;
+
 export default function LearnPage() {
     // const cards = useCardStore((state) => state.cards);
     const [cards, setCards] = useState<CardType[]>([
@@ -20,9 +22,8 @@ export default function LearnPage() {
     const [revealBack, setRevealBack] = useState(false);
 
     const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        const threshold = 100;
-        setLeftActive(info.offset.x < -threshold);
-        setRightActive(info.offset.x > threshold);
+        setLeftActive(info.offset.x < -swipeConfidenceThreshold);
+        setRightActive(info.offset.x > swipeConfidenceThreshold);
     };
 
     const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -37,6 +38,7 @@ export default function LearnPage() {
             </Side>
             <div className="flex h-full flex-col justify-evenly">
                 <CardStack
+                    swipeConfidenceThreshold={swipeConfidenceThreshold}
                     cards={cards}
                     onDrag={handleDrag}
                     onDragEnd={handleDragEnd}
