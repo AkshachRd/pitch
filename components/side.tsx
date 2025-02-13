@@ -11,7 +11,12 @@ interface SideProps {
     isActive?: boolean;
 }
 
-export const Side: FC<SideProps> = ({ color, className, isActive = false, children }: SideProps) => {
+export const Side: FC<SideProps> = ({
+    color,
+    className,
+    isActive = false,
+    children,
+}: SideProps) => {
     return (
         <div
             className={clsx(className, 'relative m-6 inline-block h-full flex-auto', {
@@ -25,12 +30,11 @@ export const Side: FC<SideProps> = ({ color, className, isActive = false, childr
                 )}
             />
             <Button
-                className={clsx('h-full w-full bg-background', `data-[hover=true]:!bg-${color}/20`)}
+                className={clsx('h-full w-full bg-background', `data-[hover=true]:bg-${color}/20`)}
                 variant="light"
             >
                 {children}
             </Button>
-            {/* <Card isPressable className="h-full w-full" /> */}
         </div>
     );
 };
