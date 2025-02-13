@@ -30,7 +30,7 @@ export const Side: FC<SideProps> = ({
                 )}
             />
             <Button
-                className={clsx('h-full w-full bg-background', `data-[hover=true]:bg-${color}/20`)}
+                className={`h-full w-full bg-background data-[hover=true]:bg-${color}/20`}
                 variant="light"
             >
                 {children}
