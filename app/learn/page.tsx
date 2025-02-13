@@ -61,7 +61,7 @@ export default function LearnPage() {
     return (
         <div className="flex h-full w-full items-center justify-center" {...keyboardProps}>
             <Side color="danger" isActive={leftActive}>
-                No
+                Bad
             </Side>
             <div className="flex h-full flex-col justify-evenly">
                 <CardStack
@@ -82,7 +82,7 @@ export default function LearnPage() {
                 />
             </div>
             <Side color="success" isActive={rightActive}>
-                Yes
+                Good
             </Side>
         </div>
     );
