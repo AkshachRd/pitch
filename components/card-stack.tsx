@@ -1,8 +1,7 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { AnimatePresence, PanInfo } from 'framer-motion';
-import { useKeyboard } from 'react-aria';
 import clsx from 'clsx';
 
 import { AnimatedCard } from './animated-card';
@@ -13,47 +12,20 @@ import { fontSerif } from '@/config/fonts';
 export interface CardStackProps {
     className?: string;
     cards: Card[];
-    onRemove?: () => void;
     onDrag?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
     onDragEnd?: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
     revealBack?: boolean;
-    swipeConfidenceThreshold: number;
+    exitDirection: number;
 }
 
 export const CardStack: FC<CardStackProps> = ({
     onDrag,
     className,
     cards,
-    onRemove,
     onDragEnd,
     revealBack,
-    swipeConfidenceThreshold,
+    exitDirection,
 }) => {
-    const [exitDirection, setExitDirection] = useState<number>(0);
-    const { keyboardProps } = useKeyboard({
-        onKeyDown: (e) => {
-            if (e.key === 'ArrowLeft') {
-                setExitDirection(-1);
-                onRemove?.();
-            } else if (e.key === 'ArrowRight') {
-                setExitDirection(1);
-                onRemove?.();
-            }
-        },
-    });
-
-    const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        onDragEnd?.(event, info);
-
-        if (info.offset.x < -swipeConfidenceThreshold) {
-            setExitDirection?.(-1);
-            onRemove?.();
-        } else if (info.offset.x > swipeConfidenceThreshold) {
-            setExitDirection?.(1);
-            onRemove?.();
-        }
-    };
-
     return (
         <div
             className={clsx(
@@ -61,7 +33,6 @@ export const CardStack: FC<CardStackProps> = ({
                 'relative h-[193px] w-[400px] font-serif',
                 fontSerif.variable,
             )}
-            {...keyboardProps}
         >
             {cards.length > 2 && (
                 <AnimatedCard
@@ -81,7 +52,7 @@ export const CardStack: FC<CardStackProps> = ({
                     scale={0.95}
                 />
             )}
-            <AnimatePresence custom={{ exitDirection: exitDirection }} initial={false}>
+            <AnimatePresence custom={{ exitDirection }} initial={false}>
                 {cards.length > 0 && (
                     <AnimatedCard
                         key={cards[0].id}
@@ -92,7 +63,7 @@ export const CardStack: FC<CardStackProps> = ({
                         headerContent={cards[0].frontSide}
                         isDraggable={true}
                         scale={1}
-                        onDragEnd={handleDragEnd}
+                        onDragEnd={onDragEnd}
                         revealBack={revealBack}
                     />
                 )}
