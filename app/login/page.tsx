@@ -6,7 +6,7 @@ import { login, signup } from './actions';
 export default function LoginPage() {
     return (
         <div className="flex h-full w-full flex-col items-center justify-center">
-            <Form className="w-full max-w-xs">
+            <Form className="w-full max-w-xs" action={login}>
                 <Input
                     isRequired
                     errorMessage="Please enter a valid email"
@@ -27,10 +27,10 @@ export default function LoginPage() {
                     placeholder="Enter your password"
                     type="password"
                 />
-                <Button formAction={login} variant="bordered">
+                <Button type="submit" variant="bordered">
                     Log in
                 </Button>
-                <Button formAction={signup} variant="bordered">
+                <Button type="button" formAction={signup} variant="bordered">
                     Sign up
                 </Button>
             </Form>
