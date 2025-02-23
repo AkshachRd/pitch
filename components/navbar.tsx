@@ -12,6 +12,7 @@ import clsx from 'clsx';
 
 import { siteConfig } from '@/config/site';
 import { ThemeSwitch } from '@/components/theme-switch';
+import { SignOutButton } from './sign-out-button/sign-out-button';
 export const Navbar = () => {
     return (
         <NextUINavbar maxWidth="xl" position="sticky">
@@ -37,6 +38,7 @@ export const Navbar = () => {
             <NavbarContent className="hidden basis-1/5 sm:flex sm:basis-full" justify="end">
                 <NavbarItem className="hidden gap-2 sm:flex">
                     <ThemeSwitch />
+                    <SignOutButton />
                 </NavbarItem>
             </NavbarContent>
 

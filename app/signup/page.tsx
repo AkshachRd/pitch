@@ -1,12 +1,12 @@
 'use client';
 
 import { Button, Form, Input, Link } from '@heroui/react';
-import { login } from './actions';
+import { signup } from './actions';
 
-export default function LoginPage() {
+export default function SignupPage() {
     return (
         <div className="flex h-full w-full flex-col items-center justify-center">
-            <Form className="w-full max-w-xs" action={login}>
+            <Form className="w-full max-w-xs" action={signup}>
                 <Input
                     isRequired
                     errorMessage="Please enter a valid email"
@@ -28,9 +28,9 @@ export default function LoginPage() {
                     type="password"
                 />
                 <Button type="submit" variant="bordered">
-                    Log in
+                    Sign up
                 </Button>
-                <Link href="/signup">Sign up</Link>
+                <Link href="/login">Log in</Link>
             </Form>
         </div>
     );
