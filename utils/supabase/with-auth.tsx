@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server';
+import { getSupabaseServerClient } from '@/utils/supabase/server';
 import { UserResponse } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 
@@ -10,7 +10,7 @@ export type WithAuthProps = {
 
 export function withAuth<P extends WithAuthProps>(WrappedComponent: React.ComponentType<P>) {
     return async function AuthenticatedComponent(props: Omit<P, keyof WithAuthProps>) {
-        const supabase = await createClient();
+        const supabase = await getSupabaseServerClient();
 
         const { data, error } = await supabase.auth.getUser();
         if (error || !data?.user) {

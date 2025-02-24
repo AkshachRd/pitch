@@ -47,8 +47,8 @@ export const CardStack: FC<CardStackProps> = ({
                     key={cards[1].id}
                     className="absolute top-5"
                     delay={0.2}
-                    footerContent={cards[1].backSide}
-                    headerContent={cards[1].frontSide}
+                    footerContent={cards[1].back_side}
+                    headerContent={cards[1].front_side}
                     scale={0.95}
                 />
             )}
@@ -59,8 +59,8 @@ export const CardStack: FC<CardStackProps> = ({
                         onDrag={onDrag}
                         className="absolute top-0 z-10"
                         delay={0}
-                        footerContent={cards[0].backSide}
-                        headerContent={cards[0].frontSide}
+                        footerContent={cards[0].back_side}
+                        headerContent={cards[0].front_side}
                         isDraggable={true}
                         scale={1}
                         onDragEnd={onDragEnd}

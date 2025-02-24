@@ -145,7 +145,7 @@ export const Search = ({ tags }: SearchProps) => {
     };
 
     const createCard = () => {
-        addCard({ id: '1', frontSide: fieldState.inputValue, backSide });
+        addCard({ id: 1, front_side: fieldState.inputValue, back_side: backSide });
         router.push('/cards');
     };
 

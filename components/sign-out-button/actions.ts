@@ -3,10 +3,10 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { createClient } from '@/utils/supabase/server';
+import { getSupabaseServerClient } from '@/utils/supabase/server';
 
 export async function signout() {
-    const supabase = await createClient();
+    const supabase = await getSupabaseServerClient();
 
     const { error } = await supabase.auth.signOut();
 
