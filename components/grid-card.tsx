@@ -23,13 +23,15 @@ interface GridCardProps {
     card: CardType;
 }
 
+const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
+
 export function GridCard({ card }: GridCardProps) {
-    const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
     const [isOpen, setOpen] = useState(false);
     let { hoverProps, isHovered } = useHover({
         onHoverStart: (e) => setOpen(true),
         onHoverEnd: (e) => setOpen(false),
     });
+
     return (
         <Dropdown isOpen={isOpen} placement="right" className="w-fit min-w-0">
             <DropdownTrigger>
