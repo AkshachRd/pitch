@@ -1,11 +1,14 @@
 'use client';
 import { Chip } from '@heroui/chip';
 
+import { TagColor } from '@/types/tag';
+
 type TagProps = {
-    color?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+    color?: TagColor;
     children?: React.ReactNode;
     onClose?: () => void;
 };
+
 export const Tag = ({ children, onClose, color }: TagProps) => {
     return (
         <Chip className="cursor-pointer" color={color} variant="dot" onClose={onClose}>
