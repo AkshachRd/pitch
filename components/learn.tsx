@@ -1,14 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { PanInfo } from 'framer-motion';
+import { useKeyboard } from 'react-aria';
+import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { CardStack } from '@/components/card-stack';
 import { Side } from '@/components/side';
-import { PanInfo } from 'framer-motion';
 import { ShowAnswerButton } from '@/components/show-answer-button';
-import { useKeyboard } from 'react-aria';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { getCards } from '@/queries/get-cards';
 
 const swipeConfidenceThreshold = 200;
@@ -69,19 +69,19 @@ export function Learn() {
             </Side>
             <div className="flex h-full flex-col justify-evenly">
                 <CardStack
-                    exitDirection={exitDirection}
                     cards={cards}
+                    exitDirection={exitDirection}
+                    revealBack={revealBack}
                     onDrag={handleDrag}
                     onDragEnd={handleDragEnd}
-                    revealBack={revealBack}
                 />
                 <ShowAnswerButton
                     disabled={revealBack}
-                    onPress={() => {
-                        setRevealBack(true);
-                    }}
                     onCountDown={() => {
                         setRevealBack(false);
+                    }}
+                    onPress={() => {
+                        setRevealBack(true);
                     }}
                 />
             </div>
