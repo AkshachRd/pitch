@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useFilter } from 'react-aria';
 import { useRouter } from 'next/navigation';
 import { Button } from '@heroui/button';
-import { useMutation } from '@tanstack/react-query';
 
 import { CloseLogo, ForwardLogo } from './icons';
 
@@ -15,6 +14,7 @@ import { createCard as createCardInSupabase } from '@/queries/create-card';
 import { Tag } from '@/app/page';
 import { useCardStore } from '@/store/store';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
+import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
 
 const useFilterItems = () => {
     const { startsWith } = useFilter({ sensitivity: 'base' });
@@ -57,10 +57,10 @@ type SearchProps = {
 
 export const Search = ({ tags }: SearchProps) => {
     const supabase = useSupabaseBrowser();
-    // This useQuery could just as well happen in some deeper
-    // child to <Posts>, data will be available immediately either way
-    const createCardMutation = useMutation({
-        mutationFn: createCardInSupabase(supabase),
+    const { mutate } = useInsertMutation(createCardInSupabase(supabase), ['id'], null, {
+        onSuccess: () => {
+            router.push('/cards');
+        },
     });
     const items = tags.map<Item>((tag) => ({
         key: `tag-${tag.tag}`,
@@ -154,8 +154,11 @@ export const Search = ({ tags }: SearchProps) => {
     };
 
     const createCard = () => {
-        addCard({ id: 1, front_side: fieldState.inputValue, back_side: backSide });
-        router.push('/cards');
+        mutate([{ front_side: fieldState.inputValue, back_side: backSide }], {
+            onError: (error) => {
+                console.error('Error creating card:', error);
+            },
+        });
     };
 
     return (
