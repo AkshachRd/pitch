@@ -7,11 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useFilter } from 'react-aria';
 import { useRouter } from 'next/navigation';
 import { Button } from '@heroui/button';
+import { useMutation } from '@tanstack/react-query';
 
 import { CloseLogo, ForwardLogo } from './icons';
 
+import { createCard as createCardInSupabase } from '@/queries/create-card';
 import { Tag } from '@/app/page';
 import { useCardStore } from '@/store/store';
+import { useSupabaseBrowser } from '@/utils/supabase/client';
 
 const useFilterItems = () => {
     const { startsWith } = useFilter({ sensitivity: 'base' });
@@ -53,6 +56,12 @@ type SearchProps = {
 };
 
 export const Search = ({ tags }: SearchProps) => {
+    const supabase = useSupabaseBrowser();
+    // This useQuery could just as well happen in some deeper
+    // child to <Posts>, data will be available immediately either way
+    const createCardMutation = useMutation({
+        mutationFn: createCardInSupabase(supabase),
+    });
     const items = tags.map<Item>((tag) => ({
         key: `tag-${tag.tag}`,
         type: 'tag',

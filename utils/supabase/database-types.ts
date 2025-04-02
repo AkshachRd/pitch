@@ -32,11 +32,31 @@ export type Database = {
                 Row: {
                     back_side: string;
                     created_at: string;
+                    front_side: string;
+                    id: number;
+                };
+                Insert: {
+                    back_side: string;
+                    created_at?: string;
+                    front_side: string;
+                    id?: number;
+                };
+                Update: {
+                    back_side?: string;
+                    created_at?: string;
+                    front_side?: string;
+                    id?: number;
+                };
+                Relationships: [];
+            };
+            repetition: {
+                Row: {
+                    created_at: string;
                     difficulty: number;
                     due: string;
                     elapsed_days: number;
-                    front_side: string;
                     id: number;
+                    id_card: number | null;
                     lapses: number;
                     last_review: string | null;
                     reps: number;
@@ -45,13 +65,12 @@ export type Database = {
                     state: Database['public']['Enums']['card_state'];
                 };
                 Insert: {
-                    back_side: string;
                     created_at?: string;
                     difficulty: number;
                     due: string;
                     elapsed_days: number;
-                    front_side: string;
                     id?: number;
+                    id_card?: number | null;
                     lapses: number;
                     last_review?: string | null;
                     reps: number;
@@ -60,13 +79,12 @@ export type Database = {
                     state?: Database['public']['Enums']['card_state'];
                 };
                 Update: {
-                    back_side?: string;
                     created_at?: string;
                     difficulty?: number;
                     due?: string;
                     elapsed_days?: number;
-                    front_side?: string;
                     id?: number;
+                    id_card?: number | null;
                     lapses?: number;
                     last_review?: string | null;
                     reps?: number;
@@ -74,7 +92,15 @@ export type Database = {
                     stability?: number;
                     state?: Database['public']['Enums']['card_state'];
                 };
-                Relationships: [];
+                Relationships: [
+                    {
+                        foreignKeyName: 'repetition_id_card_fkey';
+                        columns: ['id_card'];
+                        isOneToOne: false;
+                        referencedRelation: 'card';
+                        referencedColumns: ['id'];
+                    },
+                ];
             };
         };
         Views: {
