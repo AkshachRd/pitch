@@ -7,7 +7,7 @@ import { FC } from 'react';
 import { Tag } from './tag';
 
 import { Tag as TagType } from '@/types/tag';
-import { CoolButton } from './cool-button';
+import { AIAnimationWrapper } from './ai-animation-wrapper';
 
 interface TagInputProps {}
 
@@ -23,7 +23,7 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
     });
 
     return (
-        <CoolButton isLoading={isLoading}>
+        <AIAnimationWrapper isLoading={isLoading}>
             <Card className="w-80">
                 <CardBody className="flex-row flex-wrap items-center gap-2">
                     <form onSubmit={handleSubmit}>
@@ -51,6 +51,6 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
                     </form>
                 </CardBody>
             </Card>
-        </CoolButton>
+        </AIAnimationWrapper>
     );
 };

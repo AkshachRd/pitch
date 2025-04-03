@@ -3,17 +3,17 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-interface CoolButtonProps {
+interface AIAnimationWrapperProps {
     className?: string;
     isLoading?: boolean;
     children: React.ReactNode;
 }
 
-export const CoolButton: FC<CoolButtonProps> = ({
+export const AIAnimationWrapper: FC<AIAnimationWrapperProps> = ({
     className,
     isLoading,
     children,
-}: CoolButtonProps) => {
+}) => {
     return (
         <div className={clsx(className, 'relative inline-block')}>
             <div
