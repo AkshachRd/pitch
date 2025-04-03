@@ -23,10 +23,12 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
 
     return (
         <div className={'relative inline-block'}>
-            {isLoading && (
-                <div className="absolute inset-0 left-0 right-0 top-2 h-full w-full scale-90 animate-glow bg-glow-gradient bg-[length:200%_200%] blur-lg" />
-            )}
-            <Card className="max-w-80">
+            <div
+                className={`absolute inset-0 left-0 right-0 top-2 h-full w-full scale-90 bg-glow-gradient bg-[length:200%_200%] blur-lg transition-all duration-300 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0'}`}
+            >
+                {isLoading && <div className="h-full w-full animate-glow" />}
+            </div>
+            <Card className="w-80">
                 <CardBody className="flex-row flex-wrap items-center gap-2">
                     <form onSubmit={handleSubmit}>
                         {completion.length > 0 &&
