@@ -17,10 +17,8 @@ export const AIAnimationWrapper: FC<AIAnimationWrapperProps> = ({
     return (
         <div className={clsx(className, 'relative inline-block')}>
             <div
-                className={`absolute inset-0 left-0 right-0 top-2 h-full w-full scale-90 bg-glow-gradient bg-[length:200%_200%] blur-lg transition-opacity duration-300 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0'}`}
-            >
-                {isLoading && <div className="h-full w-full animate-glow" />}
-            </div>
+                className={`absolute inset-0 left-0 right-0 top-2 h-full w-full scale-90 bg-glow-gradient bg-[length:200%_200%] blur-lg transition-opacity duration-300 ease-in-out ${isLoading ? 'animate-glow opacity-100' : 'opacity-0'}`}
+            />
             {children}
         </div>
     );
