@@ -1,9 +1,9 @@
 'use client';
 
-import { Card, CardFooter, CardHeader, Divider } from '@heroui/react';
 import { motion, PanInfo } from 'framer-motion';
 import { FC, useState } from 'react';
-import { Spoiler } from 'spoiled';
+
+import { CardContent } from './card-content';
 
 const cardVariants = {
     initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.05, opacity: 0 }),
@@ -40,7 +40,7 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
     isDraggable,
     onDrag,
     onDragEnd,
-    revealBack = false
+    revealBack = false,
 }) => {
     const [rotation, setRotation] = useState(0);
 
@@ -52,6 +52,7 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
     const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         onDrag?.(event, info);
         const rotate = info.offset.x / 25;
+
         setRotation(rotate);
     };
 
@@ -75,13 +76,11 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
             onDrag={handleDrag}
             onDragEnd={handleDragEnd}
         >
-            <Card className="w-[400px]" shadow="lg">
-                <CardHeader className="h-24 justify-center text-xl">{headerContent}</CardHeader>
-                <Divider />
-                <CardFooter className="h-24 justify-center text-xl">
-                    <Spoiler hidden={!revealBack}>{footerContent}</Spoiler>
-                </CardFooter>
-            </Card>
+            <CardContent
+                footerContent={footerContent}
+                headerContent={headerContent}
+                revealBack={revealBack}
+            />
         </motion.div>
     );
 };
