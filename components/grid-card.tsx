@@ -1,8 +1,6 @@
 'use client';
 
 import {
-    Card,
-    CardBody,
     Dropdown,
     DropdownTrigger,
     DropdownMenu,
@@ -15,6 +13,7 @@ import { useState } from 'react';
 import { useHover } from 'react-aria';
 
 import { GridCardModal } from './grid-card-modal';
+import { CardContent } from './card-content';
 
 import { Card as CardType } from '@/types/card';
 import {
@@ -43,11 +42,11 @@ export function GridCard({ card }: GridCardProps) {
             <Dropdown className="w-fit min-w-0" isOpen={isOpen} placement="right">
                 <DropdownTrigger>
                     <button {...hoverProps} onClick={onModalOpen}>
-                        <Card className="w-[400px]" isHoverable={false} shadow="lg">
-                            <CardBody className="h-24 justify-center text-xl">
-                                {card.front_side}
-                            </CardBody>
-                        </Card>
+                        <CardContent
+                            footerContent={card.back_side}
+                            headerContent={card.front_side}
+                            revealBack={isHovered}
+                        />
                     </button>
                 </DropdownTrigger>
                 <DropdownMenu
