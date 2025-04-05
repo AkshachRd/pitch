@@ -4,15 +4,17 @@ import {
     NavbarMenu,
     NavbarItem,
     NavbarMenuItem,
+    NavbarMenuToggle,
 } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { link as linkStyles } from '@heroui/theme';
 import NextLink from 'next/link';
 import clsx from 'clsx';
 
+import { SignOutButton } from './sign-out-button/sign-out-button';
+
 import { siteConfig } from '@/config/site';
 import { ThemeSwitch } from '@/components/theme-switch';
-import { SignOutButton } from './sign-out-button/sign-out-button';
 export const Navbar = () => {
     return (
         <NextUINavbar maxWidth="xl" position="sticky">
@@ -40,6 +42,11 @@ export const Navbar = () => {
                     <ThemeSwitch />
                     <SignOutButton />
                 </NavbarItem>
+            </NavbarContent>
+
+            <NavbarContent className="basis-1 pl-4 sm:hidden" justify="end">
+                <ThemeSwitch />
+                <NavbarMenuToggle />
             </NavbarContent>
 
             <NavbarMenu>
