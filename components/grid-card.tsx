@@ -29,7 +29,7 @@ export function GridCard({ card }: GridCardProps) {
                 onModalOpen={onModalOpen}
             />
 
-            <Modal isOpen={isModalOpen} onClose={onModalClose}>
+            <Modal isOpen={isModalOpen} size="5xl" onClose={onModalClose}>
                 <GridCardModal card={card} />
             </Modal>
         </>

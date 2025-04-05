@@ -20,6 +20,12 @@ export async function POST(req: Request) {
         model,
         prompt: `Generate tags for a card in this context: ${prompt}.
         Write only generated tags separated by commas, no other text. Use lowercase letters.`,
+        onFinish: (result) => {
+            console.log(result);
+        },
+        onError: (error) => {
+            console.error(error);
+        },
     });
 
     return result.toDataStreamResponse();

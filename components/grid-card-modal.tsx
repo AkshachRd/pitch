@@ -1,6 +1,9 @@
 'use client';
 
-import { ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@heroui/react';
+import { ModalContent, Button, ModalBody, Divider } from '@heroui/react';
+
+import { CardContent } from './card-content';
+import { TagInput } from './tag-input';
 
 import { Card as CardType } from '@/types/card';
 
@@ -12,26 +15,24 @@ export function GridCardModal({ card }: GridCardModalProps) {
     return (
         <ModalContent>
             {(onClose) => (
-                <>
-                    <ModalHeader className="flex flex-col gap-1">Card Details</ModalHeader>
-                    <ModalBody>
-                        <div className="space-y-4">
-                            <div>
-                                <h3 className="mb-2 font-semibold">Front Side</h3>
-                                <p className="text-lg">{card.front_side}</p>
-                            </div>
-                            <div>
-                                <h3 className="mb-2 font-semibold">Back Side</h3>
-                                <p className="text-lg">{card.back_side}</p>
-                            </div>
+                <ModalBody>
+                    <div className="flex h-[600px]">
+                        <div className="flex flex-1 items-center justify-center">
+                            <CardContent
+                                footerContent={card.back_side}
+                                headerContent={card.front_side}
+                                revealBack={true}
+                            />
                         </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="danger" variant="light" onPress={onClose}>
-                            Close
-                        </Button>
-                    </ModalFooter>
-                </>
+                        <Divider orientation="vertical" />
+                        <div className="flex w-80 flex-col gap-4 p-4">
+                            <TagInput />
+                            <Button color="danger" variant="light" onPress={onClose}>
+                                Close
+                            </Button>
+                        </div>
+                    </div>
+                </ModalBody>
             )}
         </ModalContent>
     );

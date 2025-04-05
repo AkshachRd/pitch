@@ -5,8 +5,6 @@ import { useCompletion } from '@ai-sdk/react';
 import { FC } from 'react';
 
 import { Tag } from './tag';
-
-import { Tag as TagType } from '@/types/tag';
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
 interface TagInputProps {}
@@ -24,7 +22,7 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
 
     return (
         <AIAnimationWrapper isLoading={isLoading}>
-            <Card className="w-80">
+            <Card className="w-full">
                 <CardBody className="flex-row flex-wrap items-center gap-2">
                     {completion.length > 0 &&
                         completion.split(',').map((tag, index) => (
@@ -41,10 +39,10 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
                         Gen tags
                     </Button>
                     <Input
-                        value={input}
-                        onInput={(e) => setInput(e.currentTarget.value)}
                         className="flex-grow"
                         fullWidth={false}
+                        value={input}
+                        onInput={(e) => setInput(e.currentTarget.value)}
                     />
                 </CardBody>
             </Card>
