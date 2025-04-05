@@ -11,8 +11,6 @@ import { link as linkStyles } from '@heroui/theme';
 import NextLink from 'next/link';
 import clsx from 'clsx';
 
-import { SignOutButton } from './sign-out-button/sign-out-button';
-
 import { siteConfig } from '@/config/site';
 import { ThemeSwitch } from '@/components/theme-switch';
 export const Navbar = () => {
@@ -40,7 +38,16 @@ export const Navbar = () => {
             <NavbarContent className="hidden basis-1/5 sm:flex sm:basis-full" justify="end">
                 <NavbarItem className="hidden gap-2 sm:flex">
                     <ThemeSwitch />
-                    <SignOutButton />
+                    <NextLink
+                        className={clsx(
+                            linkStyles({ color: 'foreground', underline: 'always' }),
+                            'data-[active=true]:font-medium data-[active=true]:text-primary',
+                        )}
+                        color="foreground"
+                        href="/signout"
+                    >
+                        sign out
+                    </NextLink>
                 </NavbarItem>
             </NavbarContent>
 
