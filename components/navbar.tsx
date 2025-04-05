@@ -7,9 +7,6 @@ import {
     NavbarMenuToggle,
 } from '@heroui/navbar';
 import { Link } from '@heroui/link';
-import { link as linkStyles } from '@heroui/theme';
-import NextLink from 'next/link';
-import clsx from 'clsx';
 
 import { siteConfig } from '@/config/site';
 import { ThemeSwitch } from '@/components/theme-switch';
@@ -20,16 +17,9 @@ export const Navbar = () => {
                 <ul className="ml-2 hidden justify-start gap-4 sm:flex">
                     {siteConfig.navItems.map((item) => (
                         <NavbarItem key={item.href}>
-                            <NextLink
-                                className={clsx(
-                                    linkStyles({ color: 'foreground', underline: 'always' }),
-                                    'data-[active=true]:font-medium data-[active=true]:text-primary',
-                                )}
-                                color="foreground"
-                                href={item.href}
-                            >
+                            <Link color="foreground" href={item.href} size="md" underline="always">
                                 {item.label}
-                            </NextLink>
+                            </Link>
                         </NavbarItem>
                     ))}
                 </ul>
@@ -38,16 +28,9 @@ export const Navbar = () => {
             <NavbarContent className="hidden basis-1/5 sm:flex sm:basis-full" justify="end">
                 <NavbarItem className="hidden gap-2 sm:flex">
                     <ThemeSwitch />
-                    <NextLink
-                        className={clsx(
-                            linkStyles({ color: 'foreground', underline: 'always' }),
-                            'data-[active=true]:font-medium data-[active=true]:text-primary',
-                        )}
-                        color="foreground"
-                        href="/signout"
-                    >
+                    <Link color="foreground" href="/signout" size="md" underline="always">
                         sign out
-                    </NextLink>
+                    </Link>
                 </NavbarItem>
             </NavbarContent>
 
@@ -65,14 +48,13 @@ export const Navbar = () => {
                         <NavbarMenuItem key={`${item}-${index}`}>
                             <Link
                                 color={
-                                    index === 2
-                                        ? 'primary'
-                                        : index === siteConfig.navMenuItems.length - 1
-                                          ? 'danger'
-                                          : 'foreground'
+                                    index === siteConfig.navMenuItems.length - 1
+                                        ? 'danger'
+                                        : 'foreground'
                                 }
                                 href="#"
                                 size="lg"
+                                underline="always"
                             >
                                 {item.label}
                             </Link>
