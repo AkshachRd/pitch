@@ -16,6 +16,10 @@ export const siteConfig = {
             label: 'learn',
             href: '/learn',
         },
+        {
+            label: 'tags',
+            href: '/tags',
+        },
     ],
     navMenuItems: [
         {
