@@ -62,16 +62,19 @@ export function GridCard({ card }: GridCardProps) {
                         key="new"
                         className="gap-x-0"
                         endContent={<AddNoteIcon className={iconClasses} />}
+                        textValue="Add Note"
                     />
                     <DropdownItem
                         key="copy"
                         className="gap-x-0"
                         endContent={<CopyDocumentIcon className={iconClasses} />}
+                        textValue="Copy"
                     />
                     <DropdownItem
                         key="edit"
                         className="gap-x-0"
                         endContent={<EditDocumentIcon className={iconClasses} />}
+                        textValue="Edit"
                     />
                     <DropdownItem
                         key="delete"
@@ -80,6 +83,7 @@ export function GridCard({ card }: GridCardProps) {
                         endContent={
                             <DeleteDocumentIcon className={cn(iconClasses, 'text-danger')} />
                         }
+                        textValue="Delete"
                     />
                 </DropdownMenu>
             </Dropdown>
