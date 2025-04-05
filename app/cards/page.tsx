@@ -38,7 +38,7 @@ export default function CardsPage() {
         <div className="flex h-full w-full flex-col items-center p-4">
             <h1 className={title()}>Cards</h1>
             <CardsGrid cards={mockCards} />
-            <TagInput tags={mockTags} />
+            <TagInput />
             {/* <Suspense fallback={<Spinner />}>
                 <Chat />
             </Suspense>
