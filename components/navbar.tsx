@@ -16,8 +16,8 @@ import { ThemeSwitch } from '@/components/theme-switch';
 export const Navbar = () => {
     return (
         <NextUINavbar maxWidth="xl" position="sticky">
-            <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-                <ul className="ml-2 hidden justify-start gap-4 lg:flex">
+            <NavbarContent className="hidden basis-1/5 sm:flex sm:basis-full" justify="start">
+                <ul className="ml-2 hidden justify-start gap-4 sm:flex">
                     {siteConfig.navItems.map((item) => (
                         <NavbarItem key={item.href}>
                             <NextLink
@@ -51,9 +51,12 @@ export const Navbar = () => {
                 </NavbarItem>
             </NavbarContent>
 
+            <NavbarContent className="basis-1 pl-4 sm:hidden" justify="start">
+                <NavbarMenuToggle />
+            </NavbarContent>
+
             <NavbarContent className="basis-1 pl-4 sm:hidden" justify="end">
                 <ThemeSwitch />
-                <NavbarMenuToggle />
             </NavbarContent>
 
             <NavbarMenu>
