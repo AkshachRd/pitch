@@ -1,7 +1,5 @@
 import { title } from '@/components/primitives';
 import { CardsGrid } from '@/components/cards-grid';
-import { TagInput } from '@/components/tag-input';
-import { Tag } from '@/types/tag';
 
 const mockCards = [
     {
@@ -21,28 +19,11 @@ const mockCards = [
     },
 ];
 
-const mockTags = [
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-    { color: 'default', name: 'fruit' },
-] as Tag[];
-
 export default function CardsPage() {
     return (
         <div className="flex h-full w-full flex-col items-center p-4">
             <h1 className={title()}>Cards</h1>
             <CardsGrid cards={mockCards} />
-            <TagInput />
-            {/* <Suspense fallback={<Spinner />}>
-                <Chat />
-            </Suspense>
-            <CoolButton /> */}
         </div>
     );
 }
