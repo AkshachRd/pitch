@@ -44,21 +44,23 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
 
     const [showSaveAndCancelButton, setShowSaveAndCancelButton] = useState(false);
 
-    const { completion, input, setInput, complete, isLoading, stop } = useCompletion({
-        api: '/api/tags',
-        onFinish: async (_, response) => {
-            setShowSaveAndCancelButton(true);
-            console.log(response);
+    const { completion, input, setInput, complete, isLoading, stop, setCompletion } = useCompletion(
+        {
+            api: '/api/tags',
+            onFinish: async (_, response) => {
+                setShowSaveAndCancelButton(true);
+                console.log(response);
+            },
+            onError: (error) => {
+                console.error(error);
+            },
         },
-        onError: (error) => {
-            console.error(error);
-        },
-    });
+    );
 
     const aiGeneratedTags = parseAIGeneratedTags(completion);
     const mergedTags = [...tags, ...aiGeneratedTags];
 
-    const showGenButton = tags.length === 0;
+    const showGenButton = mergedTags.length === 0 && !isLoading;
     const showStopButton = isLoading;
     const showInput = !isLoading;
 
@@ -107,6 +109,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                             <Button
                                 type="button"
                                 onPress={() => {
+                                    setCompletion('');
                                     setShowSaveAndCancelButton(false);
                                 }}
                             >
