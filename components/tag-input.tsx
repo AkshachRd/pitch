@@ -3,7 +3,6 @@
 import { Button, Card, CardBody, Input } from '@heroui/react';
 import { useCompletion } from '@ai-sdk/react';
 import { FC, useState } from 'react';
-import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
@@ -30,29 +29,13 @@ const parseAIGeneratedTags = (tags: string): TagType[] => {
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const supabase = useSupabaseBrowser();
     const { tag: tagQuery, cardHasTag: cardHasTagQuery } = createTag(supabase);
-
-    const { mutate: createTagMutation } = useInsertMutation(tagQuery, ['id'], null, {
-        onSuccess: async (tagData) => {
-            if (!tagData?.[0]?.id) return;
-            // After tag is created, create the relationship
-            await cardHasTagQuery.insert({
-                id_card: card.id,
-                id_tag: tagData[0].id,
-            });
-        },
-    });
-
     const [showSaveAndCancelButton, setShowSaveAndCancelButton] = useState(false);
 
     const { completion, input, setInput, complete, isLoading, stop, setCompletion } = useCompletion(
         {
             api: '/api/tags',
-            onFinish: async (_, response) => {
+            onFinish: () => {
                 setShowSaveAndCancelButton(true);
-                console.log(response);
-            },
-            onError: (error) => {
-                console.error(error);
             },
         },
     );
@@ -63,6 +46,53 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const showGenButton = mergedTags.length === 0 && !isLoading;
     const showStopButton = isLoading;
     const showInput = !isLoading;
+
+    const createTagRelationship = async (tagId: number) => {
+        const { error } = await cardHasTagQuery.insert({
+            id_card: card.id,
+            id_tag: tagId,
+        });
+
+        if (error) {
+            throw new Error(`Failed to create tag relationship: ${error.message}`);
+        }
+    };
+
+    const handleSaveTags = async () => {
+        try {
+            for (const tag of aiGeneratedTags) {
+                // Check if tag exists
+                const { data: existingTag } = await tagQuery.select().eq('name', tag.name).single();
+
+                if (existingTag) {
+                    await createTagRelationship(existingTag.id);
+                } else {
+                    // Create new tag
+                    const { data: newTag, error: tagError } = await tagQuery
+                        .insert({
+                            name: tag.name,
+                            color: tag.color,
+                        })
+                        .select()
+                        .single();
+
+                    if (tagError) {
+                        throw new Error(`Failed to create tag: ${tagError.message}`);
+                    }
+
+                    if (!newTag?.id) {
+                        throw new Error('Failed to get tag ID after creation');
+                    }
+
+                    await createTagRelationship(newTag.id);
+                }
+            }
+            setShowSaveAndCancelButton(false);
+        } catch (error) {
+            // You might want to show an error toast or notification here
+            setShowSaveAndCancelButton(false);
+        }
+    };
 
     return (
         <AIAnimationWrapper isLoading={isLoading}>
@@ -97,13 +127,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                     )}
                     {showSaveAndCancelButton && (
                         <div className="flex-grow flex-row gap-2">
-                            <Button
-                                type="button"
-                                onPress={() => {
-                                    createTagMutation(aiGeneratedTags);
-                                    setShowSaveAndCancelButton(false);
-                                }}
-                            >
+                            <Button type="button" onPress={handleSaveTags}>
                                 Save
                             </Button>
                             <Button
