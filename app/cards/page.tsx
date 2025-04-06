@@ -22,15 +22,15 @@ const mockCards = [
 ];
 
 const mockTags = [
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
-    { color: 'default', content: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
+    { color: 'default', name: 'fruit' },
 ] as Tag[];
 
 export default function CardsPage() {

@@ -7,14 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useFilter } from 'react-aria';
 import { useRouter } from 'next/navigation';
 import { Button } from '@heroui/button';
+import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { CloseLogo, ForwardLogo } from './icons';
 
 import { createCard as createCardInSupabase } from '@/queries/create-card';
-import { Tag } from '@/app/page';
 import { useCardStore } from '@/store/store';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
+import { Tag } from '@/types/tag';
 
 const useFilterItems = () => {
     const { startsWith } = useFilter({ sensitivity: 'base' });
@@ -63,9 +63,9 @@ export const Search = ({ tags }: SearchProps) => {
         },
     });
     const items = tags.map<Item>((tag) => ({
-        key: `tag-${tag.tag}`,
+        key: `tag-${tag.name}`,
         type: 'tag',
-        label: tag.tag,
+        label: tag.name,
     }));
 
     const [fieldState, setFieldState] = React.useState<FieldState>({

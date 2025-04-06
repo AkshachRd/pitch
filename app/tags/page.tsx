@@ -1,25 +1,21 @@
 import { title } from '@/components/primitives';
 import { Search } from '@/components/search';
-import { Tag } from '@/components/tag';
-
-export type Tag = {
-    tag: string;
-    color: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
-};
+import { TagsList } from '@/components/tags-list';
+import { Tag } from '@/types/tag';
 
 const tags: Tag[] = [
-    { tag: 'Technology', color: 'primary' },
-    { tag: 'Technology/Software Development', color: 'success' },
-    { tag: 'Technology/Software Development/Programming Languages', color: 'warning' },
-    { tag: 'Technology/Software Development/Software Engineering', color: 'danger' },
-    { tag: 'Technology/Software Development/Web Development', color: 'secondary' },
-    { tag: 'Technology/Hardware', color: 'default' },
-    { tag: 'Technology/Hardware/Computers', color: 'primary' },
-    { tag: 'Technology/Hardware/Mobile Devices', color: 'success' },
-    { tag: 'Technology/Hardware/Peripherals', color: 'warning' },
-    { tag: 'Technology/AI', color: 'danger' },
-    { tag: 'Technology/Robotics', color: 'secondary' },
-    { tag: 'Science', color: 'default' },
+    { name: 'Technology', color: 'primary' },
+    { name: 'Technology/Software Development', color: 'success' },
+    { name: 'Technology/Software Development/Programming Languages', color: 'warning' },
+    { name: 'Technology/Software Development/Software Engineering', color: 'danger' },
+    { name: 'Technology/Software Development/Web Development', color: 'secondary' },
+    { name: 'Technology/Hardware', color: 'default' },
+    { name: 'Technology/Hardware/Computers', color: 'primary' },
+    { name: 'Technology/Hardware/Mobile Devices', color: 'success' },
+    { name: 'Technology/Hardware/Peripherals', color: 'warning' },
+    { name: 'Technology/AI', color: 'danger' },
+    { name: 'Technology/Robotics', color: 'secondary' },
+    { name: 'Science', color: 'default' },
 ];
 
 export default function TagsPage() {
@@ -29,16 +25,7 @@ export default function TagsPage() {
             <div className="mb-6">
                 <Search tags={tags} />
             </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {tags.map((tag) => (
-                    <div
-                        key={tag.tag}
-                        className="rounded-lg border p-4 transition-colors hover:bg-gray-50"
-                    >
-                        <Tag color={tag.color}>{tag.tag}</Tag>
-                    </div>
-                ))}
-            </div>
+            <TagsList tags={tags} />
         </div>
     );
 }
