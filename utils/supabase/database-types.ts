@@ -49,6 +49,39 @@ export type Database = {
                 };
                 Relationships: [];
             };
+            card_has_tag: {
+                Row: {
+                    created_at: string;
+                    id_card: number;
+                    id_tag: number;
+                };
+                Insert: {
+                    created_at?: string;
+                    id_card?: number;
+                    id_tag: number;
+                };
+                Update: {
+                    created_at?: string;
+                    id_card?: number;
+                    id_tag?: number;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: 'card_has_tag_id_card_fkey';
+                        columns: ['id_card'];
+                        isOneToOne: false;
+                        referencedRelation: 'card';
+                        referencedColumns: ['id'];
+                    },
+                    {
+                        foreignKeyName: 'card_has_tag_id_tag_fkey';
+                        columns: ['id_tag'];
+                        isOneToOne: false;
+                        referencedRelation: 'tag';
+                        referencedColumns: ['id'];
+                    },
+                ];
+            };
             repetition: {
                 Row: {
                     created_at: string;
@@ -101,6 +134,27 @@ export type Database = {
                         referencedColumns: ['id'];
                     },
                 ];
+            };
+            tag: {
+                Row: {
+                    color: string | null;
+                    created_at: string;
+                    id: number;
+                    name: string | null;
+                };
+                Insert: {
+                    color?: string | null;
+                    created_at?: string;
+                    id?: number;
+                    name?: string | null;
+                };
+                Update: {
+                    color?: string | null;
+                    created_at?: string;
+                    id?: number;
+                    name?: string | null;
+                };
+                Relationships: [];
             };
         };
         Views: {
