@@ -34,7 +34,7 @@ export function GridCardModal({ card }: GridCardModalProps) {
                         </div>
                         <Divider orientation="vertical" />
                         <div className="flex w-80 flex-col gap-4 p-4">
-                            <TagInput tags={tags} />
+                            <TagInput card={card} tags={tags} />
                             <Button color="danger" variant="light" onPress={onClose}>
                                 Close
                             </Button>

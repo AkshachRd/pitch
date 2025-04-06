@@ -8,9 +8,11 @@ import { AIAnimationWrapper } from './ai-animation-wrapper';
 
 import { Tag } from '@/components/tag';
 import { Tag as TagType } from '@/types/tag';
+import { Card as CardType } from '@/types/card';
 
 interface TagInputProps {
     tags: TagType[];
+    card: CardType;
 }
 
 const parseAIGeneratedTags = (tags: string): TagType[] => {
@@ -20,7 +22,7 @@ const parseAIGeneratedTags = (tags: string): TagType[] => {
     }));
 };
 
-export const TagInput: FC<TagInputProps> = ({ tags }: TagInputProps) => {
+export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const { completion, input, setInput, complete, isLoading, stop } = useCompletion({
         api: '/api/tags',
         onFinish: (_, response) => {
@@ -54,7 +56,9 @@ export const TagInput: FC<TagInputProps> = ({ tags }: TagInputProps) => {
 
                                     return;
                                 }
-                                complete(`card_front_side: 'Forest', card_back_side: 'Лес'`);
+                                complete(
+                                    `card_front_side: ${card.front_side}, card_back_side: ${card.back_side}`,
+                                );
                             }}
                         >
                             {isLoading ? 'Stop' : 'Gen tags'}
