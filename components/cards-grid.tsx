@@ -11,7 +11,7 @@ export function CardsGrid() {
     const { data: cards = [] } = useQuery(getCards(supabase));
 
     return (
-        <div className="grid grid-cols-5 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             {cards?.map((card) => <GridCard key={card.id} card={card} />)}
         </div>
     );
