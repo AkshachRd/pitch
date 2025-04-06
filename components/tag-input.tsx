@@ -6,11 +6,10 @@ import { FC, useState } from 'react';
 
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
-import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { createTag } from '@/queries/create-tag';
 import { Tag } from '@/components/tag';
 import { Tag as TagType } from '@/types/tag';
 import { Card as CardType } from '@/types/card';
+import { useCreateTagsMutation } from '@/hooks/use-create-tags-mutation';
 
 interface TagInputProps {
     tags: TagType[];
@@ -27,9 +26,8 @@ const parseAIGeneratedTags = (tags: string): TagType[] => {
 };
 
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
-    const supabase = useSupabaseBrowser();
-    const { tag: tagQuery, cardHasTag: cardHasTagQuery } = createTag(supabase);
     const [showSaveAndCancelButton, setShowSaveAndCancelButton] = useState(false);
+    const { mutate: createTags, isPending: isCreatingTags } = useCreateTagsMutation();
 
     const { completion, input, setInput, complete, isLoading, stop, setCompletion } = useCompletion(
         {
@@ -47,46 +45,13 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const showStopButton = isLoading;
     const showInput = !isLoading;
 
-    const createTagRelationship = async (tagId: number) => {
-        const { error } = await cardHasTagQuery.insert({
-            id_card: card.id,
-            id_tag: tagId,
-        });
-
-        if (error) {
-            throw new Error(`Failed to create tag relationship: ${error.message}`);
-        }
-    };
-
     const handleSaveTags = async () => {
         try {
-            for (const tag of aiGeneratedTags) {
-                // Check if tag exists
-                const { data: existingTag } = await tagQuery.select().eq('name', tag.name).single();
+            await createTags({
+                tags: aiGeneratedTags,
+                cardId: card.id,
+            });
 
-                if (existingTag) {
-                    await createTagRelationship(existingTag.id);
-                } else {
-                    // Create new tag
-                    const { data: newTag, error: tagError } = await tagQuery
-                        .insert({
-                            name: tag.name,
-                            color: tag.color,
-                        })
-                        .select()
-                        .single();
-
-                    if (tagError) {
-                        throw new Error(`Failed to create tag: ${tagError.message}`);
-                    }
-
-                    if (!newTag?.id) {
-                        throw new Error('Failed to get tag ID after creation');
-                    }
-
-                    await createTagRelationship(newTag.id);
-                }
-            }
             setShowSaveAndCancelButton(false);
         } catch (error) {
             // You might want to show an error toast or notification here
