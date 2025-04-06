@@ -1,4 +1,11 @@
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, cn } from '@heroui/react';
+import {
+    Dropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownItem,
+    cn,
+    useDisclosure,
+} from '@heroui/react';
 import { useHover } from 'react-aria';
 
 import { CardContent } from './card-content';
@@ -10,42 +17,44 @@ import {
     DeleteDocumentIcon,
 } from '@/components/icons';
 import { Card as CardType } from '@/types/card';
+import { debounce } from '@/lib/debounce';
 
 interface GridCardDropdownProps {
     card: CardType;
-    isDropdownOpen: boolean;
-    onDropdownOpen: () => void;
-    onDropdownClose: () => void;
     onModalOpen: () => void;
 }
 
 const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
-export function GridCardDropdown({
-    card,
-    isDropdownOpen,
-    onDropdownClose,
-    onDropdownOpen,
-    onModalOpen,
-}: GridCardDropdownProps) {
-    let { hoverProps, isHovered } = useHover({
+export function GridCardDropdown({ card, onModalOpen }: GridCardDropdownProps) {
+    const {
+        isOpen: isDropdownOpen,
+        onOpen: onDropdownOpen,
+        onClose: onDropdownClose,
+    } = useDisclosure();
+    let { hoverProps: cardHoverProps, isHovered: isCardHovered } = useHover({
         onHoverStart: onDropdownOpen,
-        onHoverEnd: onDropdownClose,
+        onHoverEnd: debounce(onDropdownClose, 300),
     });
+    let { hoverProps: menuHoverProps, isHovered: isMenuHovered } = useHover({});
 
     return (
-        <Dropdown className="w-fit min-w-0" isOpen={isDropdownOpen} placement="right">
+        <Dropdown
+            className="w-fit min-w-0"
+            isOpen={isDropdownOpen || isMenuHovered || isCardHovered}
+            placement="right"
+        >
             <DropdownTrigger>
-                <button {...hoverProps} onClick={onModalOpen}>
+                <button {...cardHoverProps} onClick={onModalOpen}>
                     <CardContent
                         footerContent={card.back_side}
                         headerContent={card.front_side}
-                        revealBack={isHovered}
+                        revealBack={isCardHovered}
                     />
                 </button>
             </DropdownTrigger>
             <DropdownMenu
-                {...hoverProps}
+                {...menuHoverProps}
                 aria-label="Dropdown menu with description"
                 variant="faded"
             >

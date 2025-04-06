@@ -12,22 +12,11 @@ interface GridCardProps {
 }
 
 export function GridCard({ card }: GridCardProps) {
-    const {
-        isOpen: isDropdownOpen,
-        onOpen: onDropdownOpen,
-        onClose: onDropdownClose,
-    } = useDisclosure();
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
     return (
         <>
-            <GridCardDropdown
-                card={card}
-                isDropdownOpen={isDropdownOpen}
-                onDropdownClose={onDropdownClose}
-                onDropdownOpen={onDropdownOpen}
-                onModalOpen={onModalOpen}
-            />
+            <GridCardDropdown card={card} onModalOpen={onModalOpen} />
 
             <Modal isOpen={isModalOpen} size="5xl" onClose={onModalClose}>
                 <GridCardModal card={card} />
