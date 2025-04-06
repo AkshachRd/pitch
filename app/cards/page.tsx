@@ -1,29 +1,23 @@
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
+
 import { title } from '@/components/primitives';
 import { CardsGrid } from '@/components/cards-grid';
+import { getCards } from '@/queries/get-cards';
+import { getSupabaseServerClient } from '@/utils/supabase/server';
 
-const mockCards = [
-    {
-        id: 1,
-        front_side: 'What is React?',
-        back_side: 'A JavaScript library for building user interfaces',
-    },
-    {
-        id: 2,
-        front_side: 'What is JSX?',
-        back_side: 'A syntax extension for JavaScript',
-    },
-    {
-        id: 3,
-        front_side: 'What are hooks?',
-        back_side: 'Functions that let you use state and other React features',
-    },
-];
+export default async function CardsPage() {
+    const queryClient = new QueryClient();
+    const supabase = await getSupabaseServerClient();
 
-export default function CardsPage() {
+    await prefetchQuery(queryClient, getCards(supabase));
+
     return (
-        <div className="flex h-full w-full flex-col items-center p-4">
-            <h1 className={title()}>Cards</h1>
-            <CardsGrid cards={mockCards} />
-        </div>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+            <div className="flex h-full w-full flex-col items-center p-4">
+                <h1 className={title()}>Cards</h1>
+                <CardsGrid />
+            </div>
+        </HydrationBoundary>
     );
 }
