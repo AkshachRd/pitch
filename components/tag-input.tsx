@@ -2,10 +2,13 @@
 
 import { Button, Card, CardBody, Input } from '@heroui/react';
 import { useCompletion } from '@ai-sdk/react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
+import { useSupabaseBrowser } from '@/utils/supabase/client';
+import { createTag } from '@/queries/create-tag';
 import { Tag } from '@/components/tag';
 import { Tag as TagType } from '@/types/tag';
 import { Card as CardType } from '@/types/card';
@@ -23,10 +26,27 @@ const parseAIGeneratedTags = (tags: string): TagType[] => {
 };
 
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
+    const supabase = useSupabaseBrowser();
+    const { tag: tagQuery, cardHasTag: cardHasTagQuery } = createTag(supabase);
+
+    const { mutate: createTagMutation } = useInsertMutation(tagQuery, ['id'], null, {
+        onSuccess: async (tagData) => {
+            if (!tagData?.[0]?.id) return;
+            // After tag is created, create the relationship
+            await cardHasTagQuery.insert({
+                id_card: card.id,
+                id_tag: tagData[0].id,
+            });
+        },
+    });
+
+    const [showSaveAndCancelButton, setShowSaveAndCancelButton] = useState(false);
+
     const { completion, input, setInput, complete, isLoading, stop } = useCompletion({
         api: '/api/tags',
-        onFinish: (_, response) => {
-            console.log('response', response);
+        onFinish: async (_, response) => {
+            setShowSaveAndCancelButton(true);
+            console.log(response);
         },
         onError: (error) => {
             console.error(error);
@@ -37,6 +57,8 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const mergedTags = [...tags, ...aiGeneratedTags];
 
     const showGenButton = tags.length === 0;
+    const showStopButton = isLoading;
+    const showInput = !isLoading;
 
     return (
         <AIAnimationWrapper isLoading={isLoading}>
@@ -59,7 +81,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                             Gen tags
                         </Button>
                     )}
-                    {isLoading && (
+                    {showStopButton && (
                         <Button
                             type="button"
                             onPress={() => {
@@ -69,7 +91,28 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                             Stop
                         </Button>
                     )}
-                    {!isLoading && (
+                    {showSaveAndCancelButton && (
+                        <div className="flex-grow flex-row gap-2">
+                            <Button
+                                type="button"
+                                onPress={() => {
+                                    createTagMutation(aiGeneratedTags);
+                                    setShowSaveAndCancelButton(false);
+                                }}
+                            >
+                                Save
+                            </Button>
+                            <Button
+                                type="button"
+                                onPress={() => {
+                                    setShowSaveAndCancelButton(false);
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                        </div>
+                    )}
+                    {showInput && (
                         <Input
                             className="flex-grow"
                             fullWidth={false}
