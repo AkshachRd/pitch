@@ -8,7 +8,7 @@ import { TagInput } from './tag-input';
 
 import { Card as CardType } from '@/types/card';
 import { toTag } from '@/types/tag';
-import { getTags } from '@/queries/get-tags';
+import { getTagsForCard } from '@/queries/get-tags';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
 
 interface GridCardModalProps {
@@ -17,8 +17,8 @@ interface GridCardModalProps {
 
 export function GridCardModal({ card }: GridCardModalProps) {
     const supabase = useSupabaseBrowser();
-    const { data: rawTags = [] } = useQuery(getTags(supabase));
-    const tags = rawTags?.map(toTag) ?? [];
+    const { data: rawTags = [] } = useQuery(getTagsForCard(supabase, card.id));
+    const tags = rawTags?.map((row) => toTag(row.tag)) ?? [];
 
     return (
         <ModalContent>
