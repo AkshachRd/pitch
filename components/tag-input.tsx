@@ -34,6 +34,8 @@ export const TagInput: FC<TagInputProps> = ({ tags }: TagInputProps) => {
     const aiGeneratedTags = parseAIGeneratedTags(completion);
     const mergedTags = [...tags, ...aiGeneratedTags];
 
+    const showGenButton = tags.length === 0;
+
     return (
         <AIAnimationWrapper isLoading={isLoading}>
             <Card className="w-full">
@@ -43,7 +45,7 @@ export const TagInput: FC<TagInputProps> = ({ tags }: TagInputProps) => {
                             {tag.name}
                         </Tag>
                     ))}
-                    {tags.length === 0 && (
+                    {showGenButton && (
                         <Button
                             type="button"
                             onPress={() => {
