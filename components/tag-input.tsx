@@ -51,17 +51,22 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                         <Button
                             type="button"
                             onPress={() => {
-                                if (isLoading) {
-                                    stop();
-
-                                    return;
-                                }
                                 complete(
                                     `card_front_side: ${card.front_side}, card_back_side: ${card.back_side}`,
                                 );
                             }}
                         >
-                            {isLoading ? 'Stop' : 'Gen tags'}
+                            Gen tags
+                        </Button>
+                    )}
+                    {isLoading && (
+                        <Button
+                            type="button"
+                            onPress={() => {
+                                stop();
+                            }}
+                        >
+                            Stop
                         </Button>
                     )}
                     {!isLoading && (
