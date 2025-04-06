@@ -13,6 +13,13 @@ interface TagInputProps {
     tags: TagType[];
 }
 
+const parseAIGeneratedTags = (tags: string): TagType[] => {
+    return tags.split(',').map((tag) => ({
+        name: tag,
+        color: 'default',
+    }));
+};
+
 export const TagInput: FC<TagInputProps> = ({ tags }: TagInputProps) => {
     const { completion, input, setInput, complete, isLoading, stop } = useCompletion({
         api: '/api/tags',
@@ -24,16 +31,18 @@ export const TagInput: FC<TagInputProps> = ({ tags }: TagInputProps) => {
         },
     });
 
+    const aiGeneratedTags = parseAIGeneratedTags(completion);
+    const mergedTags = [...tags, ...aiGeneratedTags];
+
     return (
         <AIAnimationWrapper isLoading={isLoading}>
             <Card className="w-full">
                 <CardBody className="flex-row flex-wrap items-center gap-2">
-                    {completion.length > 0 &&
-                        completion.split(',').map((tag, index) => (
-                            <Tag key={index} color={'default'}>
-                                {tag}
-                            </Tag>
-                        ))}
+                    {mergedTags.map((tag, index) => (
+                        <Tag key={index} color={tag.color}>
+                            {tag.name}
+                        </Tag>
+                    ))}
                     {tags.length === 0 && (
                         <Button
                             type="button"
