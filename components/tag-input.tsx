@@ -10,7 +10,7 @@ import { AIAnimationWrapper } from './ai-animation-wrapper';
 interface TagInputProps {}
 
 export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
-    const { completion, input, setInput, complete, isLoading } = useCompletion({
+    const { completion, input, setInput, complete, isLoading, stop } = useCompletion({
         api: '/api/tags',
         onFinish: (_, response) => {
             console.log('response', response);
@@ -33,10 +33,15 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
                     <Button
                         type="button"
                         onPress={() => {
+                            if (isLoading) {
+                                stop();
+
+                                return;
+                            }
                             complete(`card_front_side: 'Forest', card_back_side: 'Лес'`);
                         }}
                     >
-                        Gen tags
+                        {isLoading ? 'Stop' : 'Gen tags'}
                     </Button>
                     <Input
                         className="flex-grow"
