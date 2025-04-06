@@ -5,14 +5,15 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { Tag } from '@/components/tag';
 import { getTags } from '@/queries/get-tags';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { TagColor } from '@/types/tag';
+import { TagColor, toTag } from '@/types/tag';
 export function TagsList() {
     const supabase = useSupabaseBrowser();
-    const { data: tags = [] } = useQuery(getTags(supabase));
+    const { data: rawTags = [] } = useQuery(getTags(supabase));
+    const tags = rawTags?.map(toTag) ?? [];
 
     return (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {tags?.map((tag) => (
+            {tags.map((tag) => (
                 <div
                     key={tag.name}
                     className="rounded-lg border p-4 transition-colors hover:bg-gray-50"
