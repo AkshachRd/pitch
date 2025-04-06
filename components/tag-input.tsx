@@ -19,6 +19,8 @@ interface TagInputProps {
 }
 
 const parseAIGeneratedTags = (tags: string): TagType[] => {
+    if (!tags) return [];
+
     return tags.split(',').map((tag) => ({
         name: tag,
         color: 'default',
