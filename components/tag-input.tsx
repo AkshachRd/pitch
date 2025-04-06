@@ -41,6 +41,7 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
                     <Input
                         className="flex-grow"
                         fullWidth={false}
+                        placeholder="Enter tags"
                         value={input}
                         onInput={(e) => setInput(e.currentTarget.value)}
                     />
