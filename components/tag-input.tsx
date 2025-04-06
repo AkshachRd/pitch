@@ -3,18 +3,17 @@
 import { Button, Card, CardBody, Input } from '@heroui/react';
 import { useCompletion } from '@ai-sdk/react';
 import { FC } from 'react';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
-import { Tag } from './tag';
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
-import { getTags } from '@/queries/get-tags';
-import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { toTag } from '@/types/tag';
+import { Tag } from '@/components/tag';
+import { Tag as TagType } from '@/types/tag';
 
-interface TagInputProps {}
+interface TagInputProps {
+    tags: TagType[];
+}
 
-export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
+export const TagInput: FC<TagInputProps> = ({ tags }: TagInputProps) => {
     const { completion, input, setInput, complete, isLoading, stop } = useCompletion({
         api: '/api/tags',
         onFinish: (_, response) => {
@@ -24,10 +23,6 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
             console.error(error);
         },
     });
-
-    const supabase = useSupabaseBrowser();
-    const { data: rawTags = [] } = useQuery(getTags(supabase));
-    const tags = rawTags?.map(toTag) ?? [];
 
     return (
         <AIAnimationWrapper isLoading={isLoading}>
@@ -39,19 +34,21 @@ export const TagInput: FC<TagInputProps> = ({}: TagInputProps) => {
                                 {tag}
                             </Tag>
                         ))}
-                    <Button
-                        type="button"
-                        onPress={() => {
-                            if (isLoading) {
-                                stop();
+                    {tags.length === 0 && (
+                        <Button
+                            type="button"
+                            onPress={() => {
+                                if (isLoading) {
+                                    stop();
 
-                                return;
-                            }
-                            complete(`card_front_side: 'Forest', card_back_side: 'Лес'`);
-                        }}
-                    >
-                        {isLoading ? 'Stop' : 'Gen tags'}
-                    </Button>
+                                    return;
+                                }
+                                complete(`card_front_side: 'Forest', card_back_side: 'Лес'`);
+                            }}
+                        >
+                            {isLoading ? 'Stop' : 'Gen tags'}
+                        </Button>
+                    )}
                     {!isLoading && (
                         <Input
                             className="flex-grow"

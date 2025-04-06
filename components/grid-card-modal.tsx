@@ -1,17 +1,25 @@
 'use client';
 
 import { ModalContent, Button, ModalBody, Divider } from '@heroui/react';
+import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { CardContent } from './card-content';
 import { TagInput } from './tag-input';
 
 import { Card as CardType } from '@/types/card';
+import { toTag } from '@/types/tag';
+import { getTags } from '@/queries/get-tags';
+import { useSupabaseBrowser } from '@/utils/supabase/client';
 
 interface GridCardModalProps {
     card: CardType;
 }
 
 export function GridCardModal({ card }: GridCardModalProps) {
+    const supabase = useSupabaseBrowser();
+    const { data: rawTags = [] } = useQuery(getTags(supabase));
+    const tags = rawTags?.map(toTag) ?? [];
+
     return (
         <ModalContent>
             {(onClose) => (
@@ -26,7 +34,7 @@ export function GridCardModal({ card }: GridCardModalProps) {
                         </div>
                         <Divider orientation="vertical" />
                         <div className="flex w-80 flex-col gap-4 p-4">
-                            <TagInput />
+                            <TagInput tags={tags} />
                             <Button color="danger" variant="light" onPress={onClose}>
                                 Close
                             </Button>
