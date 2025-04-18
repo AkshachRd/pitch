@@ -54,6 +54,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
 
             setShowSaveAndCancelButton(false);
         } catch (error) {
+            console.error(error);
             // You might want to show an error toast or notification here
             setShowSaveAndCancelButton(false);
         }

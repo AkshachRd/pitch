@@ -32,11 +32,11 @@ export function GridCardDropdown({ card, onModalOpen }: GridCardDropdownProps) {
         onOpen: onDropdownOpen,
         onClose: onDropdownClose,
     } = useDisclosure();
-    let { hoverProps: cardHoverProps, isHovered: isCardHovered } = useHover({
+    const { hoverProps: cardHoverProps, isHovered: isCardHovered } = useHover({
         onHoverStart: onDropdownOpen,
         onHoverEnd: debounce(onDropdownClose, 300),
     });
-    let { hoverProps: menuHoverProps, isHovered: isMenuHovered } = useHover({});
+    const { hoverProps: menuHoverProps, isHovered: isMenuHovered } = useHover({});
 
     return (
         <Dropdown

@@ -12,7 +12,6 @@ import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query
 import { CloseLogo, ForwardLogo } from './icons';
 
 import { createCard as createCardInSupabase } from '@/queries/create-card';
-import { useCardStore } from '@/store/store';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
 import { Tag } from '@/types/tag';
 
@@ -84,7 +83,6 @@ export const Search = ({ tags }: SearchProps) => {
         }
     }, [isCreating]);
 
-    const addCard = useCardStore((state) => state.addCard);
     const { filter } = useFilterItems();
 
     const onSelectionChange = (key: string | number | null) => {
@@ -104,7 +102,7 @@ export const Search = ({ tags }: SearchProps) => {
         }
 
         setFieldState((prevState) => {
-            let selectedItem = prevState.items.find((option) => option.key === key);
+            const selectedItem = prevState.items.find((option) => option.key === key);
 
             const filteredItems = selectedItem ? filter(items, selectedItem.label) : [];
             const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
