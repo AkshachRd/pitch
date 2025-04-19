@@ -14,7 +14,7 @@ const SearchResult = dynamic(() => import('@/components/Research/SearchResult'))
 const FinalReport = dynamic(() => import('@/components/Research/FinalReport'));
 const History = dynamic(() => import('@/components/History'));
 
-function Home(): JSX.Element {
+function Home(): React.ReactElement {
     const { t } = useTranslation();
     const globalStore = useGlobalStore();
 

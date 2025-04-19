@@ -38,7 +38,7 @@ export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
-}>): JSX.Element {
+}>): React.ReactElement {
     return (
         <html lang="en" dir="auto" suppressHydrationWarning>
             <head>

@@ -30,7 +30,7 @@ const formSchema = z.object({
     requirement: z.string().optional(),
 });
 
-function FinalReport(): JSX.Element {
+function FinalReport(): React.ReactElement {
     const { t } = useTranslation();
     const taskStore = useTaskStore();
     const { status, writeFinalReport } = useDeepResearch();
