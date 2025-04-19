@@ -16,6 +16,10 @@ export const navbarConfig = {
             label: 'tags',
             href: '/tags',
         },
+        {
+            label: 'research',
+            href: '/research',
+        },
     ],
     navMenuItems: [
         {

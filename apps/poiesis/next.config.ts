@@ -30,7 +30,19 @@ const nextConfig: NextConfig = {
     env: {
         NEXT_PUBLIC_VERSION: pkg.version,
     },
+    // Multi-zone configuration
+    assetPrefix: process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3001',
+    basePath: process.env.BASE_PATH || '',
 };
+
+// Multi-zone rewrites configuration
+const multiZoneRewrites = [
+    // Rewrite to sylloge app for root paths
+    {
+        source: '/cards/:path*',
+        destination: 'http://localhost:3000/cards/:path*', // Sylloge app running at port 3000
+    },
+];
 
 if (BUILD_MODE === 'export') {
     nextConfig.output = 'export';
@@ -52,7 +64,7 @@ if (BUILD_MODE === 'export') {
     nextConfig.output = 'standalone';
 } else {
     nextConfig.rewrites = async () => {
-        return [
+        const apiRewrites = [
             {
                 source: '/api/ai/google/:path*',
                 destination: `${GOOGLE_GENERATIVE_AI_API_BASE_URL || API_PROXY_BASE_URL}/:path*`,
@@ -110,6 +122,12 @@ if (BUILD_MODE === 'export') {
                 destination: `${SEARXNG_API_BASE_URL}/:path*`,
             },
         ];
+
+        // Combine API rewrites with multi-zone rewrites
+        return {
+            beforeFiles: multiZoneRewrites,
+            afterFiles: apiRewrites,
+        };
     };
 }
 
