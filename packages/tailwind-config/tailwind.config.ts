@@ -1,8 +1,8 @@
-/* eslint-disable no-undef */
 import { heroui } from '@heroui/theme';
+import type { Config } from 'tailwindcss';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Omit<Config, "content"> = {
     content: [
         './components/**/*.{js,ts,jsx,tsx,mdx}',
         './app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -40,3 +40,5 @@ module.exports = {
     darkMode: 'class',
     plugins: [heroui()],
 };
+
+export default config; 

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type { IconSvgProps } from '../types/icons';
 
-export const Logo: React.FC<IconSvgProps> = ({ size = 36, width, height, ...props }) => (
+export const Logo = ({ size = 36, width, height, ...props }: IconSvgProps): React.ReactNode => (
     <svg fill="none" height={size || height} viewBox="0 0 32 32" width={size || width} {...props}>
         <path
             clipRule="evenodd"
@@ -13,7 +13,7 @@ export const Logo: React.FC<IconSvgProps> = ({ size = 36, width, height, ...prop
     </svg>
 );
 
-export const DiscordIcon: React.FC<IconSvgProps> = ({ size = 24, width, height, ...props }) => {
+export const DiscordIcon = ({ size = 24, width, height, ...props }: IconSvgProps): React.ReactNode => {
     return (
         <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
             <path
@@ -24,7 +24,7 @@ export const DiscordIcon: React.FC<IconSvgProps> = ({ size = 24, width, height, 
     );
 };
 
-export const TwitterIcon: React.FC<IconSvgProps> = ({ size = 24, width, height, ...props }) => {
+export const TwitterIcon = ({ size = 24, width, height, ...props }: IconSvgProps): React.ReactNode => {
     return (
         <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
             <path
@@ -35,7 +35,7 @@ export const TwitterIcon: React.FC<IconSvgProps> = ({ size = 24, width, height, 
     );
 };
 
-export const GithubIcon: React.FC<IconSvgProps> = ({ size = 24, width, height, ...props }) => {
+export const GithubIcon = ({ size = 24, width, height, ...props }: IconSvgProps): React.ReactNode => {
     return (
         <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
             <path
@@ -130,7 +130,7 @@ export const SearchIcon = (props: IconSvgProps) => (
     </svg>
 );
 
-export const NextUILogo: React.FC<IconSvgProps> = (props) => {
+export const NextUILogo = (props: IconSvgProps): React.ReactNode => {
     const { width, height = 40 } = props;
 
     return (
@@ -211,7 +211,7 @@ export const CloseLogo = (props: IconSvgProps) => {
     );
 };
 
-export const AddNoteIcon: React.FC<IconSvgProps> = (props) => {
+export const AddNoteIcon = (props: IconSvgProps): React.ReactNode => {
     return (
         <svg
             aria-hidden="true"
@@ -236,7 +236,7 @@ export const AddNoteIcon: React.FC<IconSvgProps> = (props) => {
     );
 };
 
-export const CopyDocumentIcon: React.FC<IconSvgProps> = (props) => {
+export const CopyDocumentIcon = (props: IconSvgProps): React.ReactNode => {
     return (
         <svg
             aria-hidden="true"
@@ -265,7 +265,7 @@ export const CopyDocumentIcon: React.FC<IconSvgProps> = (props) => {
     );
 };
 
-export const EditDocumentIcon: React.FC<IconSvgProps> = (props) => {
+export const EditDocumentIcon = (props: IconSvgProps): React.ReactNode => {
     return (
         <svg
             aria-hidden="true"
@@ -290,7 +290,7 @@ export const EditDocumentIcon: React.FC<IconSvgProps> = (props) => {
     );
 };
 
-export const DeleteDocumentIcon: React.FC<IconSvgProps> = (props) => {
+export const DeleteDocumentIcon = (props: IconSvgProps): React.ReactNode => {
     return (
         <svg
             aria-hidden="true"

@@ -2,6 +2,7 @@
     "name": "@pitch/sylloge",
     "version": "0.0.1",
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "next dev --turbopack --port 3001",
         "build": "next build",
@@ -38,6 +39,7 @@
     },
     "devDependencies": {
         "@react-types/shared": "3.25.0",
+        "@pitch/tailwind-config": "workspace:*",
         "@pitch/typescript-config": "workspace:*",
         "@pitch/eslint-config": "workspace:*",
         "@types/node": "20.5.7",

@@ -7,15 +7,15 @@ import {
     useDisclosure,
 } from '@heroui/react';
 import { useHover } from 'react-aria';
-
-import { CardContent } from './card-content';
-
 import {
     AddNoteIcon,
     CopyDocumentIcon,
     EditDocumentIcon,
     DeleteDocumentIcon,
-} from '@/components/icons';
+} from '@pitch/ui/icons';
+
+import { CardContent } from './card-content';
+
 import { Card as CardType } from '@/types/card';
 import { debounce } from '@/lib/debounce';
 
@@ -80,7 +80,9 @@ export function GridCardDropdown({ card, onModalOpen }: GridCardDropdownProps) {
                     key="delete"
                     className="text-danger gap-x-0"
                     color="danger"
-                    endContent={<DeleteDocumentIcon className={cn(iconClasses, 'text-danger')} />}
+                    endContent={
+                        <DeleteDocumentIcon {...{ className: cn(iconClasses, 'text-danger') }} />
+                    }
                     textValue="Delete"
                 />
             </DropdownMenu>
