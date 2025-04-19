@@ -1,8 +1,7 @@
-const postcssConfig = {
+/* eslint-disable no-undef */
+module.exports = {
     plugins: {
         tailwindcss: {},
         autoprefixer: {},
     },
 };
-
-export default postcssConfig;

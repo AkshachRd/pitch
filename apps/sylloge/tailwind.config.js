@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 import { heroui } from '@heroui/theme';
 
 /** @type {import('tailwindcss').Config} */
-const tailwindConfig = {
+module.exports = {
     content: [
         './components/**/*.{js,ts,jsx,tsx,mdx}',
         './app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -39,5 +40,3 @@ const tailwindConfig = {
     darkMode: 'class',
     plugins: [heroui()],
 };
-
-export default tailwindConfig;

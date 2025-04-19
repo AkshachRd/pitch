@@ -8,8 +8,7 @@ import { useFilter } from 'react-aria';
 import { useRouter } from 'next/navigation';
 import { Button } from '@heroui/button';
 import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
-
-import { CloseLogo, ForwardLogo } from './icons';
+import { CloseLogo, ForwardLogo } from '@pitch/ui/icons';
 
 import { createCard as createCardInSupabase } from '@/queries/create-card';
 import { useSupabaseBrowser } from '@/utils/supabase/client';

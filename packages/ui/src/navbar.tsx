@@ -7,15 +7,16 @@ import {
     NavbarMenuToggle,
 } from '@heroui/navbar';
 import { Link } from '@heroui/link';
+import { navbarConfig } from '../config/navbar';
+import { ThemeSwitch } from './theme-switch';
+import React from 'react';
 
-import { siteConfig } from '@/config/site';
-import { ThemeSwitch } from '@/components/theme-switch';
 export const Navbar = () => {
     return (
         <NextUINavbar maxWidth="xl" position="sticky">
             <NavbarContent className="hidden basis-1/5 sm:flex sm:basis-full" justify="start">
                 <ul className="ml-2 hidden justify-start gap-4 sm:flex">
-                    {siteConfig.navItems.map((item) => (
+                    {navbarConfig.navItems.map((item) => (
                         <NavbarItem key={item.href}>
                             <Link color="foreground" href={item.href} size="md" underline="always">
                                 {item.label}
@@ -44,11 +45,11 @@ export const Navbar = () => {
 
             <NavbarMenu>
                 <div className="mx-4 mt-2 flex flex-col gap-2">
-                    {siteConfig.navMenuItems.map((item, index) => (
+                    {navbarConfig.navMenuItems.map((item, index) => (
                         <NavbarMenuItem key={`${item}-${index}`}>
                             <Link
                                 color={
-                                    index === siteConfig.navMenuItems.length - 1
+                                    index === navbarConfig.navMenuItems.length - 1
                                         ? 'danger'
                                         : 'foreground'
                                 }
