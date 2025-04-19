@@ -13,7 +13,12 @@ export const Logo = ({ size = 36, width, height, ...props }: IconSvgProps): Reac
     </svg>
 );
 
-export const DiscordIcon = ({ size = 24, width, height, ...props }: IconSvgProps): React.ReactNode => {
+export const DiscordIcon = ({
+    size = 24,
+    width,
+    height,
+    ...props
+}: IconSvgProps): React.ReactNode => {
     return (
         <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
             <path
@@ -24,7 +29,12 @@ export const DiscordIcon = ({ size = 24, width, height, ...props }: IconSvgProps
     );
 };
 
-export const TwitterIcon = ({ size = 24, width, height, ...props }: IconSvgProps): React.ReactNode => {
+export const TwitterIcon = ({
+    size = 24,
+    width,
+    height,
+    ...props
+}: IconSvgProps): React.ReactNode => {
     return (
         <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
             <path
@@ -35,7 +45,12 @@ export const TwitterIcon = ({ size = 24, width, height, ...props }: IconSvgProps
     );
 };
 
-export const GithubIcon = ({ size = 24, width, height, ...props }: IconSvgProps): React.ReactNode => {
+export const GithubIcon = ({
+    size = 24,
+    width,
+    height,
+    ...props
+}: IconSvgProps): React.ReactNode => {
     return (
         <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
             <path

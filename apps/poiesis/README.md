@@ -49,9 +49,9 @@ Deep Research uses a variety of powerful AI models to generate in-depth research
 1. Get [Gemini API Key](https://aistudio.google.com/app/apikey)
 2. One-click deployment of the project, you can choose to deploy to Vercel or Cloudflare
 
-   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fu14app%2Fdeep-research&project-name=deep-research&repository-name=deep-research)
+    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fu14app%2Fdeep-research&project-name=deep-research&repository-name=deep-research)
 
-   Currently the project supports deployment to Cloudflare, but you need to follow [How to deploy to Cloudflare Pages](./docs/How-to-deploy-to-Cloudflare-Pages.md) to do it.
+    Currently the project supports deployment to Cloudflare, but you need to follow [How to deploy to Cloudflare Pages](./docs/How-to-deploy-to-Cloudflare-Pages.md) to do it.
 
 3. Start using
 
@@ -75,28 +75,28 @@ Follow these steps to get Deep Research up and running on your local browser.
 
 1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/u14app/deep-research.git
-   cd deep-research
-   ```
+    ```bash
+    git clone https://github.com/u14app/deep-research.git
+    cd deep-research
+    ```
 
 2. **Install dependencies:**
 
-   ```bash
-   pnpm install  # or npm install or yarn install
-   ```
+    ```bash
+    pnpm install  # or npm install or yarn install
+    ```
 
 3. **Set up Environment Variables:**
 
-   You need to modify the file `env.tpl` to `.env`, or create a `.env` file and write the variables to this file.
+    You need to modify the file `env.tpl` to `.env`, or create a `.env` file and write the variables to this file.
 
 4. **Run the development server:**
 
-   ```bash
-   pnpm dev  # or npm run dev or yarn dev
-   ```
+    ```bash
+    pnpm dev  # or npm run dev or yarn dev
+    ```
 
-   Open your browser and visit [http://localhost:3000](http://localhost:3000) to access Deep Research.
+    Open your browser and visit [http://localhost:3000](http://localhost:3000) to access Deep Research.
 
 ### Custom Model List
 

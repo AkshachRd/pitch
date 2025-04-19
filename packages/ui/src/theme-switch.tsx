@@ -45,10 +45,10 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className, classNames }) => 
             })}
         >
             <VisuallyHidden>
-                <input {...getInputProps() as React.InputHTMLAttributes<HTMLInputElement>} />
+                <input {...(getInputProps() as React.InputHTMLAttributes<HTMLInputElement>)} />
             </VisuallyHidden>
             <div
-                {...getWrapperProps() as React.HTMLAttributes<HTMLDivElement>}
+                {...(getWrapperProps() as React.HTMLAttributes<HTMLDivElement>)}
                 className={slots.wrapper({
                     class: clsx(
                         [
