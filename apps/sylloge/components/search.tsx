@@ -1,14 +1,12 @@
 'use client';
 
-import { Autocomplete, AutocompleteItem, MenuTriggerAction } from '@heroui/autocomplete';
-import { Input } from '@heroui/input';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFilter } from 'react-aria';
 import { useRouter } from 'next/navigation';
-import { Button } from '@heroui/button';
+import { Button, Input, Autocomplete, AutocompleteItem, MenuTriggerAction } from '@heroui/react';
 import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
-import { CloseLogo, ForwardLogo } from '@pitch/ui/icons';
+import { CloseLogo, ForwardLogo } from '@repo/ui/icons';
 
 import { createCard as createCardInSupabase } from '@/queries/create-card';
 import { useSupabaseBrowser } from '@/utils/supabase/client';

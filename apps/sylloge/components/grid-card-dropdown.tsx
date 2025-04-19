@@ -12,7 +12,7 @@ import {
     CopyDocumentIcon,
     EditDocumentIcon,
     DeleteDocumentIcon,
-} from '@pitch/ui/icons';
+} from '@repo/ui/icons';
 
 import { CardContent } from './card-content';
 

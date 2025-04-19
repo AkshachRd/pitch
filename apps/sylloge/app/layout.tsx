@@ -1,7 +1,8 @@
 import '@/styles/globals.css';
+import '@repo/ui/styles.css';
 import { Metadata, Viewport } from 'next';
 import clsx from 'clsx';
-import { Navbar } from '@pitch/ui/navbar';
+import { Navbar } from '@repo/ui/navbar';
 
 import { Providers } from './providers';
 

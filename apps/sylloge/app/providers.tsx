@@ -2,7 +2,7 @@
 
 import type { ThemeProviderProps } from 'next-themes';
 
-import { ThemeProvider as NextThemesProvider } from '@pitch/ui/theme-provider';
+import { ThemeProvider as NextThemesProvider } from '@repo/ui/theme-provider';
 import * as React from 'react';
 import { HeroUIProvider } from '@heroui/system';
 import { useRouter } from 'next/navigation';
