@@ -5,9 +5,12 @@ import I18Provider from "@/components/Provider/I18n";
 import Debugger from "@/components/Debugger";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@repo/ui/navbar";
+import * as React from "react";
 
 import "./globals.css";
 import "@repo/ui/styles.css";
+import clsx from "clsx";
+import { fontSans } from "@repo/fonts";
 
 const HEAD_SCRIPTS = process.env.HEAD_SCRIPTS as string;
 
@@ -42,7 +45,10 @@ export default function RootLayout({
         {HEAD_SCRIPTS ? <Script id="headscript">{HEAD_SCRIPTS}</Script> : null}
         <Debugger />
       </head>
-      <body className="antialiased">
+      <body className={clsx(
+                    'bg-background min-h-screen font-sans antialiased',
+                    fontSans.variable,
+                )}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

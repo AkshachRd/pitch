@@ -2,7 +2,7 @@ import {
     IBM_Plex_Mono as FontMono,
     IBM_Plex_Sans as FontSans,
     IBM_Plex_Serif as FontSerif,
-} from 'next/font/google';
+} from '@next/font/google';
 
 export const fontSans = FontSans({
     subsets: ['latin', 'cyrillic'],
