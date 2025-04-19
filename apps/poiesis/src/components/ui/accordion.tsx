@@ -1,53 +1,64 @@
 'use client';
 
 import * as React from 'react';
-import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { Accordion as HeroAccordion, AccordionItem as HeroAccordionItem } from '@heroui/react';
 import { ChevronDown } from 'lucide-react';
 
 import { cn } from '@/utils/style';
 
-const Accordion = AccordionPrimitive.Root;
+// We're not using forwardRef here since it's causing type issues with HeroUI
+const Accordion = ({ className, ...props }: React.ComponentProps<typeof HeroAccordion>) => (
+    <HeroAccordion className={cn('w-full', className)} {...props} />
+);
+Accordion.displayName = 'Accordion';
 
-const AccordionItem = React.forwardRef<
-    React.ElementRef<typeof AccordionPrimitive.Item>,
-    React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-    <AccordionPrimitive.Item ref={ref} className={cn('border-b', className)} {...props} />
-));
-AccordionItem.displayName = 'AccordionItem';
-
-const AccordionTrigger = React.forwardRef<
-    React.ElementRef<typeof AccordionPrimitive.Trigger>,
-    React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-    <AccordionPrimitive.Header className="flex">
-        <AccordionPrimitive.Trigger
-            ref={ref}
-            className={cn(
-                'flex flex-1 items-center justify-between py-4 text-left text-sm font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
-                className,
-            )}
-            {...props}
-        >
-            {children}
-            <ChevronDown className="text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200" />
-        </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
-));
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
-
-const AccordionContent = React.forwardRef<
-    React.ElementRef<typeof AccordionPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-    <AccordionPrimitive.Content
-        ref={ref}
-        className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
+// We're not using forwardRef here since it's causing type issues with HeroUI
+const AccordionItem = ({
+    className,
+    children,
+    ...props
+}: React.ComponentProps<typeof HeroAccordionItem>) => (
+    <HeroAccordionItem
+        classNames={{
+            base: cn('border-b', className),
+            trigger:
+                'flex flex-1 items-center justify-between py-4 text-left text-sm font-medium transition-all hover:underline',
+            indicator: 'text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200',
+            content: 'overflow-hidden text-sm',
+        }}
+        indicator={<ChevronDown />}
         {...props}
     >
-        <div className={cn('pb-4 pt-0', className)}>{children}</div>
-    </AccordionPrimitive.Content>
-));
-AccordionContent.displayName = AccordionPrimitive.Content.displayName;
+        {children}
+    </HeroAccordionItem>
+);
+AccordionItem.displayName = 'AccordionItem';
+
+// Kept for backward compatibility
+const AccordionTrigger = ({
+    children,
+    className,
+}: {
+    children: React.ReactNode;
+    className?: string;
+}) => (
+    <div
+        className={cn(
+            'flex flex-1 items-center justify-between py-4 text-sm font-medium',
+            className,
+        )}
+    >
+        {children}
+    </div>
+);
+
+// Kept for backward compatibility
+const AccordionContent = ({
+    children,
+    className,
+}: {
+    children: React.ReactNode;
+    className?: string;
+}) => <div className={cn('pb-4 pt-0 text-sm', className)}>{children}</div>;
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
