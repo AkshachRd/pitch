@@ -38,6 +38,7 @@
     },
     "devDependencies": {
         "@react-types/shared": "3.25.0",
+        "@pitch/typescript-config": "workspace:*",
         "@pitch/eslint-config": "workspace:*",
         "@types/node": "20.5.7",
         "@types/react": "18.3.3",
