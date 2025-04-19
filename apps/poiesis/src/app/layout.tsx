@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import ThemeProvider from '@/components/Provider/Theme';
-import I18Provider from '@/components/Provider/I18n';
 import Debugger from '@/components/Debugger';
 import { Toaster } from '@/components/ui/sonner';
 import { Navbar } from '@repo/ui/navbar';
@@ -11,6 +9,7 @@ import './globals.css';
 import '@repo/ui/styles.css';
 import clsx from 'clsx';
 import { fontSans } from '@repo/fonts';
+import { Providers } from '@/components/Providers';
 
 const HEAD_SCRIPTS = process.env.HEAD_SCRIPTS as string;
 
@@ -51,21 +50,14 @@ export default function RootLayout({
                     fontSans.variable,
                 )}
             >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <I18Provider>
-                        <div className="relative flex h-screen flex-col">
-                            <Navbar />
-                            <main className="container mx-auto max-w-7xl flex-grow px-6 pt-16">
-                                {children}
-                            </main>
-                        </div>
-                    </I18Provider>
-                </ThemeProvider>
+                <Providers>
+                    <div className="relative flex h-screen flex-col">
+                        <Navbar />
+                        <main className="container mx-auto max-w-7xl flex-grow px-6 pt-16">
+                            {children}
+                        </main>
+                    </div>
+                </Providers>
                 <Toaster richColors toastOptions={{ duration: 3000 }} />
             </body>
         </html>
