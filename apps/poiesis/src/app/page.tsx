@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "next-themes";
 import { useGlobalStore } from "@/store/global";
 import { useSettingStore } from "@/store/setting";
-import { Navbar } from "@repo/ui/navbar";
 
 const Header = dynamic(() => import("@/components/Header"));
 const Setting = dynamic(() => import("@/components/Setting"));
@@ -30,7 +29,6 @@ function Home(): JSX.Element {
   }, [theme, setTheme]);
   return (
     <div className="max-w-screen-md mx-auto px-4">
-      <Navbar />
       <Header />
       <main>
         <Topic />

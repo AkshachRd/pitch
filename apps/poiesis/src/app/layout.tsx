@@ -4,8 +4,10 @@ import ThemeProvider from "@/components/Provider/Theme";
 import I18Provider from "@/components/Provider/I18n";
 import Debugger from "@/components/Debugger";
 import { Toaster } from "@/components/ui/sonner";
+import { Navbar } from "@repo/ui/navbar";
 
 import "./globals.css";
+import "@repo/ui/styles.css";
 
 const HEAD_SCRIPTS = process.env.HEAD_SCRIPTS as string;
 
@@ -33,7 +35,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): JSX.Element {
   return (
     <html lang="en" dir="auto" suppressHydrationWarning>
       <head>
@@ -47,7 +49,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <I18Provider>{children}</I18Provider>
+          <I18Provider>
+            <div className="relative flex h-screen flex-col">
+              <Navbar />
+              <main className="container mx-auto max-w-7xl flex-grow px-6 pt-16">
+                {children}
+              </main>
+            </div>
+          </I18Provider>
         </ThemeProvider>
         <Toaster richColors toastOptions={{ duration: 3000 }} />
       </body>
