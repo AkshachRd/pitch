@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 import dynamic from "next/dynamic";
 import { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,7 +36,7 @@ const formSchema = z.object({
   requirement: z.string().optional(),
 });
 
-function FinalReport() {
+function FinalReport(): JSX.Element {
   const { t } = useTranslation();
   const taskStore = useTaskStore();
   const { status, writeFinalReport } = useDeepResearch();
