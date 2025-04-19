@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "next-themes";
 import { useGlobalStore } from "@/store/global";
 import { useSettingStore } from "@/store/setting";
+import { Navbar } from "@repo/ui/navbar";
 
 const Header = dynamic(() => import("@/components/Header"));
 const Setting = dynamic(() => import("@/components/Setting"));
@@ -16,7 +17,7 @@ const SearchResult = dynamic(
 const FinalReport = dynamic(() => import("@/components/Research/FinalReport"));
 const History = dynamic(() => import("@/components/History"));
 
-function Home() {
+function Home(): JSX.Element {
   const { t } = useTranslation();
   const globalStore = useGlobalStore();
 
@@ -29,6 +30,7 @@ function Home() {
   }, [theme, setTheme]);
   return (
     <div className="max-w-screen-md mx-auto px-4">
+      <Navbar />
       <Header />
       <main>
         <Topic />
