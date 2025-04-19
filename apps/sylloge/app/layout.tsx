@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     fontSans.variable,
                 )}
             >
-                <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
+                <Providers>
                     <div className="relative flex h-screen flex-col">
                         <Navbar />
                         <main className="container mx-auto max-w-7xl flex-grow px-6 pt-16">
