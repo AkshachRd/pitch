@@ -62,5 +62,6 @@
     },
     "browser": {
         "child_process": false
-    }
+    },
+    "packageManager": "pnpm@10.8.1"
 }
