@@ -14,7 +14,7 @@ async function ResearchPage() {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <div className="flex h-screen w-full max-w-2xl flex-col items-center justify-center">
+            <div className="flex h-screen w-full max-w-2xl flex-col items-center">
                 <Topic />
             </div>
         </HydrationBoundary>

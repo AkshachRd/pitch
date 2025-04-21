@@ -16,7 +16,7 @@ export function Topic() {
     };
 
     return (
-        <section className="flex h-screen w-full flex-col">
+        <section className="flex w-full flex-col rounded-lg border-2 p-4">
             <h2 className="text-lg">1. Research topics</h2>
             <Form className="w-full items-center" onSubmit={onSubmit}>
                 <Textarea
