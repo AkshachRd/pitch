@@ -5,8 +5,9 @@ import { title } from '@/components/primitives';
 import { CardsGrid } from '@/components/cards-grid';
 import { getCards } from '@/queries/get-cards';
 import { getSupabaseServerClient } from '@/utils/supabase/server';
+import { withAuth } from '@/utils/supabase/with-auth';
 
-export default async function CardsPage() {
+async function CardsPage() {
     const queryClient = new QueryClient();
     const supabase = await getSupabaseServerClient();
 
@@ -21,3 +22,5 @@ export default async function CardsPage() {
         </HydrationBoundary>
     );
 }
+
+export default withAuth(CardsPage);

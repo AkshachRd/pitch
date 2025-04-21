@@ -4,8 +4,9 @@ import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { getSupabaseServerClient } from '@/utils/supabase/server';
 import { Learn } from '@/components/learn';
 import { getCards } from '@/queries/get-cards';
+import { withAuth } from '@/utils/supabase/with-auth';
 
-export default async function LearnPage() {
+async function LearnPage() {
     const queryClient = new QueryClient();
     const supabase = await getSupabaseServerClient();
 
@@ -17,3 +18,5 @@ export default async function LearnPage() {
         </HydrationBoundary>
     );
 }
+
+export default withAuth(LearnPage);
