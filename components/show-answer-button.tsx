@@ -36,6 +36,7 @@ export const ShowAnswerButton: FC<ShowAnswerButtonProps> = ({ onPress, disabled,
                     }
                 });
             }, 500);
+
             intervalRef.current = interval;
         }
 
@@ -49,14 +50,10 @@ export const ShowAnswerButton: FC<ShowAnswerButtonProps> = ({ onPress, disabled,
             clearInterval(intervalRef.current);
             onCountDown?.();
         }
-    }, [value])
+    }, [value]);
 
     return (
         <Button
-            isLoading={disabled}
-            spinner={<CircularProgress strokeWidth={4} color='default' aria-label="Loading..." size="sm" value={value} />}
-            disabled={disabled}
-            onPress={onPress}
             disableRipple
             className={clsx(
                 'border-background text-background data-[hover=true]:bg-background data-[hover=true]:text-foreground',
@@ -65,7 +62,19 @@ export const ShowAnswerButton: FC<ShowAnswerButtonProps> = ({ onPress, disabled,
                     dark: theme === 'light',
                 },
             )}
+            disabled={disabled}
+            isLoading={disabled}
+            spinner={
+                <CircularProgress
+                    aria-label="Loading..."
+                    color="default"
+                    size="sm"
+                    strokeWidth={4}
+                    value={value}
+                />
+            }
             variant="bordered"
+            onPress={onPress}
         >
             Show answer
         </Button>

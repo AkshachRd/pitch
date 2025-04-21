@@ -104,7 +104,7 @@ export const Search = ({ tags }: SearchProps) => {
         }
 
         setFieldState((prevState) => {
-            let selectedItem = prevState.items.find((option) => option.key === key);
+            const selectedItem = prevState.items.find((option) => option.key === key);
 
             const filteredItems = selectedItem ? filter(items, selectedItem.label) : [];
             const newItems = filteredItems.length > 0 ? filteredItems : [createItem];

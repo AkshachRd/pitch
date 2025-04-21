@@ -56,15 +56,15 @@ export const CardStack: FC<CardStackProps> = ({
                 {cards.length > 0 && (
                     <AnimatedCard
                         key={cards[0].id}
-                        onDrag={onDrag}
                         className="absolute top-0 z-10"
                         delay={0}
                         footerContent={cards[0].back_side}
                         headerContent={cards[0].front_side}
                         isDraggable={true}
-                        scale={1}
-                        onDragEnd={onDragEnd}
                         revealBack={revealBack}
+                        scale={1}
+                        onDrag={onDrag}
+                        onDragEnd={onDragEnd}
                     />
                 )}
             </AnimatePresence>
