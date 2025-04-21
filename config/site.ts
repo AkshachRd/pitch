@@ -16,6 +16,10 @@ export const siteConfig = {
             label: 'learn',
             href: '/learn',
         },
+        {
+            label: 'research',
+            href: '/research',
+        },
     ],
     navMenuItems: [
         {
@@ -33,6 +37,10 @@ export const siteConfig = {
         {
             label: 'learn',
             href: '/learn',
+        },
+        {
+            label: 'research',
+            href: '/research',
         },
         {
             label: 'settings',

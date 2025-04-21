@@ -1,4 +1,4 @@
-export default function ResearchLayout({ children }: { children: React.ReactNode }) {
+export default function LearnLayout({ children }: { children: React.ReactNode }) {
     return (
         <section className="flex h-full flex-col items-center justify-center gap-4 py-8 md:py-10">
             {children}
