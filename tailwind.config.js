@@ -28,7 +28,7 @@ export default {
                 },
                 'fade-in': {
                     '0%': { transform: 'scale(0.85)' },
-                    '100%': { transform: 'scale(0.9)' },
+                    '100%': { transform: 'scale(1)' },
                 },
             },
             animation: {
