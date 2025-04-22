@@ -2,6 +2,7 @@
 
 import { Form, Button, Textarea } from '@heroui/react';
 import React from 'react';
+
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
 export function Topic() {
@@ -17,7 +18,7 @@ export function Topic() {
 
     return (
         <AIAnimationWrapper className="flex w-full flex-col" isLoading={true}>
-            <section className="z-10 flex w-full flex-col rounded-lg border-2 bg-background p-4">
+            <section className="z-10 flex w-full flex-col rounded-lg bg-background p-4">
                 <h2 className="text-lg">1. Research topics</h2>
                 <Form className="w-full items-center" onSubmit={onSubmit}>
                     <Textarea
@@ -25,8 +26,8 @@ export function Topic() {
                         label="Research Topics"
                         labelPlacement="outside"
                         name="topic"
-                        rows={3}
                         placeholder="Any topic you want to research"
+                        rows={3}
                     />
                     <Button fullWidth type="submit">
                         Start thinking
