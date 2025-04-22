@@ -30,7 +30,7 @@ export const useGenerateTags = (): UseGenerateTagsReturn => {
 
     const { completion, input, setInput, complete, isLoading, stop, setCompletion } = useCompletion(
         {
-            api: '/api/tags',
+            api: '/api/ai/tags',
             onFinish: () => {
                 setShowSaveAndCancelButton(true);
             },
