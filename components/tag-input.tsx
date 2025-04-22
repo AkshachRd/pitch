@@ -1,8 +1,7 @@
 'use client';
 
 import { Button, Card, CardBody, Input } from '@heroui/react';
-import { useCompletion } from '@ai-sdk/react';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
@@ -10,35 +9,27 @@ import { Tag } from '@/components/tag';
 import { Tag as TagType } from '@/types/tag';
 import { Card as CardType } from '@/types/card';
 import { useCreateTagsMutation } from '@/hooks/use-create-tags-mutation';
+import { useGenerateTags } from '@/hooks/use-generate-tags';
 
 interface TagInputProps {
     tags: TagType[];
     card: CardType;
 }
 
-const parseAIGeneratedTags = (tags: string): TagType[] => {
-    if (!tags) return [];
-
-    return tags.split(',').map((tag) => ({
-        name: tag,
-        color: 'default',
-    }));
-};
-
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
-    const [showSaveAndCancelButton, setShowSaveAndCancelButton] = useState(false);
     const { mutate: createTags, isPending: isCreatingTags } = useCreateTagsMutation();
+    const {
+        input,
+        setInput,
+        generateTags,
+        isLoading,
+        stopGeneration,
+        aiGeneratedTags,
+        clearCompletion,
+        showSaveAndCancelButton,
+        setShowSaveAndCancelButton,
+    } = useGenerateTags();
 
-    const { completion, input, setInput, complete, isLoading, stop, setCompletion } = useCompletion(
-        {
-            api: '/api/tags',
-            onFinish: () => {
-                setShowSaveAndCancelButton(true);
-            },
-        },
-    );
-
-    const aiGeneratedTags = parseAIGeneratedTags(completion);
     const mergedTags = [...tags, ...aiGeneratedTags];
 
     const showGenButton = mergedTags.length === 0 && !isLoading;
@@ -69,24 +60,12 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                         </Tag>
                     ))}
                     {showGenButton && (
-                        <Button
-                            type="button"
-                            onPress={() => {
-                                complete(
-                                    `card_front_side: ${card.front_side}, card_back_side: ${card.back_side}`,
-                                );
-                            }}
-                        >
+                        <Button type="button" onPress={() => generateTags(card)}>
                             Gen tags
                         </Button>
                     )}
                     {showStopButton && (
-                        <Button
-                            type="button"
-                            onPress={() => {
-                                stop();
-                            }}
-                        >
+                        <Button type="button" onPress={stopGeneration}>
                             Stop
                         </Button>
                     )}
@@ -98,7 +77,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                             <Button
                                 type="button"
                                 onPress={() => {
-                                    setCompletion('');
+                                    clearCompletion();
                                     setShowSaveAndCancelButton(false);
                                 }}
                             >
