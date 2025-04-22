@@ -1,23 +1,34 @@
 'use client';
 
 import { Form, Button, Textarea } from '@heroui/react';
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
-export function Topic() {
-    const [submitted, setSubmitted] = React.useState(null);
+import { useTaskStore } from '@/store/task';
+import { useDeepResearch } from '@/hooks/use-deep-research';
 
-    const onSubmit = (e) => {
+export function Topic() {
+    const [isThinking, setIsThinking] = useState<boolean>(false);
+    const { askQuestions } = useDeepResearch();
+    const { setQuestion, questions } = useTaskStore.getState();
+
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const data = Object.fromEntries(new FormData(e.currentTarget));
 
-        setSubmitted(data);
+        try {
+            setIsThinking(true);
+            setQuestion(data.topic as string);
+            await askQuestions();
+        } finally {
+            setIsThinking(false);
+        }
     };
 
     return (
-        <AIAnimationWrapper className="flex w-full flex-col" isLoading={true}>
+        <AIAnimationWrapper className="flex w-full flex-col" isLoading={isThinking}>
             <section className="z-10 flex w-full flex-col rounded-lg bg-background p-4">
                 <h2 className="text-lg">1. Research topics</h2>
                 <Form className="w-full items-center" onSubmit={onSubmit}>
@@ -32,9 +43,9 @@ export function Topic() {
                     <Button fullWidth type="submit">
                         Start thinking
                     </Button>
-                    {submitted && (
+                    {questions && (
                         <div className="text-small text-default-500">
-                            You submitted: <code>{JSON.stringify(submitted)}</code>
+                            You submitted: <code>{questions}</code>
                         </div>
                     )}
                 </Form>

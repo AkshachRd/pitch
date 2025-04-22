@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { streamText, smoothStream } from 'ai';
 import { addToast } from '@heroui/react';
+import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 
-import useModelProvider from '@/hooks/useAiProvider';
 import { useTaskStore } from '@/store/task';
-import { useSettingStore } from '@/store/setting';
-import { getSystemPrompt, generateQuestionsPrompt } from '@/utils/deep-research';
+import { getSystemPrompt, generateQuestionsPrompt } from '@/utils/prompts/prompts';
 import { parseError } from '@/utils/error';
 
 function getResponseLanguagePrompt(lang: string) {
@@ -45,21 +44,27 @@ function handleError(error: unknown) {
     });
 }
 
+const openrouterApiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
+
+if (!openrouterApiKey) {
+    throw new Error('OPENROUTER_API_KEY environment variable is not set');
+}
+
+const openrouter = createOpenRouter({ apiKey: openrouterApiKey });
+const model = openrouter('deepseek/deepseek-r1:free');
+
 export function useDeepResearch() {
     const taskStore = useTaskStore();
-    const { createProvider, getModel } = useModelProvider();
     const [status, setStatus] = useState<string>('');
 
     async function askQuestions() {
-        const { language } = useSettingStore.getState();
         const { question } = useTaskStore.getState();
-        const { thinkingModel } = getModel();
 
         setStatus('Thinking...');
         const result = streamText({
-            model: createProvider(thinkingModel),
+            model,
             system: getSystemPrompt(),
-            prompt: [generateQuestionsPrompt(question), getResponseLanguagePrompt(language)].join(
+            prompt: [generateQuestionsPrompt(question), getResponseLanguagePrompt('english')].join(
                 '\n\n',
             ),
             experimental_transform: smoothTextStream(),
