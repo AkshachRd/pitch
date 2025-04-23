@@ -1,5 +1,4 @@
-'use server';
-
+import 'server-only';
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 
 const openrouterApiKey = process.env.OPENROUTER_API_KEY;
@@ -9,4 +8,5 @@ if (!openrouterApiKey) {
 }
 
 const openrouter = createOpenRouter({ apiKey: openrouterApiKey });
+
 export const thinkingModel = openrouter('deepseek/deepseek-r1:free');

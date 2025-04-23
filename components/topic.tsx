@@ -1,7 +1,7 @@
 'use client';
 
 import { Form, Button, Textarea } from '@heroui/react';
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
@@ -9,7 +9,8 @@ import { useTaskStore } from '@/store/task';
 import { useDeepResearch } from '@/hooks/use-deep-research';
 
 export function Topic() {
-    const { askQuestions, isThinking } = useDeepResearch();
+    const { askQuestions } = useDeepResearch();
+    const [isThinking, setIsThinking] = useState(false);
     const { setQuestion, questions } = useTaskStore.getState();
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -17,8 +18,13 @@ export function Topic() {
 
         const data = Object.fromEntries(new FormData(e.currentTarget));
 
-        setQuestion(data.topic as string);
-        await askQuestions();
+        try {
+            setIsThinking(true);
+            setQuestion(data.topic as string);
+            await askQuestions();
+        } finally {
+            setIsThinking(false);
+        }
     };
 
     return (
