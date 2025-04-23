@@ -1,10 +1,8 @@
-import { useState } from 'react';
-import { streamText, smoothStream } from 'ai';
-import { addToast } from '@heroui/react';
-import { createOpenRouter } from '@openrouter/ai-sdk-provider';
-
+import { useEffect, useState } from 'react';
 import { useTaskStore } from '@/store/task';
-import { getSystemPrompt, generateQuestionsPrompt } from '@/utils/prompts/prompts';
+import { generateQuestionsPrompt } from '@/utils/prompts/prompts';
+import { useCompletion } from '@ai-sdk/react';
+import { addToast } from '@heroui/react';
 import { parseError } from '@/utils/error';
 
 function getResponseLanguagePrompt(lang: string) {
@@ -27,14 +25,7 @@ function removeJsonMarkdown(text: string) {
     return text.trim();
 }
 
-function smoothTextStream() {
-    return smoothStream({
-        chunking: 'word',
-        delayInMs: 0,
-    });
-}
-
-function handleError(error: unknown) {
+export function handleError(error: unknown) {
     const errorMessage = parseError(error);
 
     addToast({
@@ -44,42 +35,35 @@ function handleError(error: unknown) {
     });
 }
 
-const openrouterApiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
-
-if (!openrouterApiKey) {
-    throw new Error('OPENROUTER_API_KEY environment variable is not set');
-}
-
-const openrouter = createOpenRouter({ apiKey: openrouterApiKey });
-const model = openrouter('deepseek/deepseek-r1:free');
-
 export function useDeepResearch() {
     const taskStore = useTaskStore();
     const [status, setStatus] = useState<string>('');
+    const { completion, complete, isLoading } = useCompletion({
+        api: '/api/ai/questions',
+        onError: (error) => {
+            handleError(error);
+        },
+    });
+
+    useEffect(() => {
+        taskStore.updateQuestions(completion);
+    }, [completion]);
 
     async function askQuestions() {
         const { question } = useTaskStore.getState();
 
         setStatus('Thinking...');
-        const result = streamText({
-            model,
-            system: getSystemPrompt(),
-            prompt: [generateQuestionsPrompt(question), getResponseLanguagePrompt('english')].join(
-                '\n\n',
-            ),
-            experimental_transform: smoothTextStream(),
-            onError: handleError,
-        });
-        let content = '';
+        const prompt = [
+            generateQuestionsPrompt(question),
+            getResponseLanguagePrompt('english'),
+        ].join('\n\n');
 
         taskStore.setQuestion(question);
-        for await (const textPart of result.textStream) {
-            content += textPart;
-            taskStore.updateQuestions(content);
-        }
+        await complete(prompt);
     }
 
     return {
+        isThinking: isLoading,
         status,
         askQuestions,
     };
