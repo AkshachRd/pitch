@@ -4,14 +4,12 @@ import { Tab, Tabs } from '@heroui/react';
 
 import { CardsList } from './cards-list';
 
-import { Tag as TagType } from '@/types/tag';
 import { Tag } from '@/components/tag';
+import { useTagsQuery } from '@/hooks/use-tags-query';
 
-type HomeContentProps = {
-    tags: TagType[];
-};
+export const HomeContent = () => {
+    const tags = useTagsQuery();
 
-export const HomeContent = ({ tags }: HomeContentProps) => {
     return (
         <Tabs aria-label="Options" variant="underlined">
             <Tab key="cards" title="cards">

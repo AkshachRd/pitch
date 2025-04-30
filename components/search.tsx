@@ -14,7 +14,7 @@ import { CloseLogo, ForwardLogo } from './icons';
 import { createCard as createCardInSupabase } from '@/queries/create-card';
 import { useCardStore } from '@/store/store';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { Tag } from '@/types/tag';
+import { useTagsQuery } from '@/hooks/use-tags-query';
 
 const useFilterItems = () => {
     const { startsWith } = useFilter({ sensitivity: 'base' });
@@ -51,17 +51,14 @@ type FieldState = {
     items: Item[];
 };
 
-type SearchProps = {
-    tags: Tag[];
-};
-
-export const Search = ({ tags }: SearchProps) => {
+export const Search = () => {
     const supabase = useSupabaseBrowser();
     const { mutate } = useInsertMutation(createCardInSupabase(supabase), ['id'], null, {
         onSuccess: () => {
             router.push('/cards');
         },
     });
+    const tags = useTagsQuery();
     const items = tags.map<Item>((tag) => ({
         key: `tag-${tag.name}`,
         type: 'tag',

@@ -1,7 +1,9 @@
 import { TypedSupabaseClient } from '@/utils/supabase/types';
 
-export function getTags(client: TypedSupabaseClient) {
-    return client.from('tag').select().throwOnError();
+export async function getTags(client: TypedSupabaseClient) {
+    const { data } = await client.from('tag').select().throwOnError();
+
+    return data;
 }
 
 export function getTagsForCard(client: TypedSupabaseClient, cardId: number) {
