@@ -1,19 +1,12 @@
 'use client';
 
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
-
 import { CardItem } from '@/components/card-item';
-import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { getCardsWithTags } from '@/queries/get-cards';
 import { useTagsStore } from '@/store/store';
-import { toCardWithTags } from '@/types/card';
+import { useCardsWithTagsQuery } from '@/hooks/use-cards-with-tags-query';
 
 export function CardsList() {
-    const supabase = useSupabaseBrowser();
-    const { data: rawCards = [] } = useQuery(getCardsWithTags(supabase));
+    const cards = useCardsWithTagsQuery();
     const { selectedTags } = useTagsStore();
-
-    const cards = rawCards ? rawCards.map(toCardWithTags) : [];
 
     const filteredCards =
         selectedTags.length > 0

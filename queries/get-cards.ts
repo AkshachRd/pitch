@@ -4,8 +4,8 @@ export function getCards(client: TypedSupabaseClient) {
     return client.from('card').select().throwOnError();
 }
 
-export function getCardsWithTags(client: TypedSupabaseClient) {
-    return client
+export async function getCardsWithTags(client: TypedSupabaseClient) {
+    const { data } = await client
         .from('card')
         .select(
             `
@@ -20,4 +20,6 @@ export function getCardsWithTags(client: TypedSupabaseClient) {
         `,
         )
         .throwOnError();
+
+    return data;
 }
