@@ -1,24 +1,18 @@
 'use client';
 
 import { ModalContent, Button, ModalBody, Divider } from '@heroui/react';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { CardContent } from './card-content';
 import { TagInput } from './tag-input';
 
 import { Card as CardType } from '@/types/card';
-import { toTag } from '@/types/tag';
-import { getTagsForCard } from '@/queries/get-tags';
-import { useSupabaseBrowser } from '@/utils/supabase/client';
-
+import { useTagsByCardQuery } from '@/hooks/use-tags-by-card-query';
 interface CardItemModalProps {
     card: CardType;
 }
 
 export function CardItemModal({ card }: CardItemModalProps) {
-    const supabase = useSupabaseBrowser();
-    const { data: rawTags = [] } = useQuery(getTagsForCard(supabase, card.id));
-    const tags = rawTags?.map((row) => toTag(row.tag)) ?? [];
+    const tags = useTagsByCardQuery(card.id);
 
     return (
         <ModalContent>

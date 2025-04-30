@@ -6,10 +6,12 @@ export async function getTags(client: TypedSupabaseClient) {
     return data;
 }
 
-export function getTagsForCard(client: TypedSupabaseClient, cardId: number) {
-    return client
+export async function getTagsByCard(client: TypedSupabaseClient, cardId: number) {
+    const { data } = await client
         .from('card_has_tag')
         .select('id_tag, tag(*)')
         .eq('id_card', cardId)
         .throwOnError();
+
+    return data;
 }
