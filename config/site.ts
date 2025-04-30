@@ -9,12 +9,12 @@ export const siteConfig = {
             href: '/',
         },
         {
-            label: 'learn',
-            href: '/learn',
-        },
-        {
             label: 'research',
             href: '/research',
+        },
+        {
+            label: 'learn',
+            href: '/learn',
         },
     ],
     navMenuItems: [
@@ -27,12 +27,12 @@ export const siteConfig = {
             href: '/home',
         },
         {
-            label: 'learn',
-            href: '/learn',
-        },
-        {
             label: 'research',
             href: '/research',
+        },
+        {
+            label: 'learn',
+            href: '/learn',
         },
         {
             label: 'settings',
