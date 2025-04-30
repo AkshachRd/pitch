@@ -23,7 +23,9 @@ export const CardContent: FC<CardContentProps> = ({
             <CardHeader className="h-24 justify-center text-xl">{headerContent}</CardHeader>
             <Divider />
             <CardFooter className="h-24 justify-center text-xl">
-                <Spoiler hidden={!revealBack}>{footerContent}</Spoiler>
+                <Spoiler fps={16} hidden={!revealBack}>
+                    {footerContent}
+                </Spoiler>
             </CardFooter>
         </Card>
     );
