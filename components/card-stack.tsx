@@ -7,7 +7,6 @@ import clsx from 'clsx';
 import { AnimatedCard } from './animated-card';
 
 import { Card } from '@/types/card';
-import { fontSerif } from '@/config/fonts';
 
 export interface CardStackProps {
     className?: string;
@@ -27,13 +26,7 @@ export const CardStack: FC<CardStackProps> = ({
     exitDirection,
 }) => {
     return (
-        <div
-            className={clsx(
-                className,
-                'relative h-[193px] w-[400px] font-serif',
-                fontSerif.variable,
-            )}
-        >
+        <div className={clsx('relative h-[193px] w-[400px]', className)}>
             {cards.length > 2 && (
                 <AnimatedCard
                     key={cards[2].id}
