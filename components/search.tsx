@@ -209,6 +209,7 @@ export const Search = () => {
                 <Autocomplete
                     fullWidth
                     allowsCustomValue={true}
+                    aria-label="Search and create cards"
                     classNames={{ selectorButton: 'hidden' }}
                     inputProps={{ classNames: { inputWrapper: 'bg-background z-10' } }}
                     inputValue={fieldState.inputValue}
