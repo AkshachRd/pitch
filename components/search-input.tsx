@@ -1,101 +1,40 @@
 'use client';
 
-import { Autocomplete, AutocompleteItem, MenuTriggerAction } from '@heroui/autocomplete';
-import { Input } from '@heroui/input';
-import React, { useCallback, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useFilter } from 'react-aria';
+import type { Item } from '@/hooks/use-search';
+
+import { Autocomplete, AutocompleteItem } from '@heroui/autocomplete';
+import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { Button } from '@heroui/button';
 import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
+import { useCallback, useState } from 'react';
 
-import { CloseLogo, ForwardLogo } from './icons';
+import { CardCreationForm } from './card-creation-form';
 
-import { createCard as createCardInSupabase } from '@/queries/create-card';
-import { useCardStore } from '@/store/store';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
 import { useTagsQuery } from '@/hooks/use-tags-query';
 import { useTagsStore } from '@/store/store';
+import { useSearch } from '@/hooks/use-search';
+import { createCard as createCardInSupabase } from '@/queries/create-card';
 import { Tag } from '@/types/tag';
-
-const useFilterItems = () => {
-    const { startsWith } = useFilter({ sensitivity: 'base' });
-
-    const filter = useCallback(
-        (items: Item[], selectedLabel: string) => {
-            return items.filter((item) =>
-                item.label.split('/').some((lablePart) => startsWith(lablePart, selectedLabel)),
-            );
-        },
-        [startsWith],
-    );
-
-    return {
-        filter,
-    };
-};
-
-type Item = {
-    key: string;
-    type: string;
-    label: string;
-};
-
-const createItem: Item = {
-    type: 'create',
-    label: 'Create card',
-    key: 'create',
-};
-
-type FieldState = {
-    selectedKey: string | number | null;
-    inputValue: string;
-    items: Item[];
-};
 
 export const SearchInput = () => {
     const supabase = useSupabaseBrowser();
+    const router = useRouter();
     const { mutate } = useInsertMutation(createCardInSupabase(supabase), ['id'], null, {
         onSuccess: () => {
             router.push('/cards');
         },
     });
+
     const tags = useTagsQuery();
     const { selectedTags, addTag, removeTag } = useTagsStore();
-    const items = tags
-        .filter((tag) => !selectedTags.some((t) => t.id === tag.id))
-        .map<Item>((tag) => ({
-            key: tag.id.toString(),
-            type: 'tag',
-            label: tag.name,
-        }));
+    const [isCreating, setIsCreating] = useState(false);
+    const [items, setItems] = useState<Item[]>([]);
 
-    const [fieldState, setFieldState] = React.useState<FieldState>({
-        selectedKey: '',
-        inputValue: '',
-        items,
-    });
-    const [backSide, setBackSide] = React.useState('');
-    const [isCreating, setIsCreating] = React.useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const router = useRouter();
-
-    useEffect(() => {
-        if (isCreating) {
-            inputRef.current?.focus();
-        }
-    }, [isCreating]);
-
-    useEffect(() => {
-        console.log('Debug info:', {
-            inputValue: fieldState.inputValue,
-            selectedKey: fieldState.selectedKey,
-            itemsCount: fieldState.items.map((item) => item.label).length,
-        });
-    }, [fieldState]);
-
-    const addCard = useCardStore((state) => state.addCard);
-    const { filter } = useFilterItems();
+    const { fieldState, availableItems, onInputChange, onSelectionChange } = useSearch(
+        tags,
+        selectedTags,
+    );
 
     const handleTagSelection = useCallback(
         (tag: Tag) => {
@@ -108,118 +47,52 @@ export const SearchInput = () => {
         [selectedTags, addTag, removeTag],
     );
 
-    const onSelectionChange = useCallback(
+    const handleSelectionChange = useCallback(
         (key: string | number | null) => {
-            if (key === null) {
-                return;
-            }
+            const { shouldCreate, items: newItems } = onSelectionChange(key);
 
-            if (key === 'create') {
-                setFieldState((prevState) => ({
-                    inputValue: prevState.inputValue,
-                    selectedKey: key,
-                    items: [],
-                }));
+            setItems(newItems);
+
+            if (shouldCreate) {
                 setIsCreating(true);
+            } else if (key !== null) {
+                const selectedItem = availableItems.find((option) => option.key === key);
 
-                return;
-            }
+                if (selectedItem?.type === 'tag') {
+                    const tag = tags.find((t) => t.name === selectedItem.label);
 
-            const selectedItem = fieldState.items.find((option) => option.key === key);
-
-            if (!selectedItem) return;
-
-            if (selectedItem.type === 'tag') {
-                const tag = tags.find((t) => t.name === selectedItem.label);
-
-                if (tag) {
-                    handleTagSelection(tag);
+                    if (tag) {
+                        handleTagSelection(tag);
+                    }
                 }
             }
-
-            const filteredItems = filter(items, selectedItem.label);
-            const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
-
-            setFieldState((prevState) => ({
-                inputValue: selectedItem.label || '',
-                selectedKey: key,
-                items: newItems,
-            }));
         },
-        [fieldState.items, filter, handleTagSelection, items, tags],
+        [availableItems, handleTagSelection, onSelectionChange, tags],
     );
 
-    const onInputChange = (value: string) => {
-        if (isCreating) {
-            setFieldState((prevState) => ({
-                inputValue: value,
-                selectedKey: prevState.selectedKey,
-                items: prevState.items,
-            }));
+    const handleInputChange = useCallback(
+        (value: string) => {
+            const newItems = onInputChange(value);
 
-            return;
-        }
+            setItems(newItems);
+        },
+        [onInputChange],
+    );
 
-        const filteredItems = filter(items, value);
-        const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
-
-        setFieldState((prevState) => ({
-            inputValue: value,
-            selectedKey: value === '' ? null : prevState.selectedKey,
-            items: newItems,
-        }));
-    };
-
-    const onOpenChange = (isOpen: boolean, menuTrigger: MenuTriggerAction) => {
-        if (menuTrigger === 'manual') {
-            if (isOpen && !isCreating) {
-                setFieldState((prevState) => ({
-                    inputValue: prevState.inputValue,
-                    selectedKey: prevState.selectedKey,
-                    items: items,
-                }));
-            } else if (!isOpen) {
-                // Preserve the state when menu closes
-                setFieldState((prevState) => ({
-                    inputValue: prevState.inputValue,
-                    selectedKey: prevState.selectedKey,
-                    items: prevState.items,
-                }));
-            }
-        }
-    };
-
-    const cancelCreatingCard = () => {
-        setIsCreating(false);
-        setFieldState((prevState) => ({ ...prevState, selectedKey: '' }));
-    };
-
-    const createCard = () => {
-        mutate([{ front_side: fieldState.inputValue, back_side: backSide }], {
-            onError: (error) => {
-                console.error('Error creating card:', error);
-            },
-        });
-    };
+    const handleCreateCard = useCallback(
+        (backSide: string) => {
+            mutate([{ front_side: fieldState.inputValue, back_side: backSide }], {
+                onError: (error) => {
+                    console.error('Error creating card:', error);
+                },
+            });
+        },
+        [fieldState.inputValue, mutate],
+    );
 
     return (
         <div className="flex w-96 flex-col">
             <div className="relative">
-                <AnimatePresence>
-                    {isCreating && (
-                        <motion.div
-                            animate={{ x: 0 }}
-                            className="absolute end-full-0.5 top-0"
-                            exit={{ x: '100%' }}
-                            initial={{ x: '100%' }}
-                            transition={{ type: 'tween' }}
-                        >
-                            <Button isIconOnly radius="full" size="md" onPress={cancelCreatingCard}>
-                                <CloseLogo />
-                            </Button>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
                 <Autocomplete
                     fullWidth
                     allowsCustomValue={true}
@@ -228,14 +101,13 @@ export const SearchInput = () => {
                     inputProps={{ classNames: { inputWrapper: 'bg-background z-10' } }}
                     inputValue={fieldState.inputValue}
                     isClearable={false}
-                    items={fieldState.items}
+                    items={items}
                     placeholder={isCreating ? 'Front side' : 'Search, create, tag...'}
                     radius="full"
                     selectedKey={fieldState.selectedKey}
                     variant="bordered"
-                    onInputChange={onInputChange}
-                    onOpenChange={onOpenChange}
-                    onSelectionChange={onSelectionChange}
+                    onInputChange={handleInputChange}
+                    onSelectionChange={handleSelectionChange}
                 >
                     {(item) => {
                         if (item.type === 'tag') {
@@ -252,33 +124,11 @@ export const SearchInput = () => {
             </div>
             <AnimatePresence>
                 {isCreating && (
-                    <motion.div
-                        animate={{ y: 0 }}
-                        className="relative"
-                        exit={{ y: '-100%' }}
-                        initial={{ y: '-100%' }}
-                        transition={{ type: 'tween' }}
-                    >
-                        <Input
-                            ref={inputRef}
-                            placeholder="Back side"
-                            radius="full"
-                            variant="bordered"
-                            onValueChange={(value) => setBackSide(value)}
-                        />
-
-                        <motion.div
-                            animate={{ x: 0 }}
-                            className="absolute start-full-0.5 top-0"
-                            exit={{ x: '-100%' }}
-                            initial={{ x: '-100%' }}
-                            transition={{ type: 'tween', delay: 0.2 }}
-                        >
-                            <Button isIconOnly radius="full" size="md" onPress={createCard}>
-                                <ForwardLogo />
-                            </Button>
-                        </motion.div>
-                    </motion.div>
+                    <CardCreationForm
+                        frontSide={fieldState.inputValue}
+                        onCancel={() => setIsCreating(false)}
+                        onCreate={handleCreateCard}
+                    />
                 )}
             </AnimatePresence>
         </div>
