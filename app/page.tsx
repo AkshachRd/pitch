@@ -1,4 +1,3 @@
-import { QueryClient } from '@tanstack/react-query';
 import { dehydrate } from '@tanstack/react-query';
 import { HydrationBoundary } from '@tanstack/react-query';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
@@ -8,6 +7,7 @@ import { Tag as TagType } from '@/types/tag';
 import { HomeContent } from '@/components/home-content';
 import { getCards } from '@/queries/get-cards';
 import { getSupabaseServerClient } from '@/utils/supabase/server';
+import { getQueryClient } from '@/utils/get-query-client';
 
 const tags: TagType[] = [
     { name: 'Technology', color: 'primary' },
@@ -190,7 +190,7 @@ const tags: TagType[] = [
 ];
 
 export default async function HomePage() {
-    const queryClient = new QueryClient();
+    const queryClient = getQueryClient();
     const supabase = await getSupabaseServerClient();
 
     await prefetchQuery(queryClient, getCards(supabase));
