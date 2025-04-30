@@ -4,7 +4,6 @@ import type { Item } from '@/hooks/use-search';
 
 import { Autocomplete, AutocompleteItem } from '@heroui/autocomplete';
 import { AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
 import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
 import { useCallback, useState } from 'react';
 
@@ -19,12 +18,7 @@ import { Tag } from '@/types/tag';
 
 export const SearchInput = () => {
     const supabase = useSupabaseBrowser();
-    const router = useRouter();
-    const { mutate } = useInsertMutation(createCardInSupabase(supabase), ['id'], null, {
-        onSuccess: () => {
-            router.push('/cards');
-        },
-    });
+    const { mutate } = useInsertMutation(createCardInSupabase(supabase), ['id'], null);
 
     const tags = useTagsQuery();
     const { selectedTags, addTag, removeTag } = useTagsStore();
