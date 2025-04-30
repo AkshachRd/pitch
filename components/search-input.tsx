@@ -105,7 +105,7 @@ export const SearchInput = () => {
                     placeholder={isCreating ? 'Front side' : 'Search, create, tag...'}
                     radius="full"
                     selectedKey={fieldState.selectedKey}
-                    variant="bordered"
+                    variant="underlined"
                     onInputChange={handleInputChange}
                     onSelectionChange={handleSelectionChange}
                 >
