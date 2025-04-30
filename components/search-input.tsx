@@ -53,7 +53,7 @@ type FieldState = {
     items: Item[];
 };
 
-export const Search = () => {
+export const SearchInput = () => {
     const supabase = useSupabaseBrowser();
     const { mutate } = useInsertMutation(createCardInSupabase(supabase), ['id'], null, {
         onSuccess: () => {
@@ -83,6 +83,14 @@ export const Search = () => {
             inputRef.current?.focus();
         }
     }, [isCreating]);
+
+    useEffect(() => {
+        console.log('Debug info:', {
+            inputValue: fieldState.inputValue,
+            selectedKey: fieldState.selectedKey,
+            itemsCount: fieldState.items.map((item) => item.label).length,
+        });
+    }, [fieldState]);
 
     const addCard = useCardStore((state) => state.addCard);
     const { filter } = useFilterItems();
@@ -185,11 +193,6 @@ export const Search = () => {
 
     return (
         <div className="flex w-96 flex-col">
-            <div>
-                <p>input value: {fieldState.inputValue}</p>
-                <p>selected key: {fieldState.selectedKey}</p>
-                <p>items: {fieldState.items.map((item) => item.label).length}</p>
-            </div>
             <div className="relative">
                 <AnimatePresence>
                     {isCreating && (
