@@ -15,6 +15,8 @@ import { createCard as createCardInSupabase } from '@/queries/create-card';
 import { useCardStore } from '@/store/store';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
 import { useTagsQuery } from '@/hooks/use-tags-query';
+import { useTagsStore } from '@/store/store';
+import { Tag } from '@/types/tag';
 
 const useFilterItems = () => {
     const { startsWith } = useFilter({ sensitivity: 'base' });
@@ -59,6 +61,7 @@ export const Search = () => {
         },
     });
     const tags = useTagsQuery();
+    const { selectedTags, addTag, removeTag } = useTagsStore();
     const items = tags.map<Item>((tag) => ({
         key: `tag-${tag.name}`,
         type: 'tag',
@@ -84,35 +87,57 @@ export const Search = () => {
     const addCard = useCardStore((state) => state.addCard);
     const { filter } = useFilterItems();
 
-    const onSelectionChange = (key: string | number | null) => {
-        if (key === null) {
-            return;
-        }
+    const handleTagSelection = useCallback(
+        (tag: Tag) => {
+            if (selectedTags.some((t) => t.id === tag.id)) {
+                removeTag(tag);
+            } else {
+                addTag(tag);
+            }
+        },
+        [selectedTags, addTag, removeTag],
+    );
 
-        if (key === 'create') {
-            setFieldState((prevState) => ({
-                inputValue: prevState.inputValue,
-                selectedKey: key,
-                items: [],
-            }));
-            setIsCreating(true);
+    const onSelectionChange = useCallback(
+        (key: string | number | null) => {
+            if (key === null) {
+                return;
+            }
 
-            return;
-        }
+            if (key === 'create') {
+                setFieldState((prevState) => ({
+                    inputValue: prevState.inputValue,
+                    selectedKey: key,
+                    items: [],
+                }));
+                setIsCreating(true);
 
-        setFieldState((prevState) => {
-            const selectedItem = prevState.items.find((option) => option.key === key);
+                return;
+            }
 
-            const filteredItems = selectedItem ? filter(items, selectedItem.label) : [];
+            const selectedItem = fieldState.items.find((option) => option.key === key);
+
+            if (!selectedItem) return;
+
+            if (selectedItem.type === 'tag') {
+                const tag = tags.find((t) => t.name === selectedItem.label);
+
+                if (tag) {
+                    handleTagSelection(tag);
+                }
+            }
+
+            const filteredItems = filter(items, selectedItem.label);
             const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
 
-            return {
-                inputValue: selectedItem?.label || '',
+            setFieldState((prevState) => ({
+                inputValue: selectedItem.label || '',
                 selectedKey: key,
                 items: newItems,
-            };
-        });
-    };
+            }));
+        },
+        [fieldState.items, filter, handleTagSelection, items, tags],
+    );
 
     const onInputChange = (value: string) => {
         if (isCreating) {
