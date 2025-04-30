@@ -19,14 +19,14 @@ import {
 import { Card as CardType } from '@/types/card';
 import { debounce } from '@/lib/debounce';
 
-interface GridCardDropdownProps {
+interface CardItemDropdownProps {
     card: CardType;
     onModalOpen: () => void;
 }
 
 const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
 
-export function GridCardDropdown({ card, onModalOpen }: GridCardDropdownProps) {
+export function CardItemDropdown({ card, onModalOpen }: CardItemDropdownProps) {
     const {
         isOpen: isDropdownOpen,
         onOpen: onDropdownOpen,

@@ -2,7 +2,7 @@
 
 import { Tab, Tabs } from '@heroui/react';
 
-import { CardsGrid } from './cards-grid';
+import { CardsList } from './cards-list';
 
 import { Tag as TagType } from '@/types/tag';
 import { Tag } from '@/components/tag';
@@ -15,7 +15,7 @@ export const HomeContent = ({ tags }: HomeContentProps) => {
     return (
         <Tabs aria-label="Options" variant="underlined">
             <Tab key="cards" title="cards">
-                <CardsGrid />
+                <CardsList />
             </Tab>
             <Tab key="tags" title="tags">
                 <div className="flex flex-wrap justify-center gap-2">

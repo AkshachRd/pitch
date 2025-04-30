@@ -2,24 +2,24 @@
 
 import { useDisclosure, Modal } from '@heroui/react';
 
-import { GridCardModal } from './grid-card-modal';
-import { GridCardDropdown } from './grid-card-dropdown';
+import { CardItemModal } from './card-item-modal';
+import { CardItemDropdown } from './card-item-dropdown';
 
 import { Card as CardType } from '@/types/card';
 
-interface GridCardProps {
+interface CardItemProps {
     card: CardType;
 }
 
-export function GridCard({ card }: GridCardProps) {
+export function CardItem({ card }: CardItemProps) {
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
     return (
         <>
-            <GridCardDropdown card={card} onModalOpen={onModalOpen} />
+            <CardItemDropdown card={card} onModalOpen={onModalOpen} />
 
             <Modal isOpen={isModalOpen} size="5xl" onClose={onModalClose}>
-                <GridCardModal card={card} />
+                <CardItemModal card={card} />
             </Modal>
         </>
     );

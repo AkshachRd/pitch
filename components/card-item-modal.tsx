@@ -11,11 +11,11 @@ import { toTag } from '@/types/tag';
 import { getTagsForCard } from '@/queries/get-tags';
 import { useSupabaseBrowser } from '@/utils/supabase/client';
 
-interface GridCardModalProps {
+interface CardItemModalProps {
     card: CardType;
 }
 
-export function GridCardModal({ card }: GridCardModalProps) {
+export function CardItemModal({ card }: CardItemModalProps) {
     const supabase = useSupabaseBrowser();
     const { data: rawTags = [] } = useQuery(getTagsForCard(supabase, card.id));
     const tags = rawTags?.map((row) => toTag(row.tag)) ?? [];
