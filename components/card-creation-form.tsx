@@ -25,10 +25,10 @@ export const CardCreationForm = ({ frontSide, onCancel, onCreate }: CardCreation
         >
             <div className="relative">
                 <motion.div
-                    animate={{ x: 0 }}
+                    animate={{ x: 0, y: '-100%' }}
                     className="absolute end-full-0.5 top-0"
-                    exit={{ x: '100%' }}
-                    initial={{ x: '100%' }}
+                    exit={{ x: '100%', y: 0 }}
+                    initial={{ x: '100%', y: 0 }}
                     transition={{ type: 'tween' }}
                 >
                     <Button isIconOnly radius="full" size="md" onPress={onCancel}>
