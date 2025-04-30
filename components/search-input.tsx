@@ -62,11 +62,13 @@ export const SearchInput = () => {
     });
     const tags = useTagsQuery();
     const { selectedTags, addTag, removeTag } = useTagsStore();
-    const items = tags.map<Item>((tag) => ({
-        key: `tag-${tag.name}`,
-        type: 'tag',
-        label: tag.name,
-    }));
+    const items = tags
+        .filter((tag) => !selectedTags.some((t) => t.id === tag.id))
+        .map<Item>((tag) => ({
+            key: tag.id.toString(),
+            type: 'tag',
+            label: tag.name,
+        }));
 
     const [fieldState, setFieldState] = React.useState<FieldState>({
         selectedKey: '',
@@ -169,12 +171,21 @@ export const SearchInput = () => {
     };
 
     const onOpenChange = (isOpen: boolean, menuTrigger: MenuTriggerAction) => {
-        if (menuTrigger === 'manual' && isOpen && !isCreating) {
-            setFieldState((prevState) => ({
-                inputValue: prevState.inputValue,
-                selectedKey: prevState.selectedKey,
-                items: items,
-            }));
+        if (menuTrigger === 'manual') {
+            if (isOpen && !isCreating) {
+                setFieldState((prevState) => ({
+                    inputValue: prevState.inputValue,
+                    selectedKey: prevState.selectedKey,
+                    items: items,
+                }));
+            } else if (!isOpen) {
+                // Preserve the state when menu closes
+                setFieldState((prevState) => ({
+                    inputValue: prevState.inputValue,
+                    selectedKey: prevState.selectedKey,
+                    items: prevState.items,
+                }));
+            }
         }
     };
 
