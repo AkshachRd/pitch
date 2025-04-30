@@ -1,6 +1,6 @@
 import { Search } from '@/components/search';
-import { Tag } from '@/components/tag';
 import { Tag as TagType } from '@/types/tag';
+import { HomeContent } from '@/components/home-content';
 
 const tags: TagType[] = [
     { name: 'Technology', color: 'primary' },
@@ -188,12 +188,8 @@ export default function HomePage() {
             <div>
                 <Search tags={tags} />
             </div>
-            <div className="flex flex-wrap justify-center gap-2">
-                {tags.map((tag) => (
-                    <Tag key={tag.name} color={tag.color}>
-                        {tag.name}
-                    </Tag>
-                ))}
+            <div>
+                <HomeContent tags={tags} />
             </div>
         </section>
     );
