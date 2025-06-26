@@ -1,12 +1,15 @@
 import { useCompletion } from '@ai-sdk/react';
 import { useState } from 'react';
-import { Tag as TagType } from '@/types/tag';
-import { Card as CardType } from '@/types/card';
+import { nanoid } from 'nanoid';
 
-export const parseAIGeneratedTags = (tags: string): TagType[] => {
+import { Tag } from '@/models/tag';
+import { Card } from '@/models/card';
+
+export const parseAIGeneratedTags = (tags: string): Tag[] => {
     if (!tags) return [];
 
     return tags.split(',').map((tag) => ({
+        id: nanoid(),
         name: tag,
         color: 'default',
     }));
@@ -16,10 +19,10 @@ interface UseGenerateTagsReturn {
     completion: string;
     input: string;
     setInput: (input: string) => void;
-    generateTags: (card: CardType) => void;
+    generateTags: (card: Card) => void;
     isLoading: boolean;
     stopGeneration: () => void;
-    aiGeneratedTags: TagType[];
+    aiGeneratedTags: Tag[];
     clearCompletion: () => void;
     showSaveAndCancelButton: boolean;
     setShowSaveAndCancelButton: (show: boolean) => void;
@@ -37,8 +40,8 @@ export const useGenerateTags = (): UseGenerateTagsReturn => {
         },
     );
 
-    const generateTags = (card: CardType) => {
-        complete(`card_front_side: ${card.front_side}, card_back_side: ${card.back_side}`);
+    const generateTags = (card: Card) => {
+        complete(`card_front_side: ${card.frontSide}, card_back_side: ${card.backSide}`);
     };
 
     const stopGeneration = () => {

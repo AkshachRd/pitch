@@ -1,7 +1,7 @@
 'use client';
 import { Chip } from '@heroui/chip';
 
-import { TagColor } from '@/types/tag';
+import { TagColor } from '@/models/tag';
 
 type TagProps = {
     color?: TagColor;

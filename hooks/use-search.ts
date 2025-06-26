@@ -1,7 +1,7 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useFilter } from 'react-aria';
 
-import { Tag } from '@/types/tag';
+import { Tag } from '@/models/tag';
 
 export type Item = {
     key: string;

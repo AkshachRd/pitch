@@ -16,11 +16,11 @@ import {
     EditDocumentIcon,
     DeleteDocumentIcon,
 } from '@/components/icons';
-import { Card as CardType } from '@/types/card';
+import { CardWithTags } from '@/types';
 import { debounce } from '@/lib/debounce';
 
 interface CardItemDropdownProps {
-    card: CardType;
+    card: CardWithTags;
     onModalOpen: () => void;
 }
 
@@ -47,8 +47,8 @@ export function CardItemDropdown({ card, onModalOpen }: CardItemDropdownProps) {
             <DropdownTrigger>
                 <button {...cardHoverProps} onClick={onModalOpen}>
                     <CardContent
-                        footerContent={card.back_side}
-                        headerContent={card.front_side}
+                        footerContent={card.backSide}
+                        headerContent={card.frontSide}
                         revealBack={isCardHovered}
                     />
                 </button>

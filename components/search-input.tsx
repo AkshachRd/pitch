@@ -4,24 +4,24 @@ import type { Item } from '@/hooks/use-search';
 
 import { Autocomplete, AutocompleteItem } from '@heroui/autocomplete';
 import { AnimatePresence } from 'framer-motion';
-import { useInsertMutation } from '@supabase-cache-helpers/postgrest-react-query';
 import { useCallback, useState } from 'react';
+import { nanoid } from 'nanoid';
 
 import { CardCreationForm } from './card-creation-form';
 
-import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { useTagsQuery } from '@/hooks/use-tags-query';
-import { useTagsStore } from '@/store/store';
 import { useSearch } from '@/hooks/use-search';
-import { createCard as createCardInSupabase } from '@/queries/create-card';
-import { Tag } from '@/types/tag';
+import { Tag } from '@/models/tag';
+import { useCardStore } from '@/store/cards';
+import { useTagsStore } from '@/store/tags';
 
-export const SearchInput = () => {
-    const supabase = useSupabaseBrowser();
-    const { mutate } = useInsertMutation(createCardInSupabase(supabase), ['id'], null);
+type SearchInputProps = {
+    selectedTags: Tag[];
+    setSelectedTags: (tags: Tag[]) => void;
+};
 
-    const tags = useTagsQuery();
-    const { selectedTags, addTag, removeTag } = useTagsStore();
+export const SearchInput = ({ selectedTags, setSelectedTags }: SearchInputProps) => {
+    const { addCard } = useCardStore();
+    const { tags } = useTagsStore();
     const [isCreating, setIsCreating] = useState(false);
     const [items, setItems] = useState<Item[]>([]);
 
@@ -33,12 +33,12 @@ export const SearchInput = () => {
     const handleTagSelection = useCallback(
         (tag: Tag) => {
             if (selectedTags.some((t) => t.id === tag.id)) {
-                removeTag(tag);
+                setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
             } else {
-                addTag(tag);
+                setSelectedTags([...selectedTags, tag]);
             }
         },
-        [selectedTags, addTag, removeTag],
+        [selectedTags, setSelectedTags],
     );
 
     const handleSelectionChange = useCallback(
@@ -75,13 +75,14 @@ export const SearchInput = () => {
 
     const handleCreateCard = useCallback(
         (backSide: string) => {
-            mutate([{ front_side: fieldState.inputValue, back_side: backSide }], {
-                onError: (error) => {
-                    console.error('Error creating card:', error);
-                },
+            addCard({
+                id: nanoid(),
+                frontSide: fieldState.inputValue,
+                backSide,
+                tagIds: [],
             });
         },
-        [fieldState.inputValue, mutate],
+        [fieldState.inputValue, addCard],
     );
 
     return (

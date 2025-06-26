@@ -6,18 +6,20 @@ import { FC } from 'react';
 import { AIAnimationWrapper } from './ai-animation-wrapper';
 
 import { Tag } from '@/components/tag';
-import { Tag as TagType } from '@/types/tag';
-import { Card as CardType } from '@/types/card';
-import { useCreateTagsMutation } from '@/hooks/use-create-tags-mutation';
+import { Tag as TagType } from '@/models/tag';
+import { CardWithTags } from '@/types';
 import { useGenerateTags } from '@/hooks/use-generate-tags';
+import { useTagsStore } from '@/store/tags';
+import { useCardStore } from '@/store/cards';
 
 interface TagInputProps {
     tags: TagType[];
-    card: CardType;
+    card: CardWithTags;
 }
 
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
-    const { mutate: createTags, isPending: isCreatingTags } = useCreateTagsMutation();
+    const { addTag } = useTagsStore();
+    const { addTagsToCard } = useCardStore();
     const {
         input,
         setInput,
@@ -37,17 +39,13 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const showInput = !isLoading;
 
     const handleSaveTags = async () => {
-        try {
-            await createTags({
-                tags: aiGeneratedTags,
-                cardId: card.id,
-            });
+        aiGeneratedTags.forEach((tag) => {
+            addTag(tag);
+        });
 
-            setShowSaveAndCancelButton(false);
-        } catch (error) {
-            // You might want to show an error toast or notification here
-            setShowSaveAndCancelButton(false);
-        }
+        addTagsToCard(card.id, aiGeneratedTags);
+
+        setShowSaveAndCancelButton(false);
     };
 
     return (
