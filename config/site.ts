@@ -42,10 +42,6 @@ export const siteConfig = {
             label: 'help & feedback',
             href: '/help-feedback',
         },
-        {
-            label: 'logout',
-            href: '/logout',
-        },
     ],
     links: {},
 };
