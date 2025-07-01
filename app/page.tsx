@@ -6,7 +6,7 @@ import { HomeContent } from '@/components/home-content';
 import { SearchBar } from '@/components/search-bar';
 import { Tag } from '@/models/tag';
 
-export default async function HomePage() {
+export default function HomePage() {
     const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
     return (

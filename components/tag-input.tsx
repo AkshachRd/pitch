@@ -32,7 +32,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
         setShowSaveAndCancelButton,
     } = useGenerateTags();
 
-    const mergedTags = [...tags, ...aiGeneratedTags];
+    const mergedTags = showSaveAndCancelButton ? aiGeneratedTags : tags;
 
     const showGenButton = mergedTags.length === 0 && !isLoading;
     const showStopButton = isLoading;

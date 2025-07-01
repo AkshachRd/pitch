@@ -3,21 +3,16 @@
 import { useState } from 'react';
 import { PanInfo } from 'framer-motion';
 import { useKeyboard } from 'react-aria';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { CardStack } from '@/components/card-stack';
 import { Side } from '@/components/side';
 import { ShowAnswerButton } from '@/components/show-answer-button';
-import { useSupabaseBrowser } from '@/utils/supabase/client';
-import { getCards } from '@/queries/get-cards';
+import { useCardStore } from '@/store/cards';
 
 const swipeConfidenceThreshold = 200;
 
 export function Learn() {
-    const supabase = useSupabaseBrowser();
-    // This useQuery could just as well happen in some deeper
-    // child to <Posts>, data will be available immediately either way
-    const { data: cards } = useQuery(getCards(supabase));
+    const { cards } = useCardStore();
     const [exitDirection, setExitDirection] = useState<number>(0);
     const [leftActive, setLeftActive] = useState(false);
     const [rightActive, setRightActive] = useState(false);
