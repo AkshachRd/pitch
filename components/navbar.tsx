@@ -28,9 +28,6 @@ export const Navbar = () => {
             <NavbarContent className="hidden basis-1/5 sm:flex sm:basis-full" justify="end">
                 <NavbarItem className="hidden gap-2 sm:flex">
                     <ThemeSwitch />
-                    <Link color="foreground" href="/signout" size="md" underline="always">
-                        sign out
-                    </Link>
                 </NavbarItem>
             </NavbarContent>
 
