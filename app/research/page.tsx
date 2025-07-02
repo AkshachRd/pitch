@@ -1,1 +1,1 @@
-export { ResearchPage as default } from '@/src/app/research/page';
+export { ResearchPage as default } from '@/pages/research';

@@ -1,1 +1,1 @@
-export { POST } from '@/src/app/api/ai/tags/route';
+export { POST } from '@/features/tag-management/api';

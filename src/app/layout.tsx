@@ -1,12 +1,12 @@
-import '@/styles/globals.css';
+import '@/shared/styles/globals.css';
 import { Metadata, Viewport } from 'next';
 import clsx from 'clsx';
 
 import { Providers } from './providers';
 
-import { siteConfig } from '@/src/config/site';
-import { fontSans } from '@/src/config/fonts';
-import { Navbar } from '@/src/components/navbar';
+import { siteConfig } from '@/shared/config';
+import { fontSans } from '@/shared/config';
+import { Navbar } from '@/widgets/navbar';
 
 export const metadata: Metadata = {
     title: {

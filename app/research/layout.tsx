@@ -1,1 +1,1 @@
-export { ResearchLayout as default } from '@/src/app/research/layout';
+export { ResearchLayout as default } from '@/pages/research';

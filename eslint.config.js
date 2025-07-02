@@ -169,6 +169,76 @@ const config = [
                     'newlines-between': 'always',
                 },
             ],
+            // Запрет прямых импортов из src без FSD слоев
+            'no-restricted-imports': [
+                'error',
+                {
+                    patterns: [
+                        {
+                            group: ['src/*', './src/*', '../src/*', '../../src/*'],
+                            message:
+                                '❌ Прямые импорты из src запрещены! Используйте FSD слои: @/app, @/pages, @/widgets, @/features, @/entities, @/shared',
+                        },
+                        {
+                            group: ['@/src/*'],
+                            message:
+                                '❌ Прямые импорты из src запрещены! Используйте FSD слои: @/app, @/pages, @/widgets, @/features, @/entities, @/shared',
+                        },
+                    ],
+                },
+            ],
+            // Запрет импортов, нарушающих FSD архитектуру
+            'import/no-restricted-paths': [
+                'error',
+                {
+                    zones: [
+                        // Shared не может импортировать из других слоев
+                        {
+                            target: './src/shared/**/*',
+                            from: [
+                                './src/entities/**/*',
+                                './src/features/**/*',
+                                './src/widgets/**/*',
+                                './src/pages/**/*',
+                                './src/app/**/*',
+                            ],
+                            message: '❌ Shared слой не может импортировать из вышестоящих слоев!',
+                        },
+                        // Entities может импортировать только из shared
+                        {
+                            target: './src/entities/**/*',
+                            from: [
+                                './src/features/**/*',
+                                './src/widgets/**/*',
+                                './src/pages/**/*',
+                                './src/app/**/*',
+                            ],
+                            message: '❌ Entities может импортировать только из shared слоя!',
+                        },
+                        // Features может импортировать только из shared и entities
+                        {
+                            target: './src/features/**/*',
+                            from: ['./src/widgets/**/*', './src/pages/**/*', './src/app/**/*'],
+                            message:
+                                '❌ Features может импортировать только из shared и entities слоев!',
+                        },
+                        // Widgets может импортировать только из shared, entities и features
+                        {
+                            target: './src/widgets/**/*',
+                            from: ['./src/pages/**/*', './src/app/**/*'],
+                            message:
+                                '❌ Widgets может импортировать только из shared, entities и features слоев!',
+                        },
+                        // Pages может импортировать только из shared, entities, features и widgets
+                        {
+                            target: './src/pages/**/*',
+                            from: ['./src/app/**/*'],
+                            message:
+                                '❌ Pages может импортировать только из shared, entities, features и widgets слоев!',
+                        },
+                    ],
+                },
+            ],
         },
     },
     // Unused imports plugin configuration

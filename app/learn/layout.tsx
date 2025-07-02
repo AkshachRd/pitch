@@ -1,1 +1,1 @@
-export { LearnLayout as default } from '@/src/app/learn/layout';
+export { LearnLayout as default } from '@/pages/learn';

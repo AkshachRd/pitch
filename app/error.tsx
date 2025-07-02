@@ -1,1 +1,3 @@
-export { Error as default } from '@/src/app/error';
+'use client';
+
+export { Error as default } from '@/app/error';

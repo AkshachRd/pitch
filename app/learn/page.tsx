@@ -1,1 +1,1 @@
-export { LearnPage as default } from '@/src/app/learn/page';
+export { LearnPage as default } from '@/pages/learn';
