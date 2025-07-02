@@ -1,5 +1,1 @@
-'use client';
-
-export default function ErrorPage() {
-    return <p>Sorry, something went wrong</p>;
-}
+export { ErrorPage as default } from '@/src/app/error/page';

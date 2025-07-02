@@ -1,7 +1,1 @@
-import { Learn } from '@/components/learn';
-
-async function LearnPage() {
-    return <Learn />;
-}
-
-export default LearnPage;
+export { LearnPage as default } from '@/src/app/learn/page';
