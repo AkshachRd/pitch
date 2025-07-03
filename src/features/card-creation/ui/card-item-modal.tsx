@@ -2,7 +2,8 @@
 
 import { ModalContent, Button, ModalBody, Divider } from '@heroui/react';
 
-import { CardContent } from '@/features/card-interaction';
+import { CardContent } from './card-content';
+
 import { TagInput } from '@/features/tag-management';
 import { CardWithTags } from '@/shared/types';
 
