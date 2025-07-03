@@ -8,7 +8,7 @@ import {
 } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 
-import { siteConfig } from '@/shared/config/site';
+import { siteConfig } from '@/shared/config';
 import { ThemeSwitch } from '@/shared/ui';
 
 export const Navbar = () => {

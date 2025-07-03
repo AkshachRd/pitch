@@ -8,7 +8,7 @@ import { useGenerateTags } from '../../../widgets/cards-list/model/use-generate-
 import { AIAnimationWrapper } from '@/entities/ai';
 import { TagComponent } from '@/entities/tag';
 import { Tag } from '@/entities/tag';
-import { CardWithTags } from '@/shared/types';
+import { CardWithTags } from '@/entities/card';
 import { useTagsStore } from '@/entities/tag';
 import { useCardStore } from '@/entities/card';
 
