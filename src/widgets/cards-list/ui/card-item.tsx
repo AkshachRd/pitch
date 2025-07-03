@@ -3,8 +3,8 @@
 import { useDisclosure, Modal } from '@heroui/react';
 
 import { CardItemDropdown } from './card-item-dropdown';
+import { CardItemModal } from './card-item-modal';
 
-import { CardItemModal } from '@/features/card-creation';
 import { CardWithTags } from '@/shared/types';
 
 interface CardItemProps {

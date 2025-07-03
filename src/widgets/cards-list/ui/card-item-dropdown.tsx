@@ -8,11 +8,10 @@ import {
 } from '@heroui/react';
 import { useHover } from 'react-aria';
 
-import { CardContent } from './card-content';
-
 import { AddNoteIcon, CopyDocumentIcon, EditDocumentIcon, DeleteDocumentIcon } from '@/shared/ui';
 import { CardWithTags } from '@/shared/types';
 import { debounce } from '@/shared/lib';
+import { CardComponent } from '@/entities/card';
 
 interface CardItemDropdownProps {
     card: CardWithTags;
@@ -41,7 +40,7 @@ export function CardItemDropdown({ card, onModalOpen }: CardItemDropdownProps) {
         >
             <DropdownTrigger>
                 <button {...cardHoverProps} onClick={onModalOpen}>
-                    <CardContent
+                    <CardComponent
                         footerContent={card.backSide}
                         headerContent={card.frontSide}
                         revealBack={isCardHovered}

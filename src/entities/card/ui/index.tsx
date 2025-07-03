@@ -5,14 +5,14 @@ import { Spoiler } from 'spoiled';
 
 import { fontSerif } from '@/shared/config';
 
-interface CardContentProps {
+interface CardComponentProps {
     headerContent?: string;
     footerContent?: string;
     revealBack?: boolean;
     className?: string;
 }
 
-export const CardContent: FC<CardContentProps> = ({
+export const CardComponent: FC<CardComponentProps> = ({
     headerContent,
     footerContent,
     revealBack = false,

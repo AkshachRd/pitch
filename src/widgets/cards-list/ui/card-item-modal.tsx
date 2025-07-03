@@ -2,8 +2,7 @@
 
 import { ModalContent, Button, ModalBody, Divider } from '@heroui/react';
 
-import { CardContent } from './card-content';
-
+import { CardComponent } from '@/entities/card';
 import { TagInput } from '@/features/tag-management';
 import { CardWithTags } from '@/shared/types';
 
@@ -18,7 +17,7 @@ export function CardItemModal({ card }: CardItemModalProps) {
                 <ModalBody>
                     <div className="flex h-[600px]">
                         <div className="flex flex-1 items-center justify-center">
-                            <CardContent
+                            <CardComponent
                                 footerContent={card.backSide}
                                 headerContent={card.frontSide}
                                 revealBack={true}

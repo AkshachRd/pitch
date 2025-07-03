@@ -3,7 +3,7 @@
 import { motion, PanInfo } from 'framer-motion';
 import { FC, useState } from 'react';
 
-import { CardContent } from '@/features/card-interaction';
+import { CardComponent } from '@/entities/card';
 
 const cardVariants = {
     initial: ({ scale }: { scale: number }) => ({ scale: scale - 0.05, opacity: 0 }),
@@ -76,7 +76,7 @@ export const AnimatedCard: FC<AnimatedCardProps> = ({
             onDrag={handleDrag}
             onDragEnd={handleDragEnd}
         >
-            <CardContent
+            <CardComponent
                 footerContent={footerContent}
                 headerContent={headerContent}
                 revealBack={revealBack}

@@ -1,6 +1,7 @@
 'use client';
 
-import { CardItem } from '@/features/card-interaction';
+import { CardItem } from './card-item';
+
 import { Tag, useTagsStore } from '@/entities/tag';
 import { useCardStore } from '@/entities/card';
 import { combineCardsWithTags } from '@/shared/lib';
