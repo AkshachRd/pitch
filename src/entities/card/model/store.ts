@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 import { Card } from './types';
 
-import { Tag } from '@/entities/tag';
+import { Tag } from '@/entities/tag/@x/card';
 
 export type CardsState = {
     cards: Card[];
