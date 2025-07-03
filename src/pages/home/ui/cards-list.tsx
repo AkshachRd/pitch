@@ -4,7 +4,7 @@ import { CardItem } from './card-item';
 
 import { Tag, useTagsStore } from '@/entities/tag';
 import { useCardStore } from '@/entities/card';
-import { combineCardsWithTags } from '@/shared/lib';
+import { combineCardsWithTags } from '@/entities/card';
 
 type CardsListProps = {
     selectedTags: Tag[];

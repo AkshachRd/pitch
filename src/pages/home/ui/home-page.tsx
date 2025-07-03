@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 
-import { SearchBar } from '@/widgets/search-panel';
-import { HomeContent } from '@/widgets/cards-list';
+import { SearchBar } from './search-bar';
+import { HomeContent } from './home-content';
+
 import { Tag } from '@/entities/tag';
 
 export function HomePage() {

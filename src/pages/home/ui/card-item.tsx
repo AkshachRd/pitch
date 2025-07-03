@@ -5,7 +5,7 @@ import { useDisclosure, Modal } from '@heroui/react';
 import { CardItemDropdown } from './card-item-dropdown';
 import { CardItemModal } from './card-item-modal';
 
-import { CardWithTags } from '@/shared/types';
+import { CardWithTags } from '@/entities/card';
 
 interface CardItemProps {
     card: CardWithTags;

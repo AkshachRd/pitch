@@ -6,8 +6,7 @@ import { readStreamableValue } from 'ai/rsc';
 
 import { generateQuestions } from '../lib/generate-questions';
 import { useTaskStore } from '../model/store';
-
-import { parseError } from '@/shared/utils';
+import { parseError } from '../lib';
 
 function removeJsonMarkdown(text: string) {
     text = text.trim();
