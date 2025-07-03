@@ -1,1 +1,1 @@
-export { POST } from '@/entities/ai';
+export { POST } from '@/entities/ai/api/questions';
