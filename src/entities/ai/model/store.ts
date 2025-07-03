@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { SearchTask, Source } from './types';
+
 export interface TaskStore {
     id: string;
     question: string;

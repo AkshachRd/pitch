@@ -1,11 +1,13 @@
-interface Source {
+import { JSONValue } from 'ai';
+
+export interface Source {
     sourceType: 'url';
     id: string;
     url: string;
     title?: string;
 }
 
-interface SearchTask {
+export interface SearchTask {
     state: 'unprocessed' | 'processing' | 'completed';
     query: string;
     researchGoal: string;
@@ -13,18 +15,18 @@ interface SearchTask {
     sources: Source[];
 }
 
-interface Source {
+export interface Source {
     title?: string;
     content?: string;
     url: string;
 }
 
-interface PartialJson {
+export interface PartialJson {
     value: JSONValue | undefined;
     state: 'undefined-input' | 'successful-parse' | 'repaired-parse' | 'failed-parse';
 }
 
-interface WebSearchResult {
+export interface WebSearchResult {
     content: string;
     url: string;
     title?: string;

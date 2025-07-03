@@ -1,9 +1,6 @@
-import { Card } from '@/entities/card';
-import { Tag } from '@/entities/tag';
+import { Card, CardWithTags } from '../model';
 
-export type CardWithTags = Card & {
-    tags: Tag[];
-};
+import { Tag } from '@/entities/tag/@x/card';
 
 /**
  * Утилитарная функция для объединения cards и tags
