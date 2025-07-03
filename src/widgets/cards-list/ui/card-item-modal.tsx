@@ -2,9 +2,10 @@
 
 import { ModalContent, Button, ModalBody, Divider } from '@heroui/react';
 
+import { TagInput } from './tag-input';
+
 import { CardComponent } from '@/entities/card';
-import { TagInput } from '@/features/tag-management';
-import { CardWithTags } from '@/shared/types';
+import { CardWithTags } from '@/entities/card';
 
 interface CardItemModalProps {
     card: CardWithTags;

@@ -1,1 +1,1 @@
-export { POST } from '@/features/tag-management/api';
+export { POST } from '@/widgets/cards-list/api';
