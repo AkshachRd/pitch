@@ -1,2 +1,2 @@
-export * from './ui/learn-page';
-export * from './ui/learn-layout';
+export { LearnPage } from './ui/learn-page';
+export { LearnLayout } from './ui/learn-layout';
