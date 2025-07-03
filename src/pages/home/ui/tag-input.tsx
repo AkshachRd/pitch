@@ -3,7 +3,7 @@
 import { Button, Card, CardBody, Input } from '@heroui/react';
 import { FC } from 'react';
 
-import { useGenerateTags } from '../../../widgets/cards-list/model/use-generate-tags';
+import { useGenerateTags } from '../../../pages/home/model/use-generate-tags';
 
 import { AIAnimationWrapper } from '@/entities/ai';
 import { TagComponent } from '@/entities/tag';

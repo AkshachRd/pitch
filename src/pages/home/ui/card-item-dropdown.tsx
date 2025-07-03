@@ -9,7 +9,7 @@ import {
 import { useHover } from 'react-aria';
 
 import { AddNoteIcon, CopyDocumentIcon, EditDocumentIcon, DeleteDocumentIcon } from '@/shared/ui';
-import { CardWithTags } from '@/shared/types';
+import { CardWithTags } from '@/entities/card';
 import { debounce } from '@/shared/lib';
 import { CardComponent } from '@/entities/card';
 

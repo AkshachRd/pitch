@@ -1,1 +1,1 @@
-export { POST } from '@/widgets/cards-list/api';
+export { POST } from '@/pages/home/api';
