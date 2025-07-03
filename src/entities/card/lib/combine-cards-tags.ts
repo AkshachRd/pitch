@@ -1,4 +1,4 @@
-import { Card, CardWithTags } from '../model';
+import { Card, CardWithTags } from '../model/types';
 
 import { Tag } from '@/entities/tag/@x/card';
 

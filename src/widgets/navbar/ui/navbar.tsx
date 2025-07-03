@@ -9,7 +9,7 @@ import {
 import { Link } from '@heroui/link';
 
 import { siteConfig } from '@/shared/config';
-import { ThemeSwitch } from '@/shared/ui';
+import { ThemeSwitch } from '@/shared/ui/theme-switch';
 
 export const Navbar = () => {
     return (

@@ -1,7 +1,7 @@
 'use client';
 import { Chip } from '@heroui/chip';
 
-import { TagColor } from '@/entities/tag';
+import { TagColor } from '../model/types';
 
 type TagComponentProps = {
     color?: TagColor;

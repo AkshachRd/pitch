@@ -3,7 +3,7 @@ import { Input } from '@heroui/input';
 import { Button } from '@heroui/button';
 import { useRef, useState } from 'react';
 
-import { ForwardLogo, CloseLogo } from '@/shared/ui';
+import { ForwardLogo, CloseLogo } from '@/shared/ui/icons';
 
 interface CardCreationFormProps {
     frontSide: string;

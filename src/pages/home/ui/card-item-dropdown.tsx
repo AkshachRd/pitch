@@ -8,9 +8,14 @@ import {
 } from '@heroui/react';
 import { useHover } from 'react-aria';
 
-import { AddNoteIcon, CopyDocumentIcon, EditDocumentIcon, DeleteDocumentIcon } from '@/shared/ui';
+import {
+    AddNoteIcon,
+    CopyDocumentIcon,
+    EditDocumentIcon,
+    DeleteDocumentIcon,
+} from '@/shared/ui/icons';
 import { CardWithTags } from '@/entities/card';
-import { debounce } from '@/shared/lib';
+import { debounce } from '@/shared/lib/debounce';
 import { CardComponent } from '@/entities/card';
 
 interface CardItemDropdownProps {
