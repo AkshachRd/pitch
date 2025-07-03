@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 import { useGenerateTags } from '../model/use-generate-tags';
 
-import { AIAnimationWrapper } from '@/features/ai-questions';
+import { AIAnimationWrapper } from '@/entities/ai';
 import { TagComponent } from '@/entities/tag';
 import { Tag } from '@/entities/tag';
 import { CardWithTags } from '@/shared/types';

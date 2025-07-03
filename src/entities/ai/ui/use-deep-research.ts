@@ -5,8 +5,8 @@ import { addToast } from '@heroui/react';
 import { readStreamableValue } from 'ai/rsc';
 
 import { generateQuestions } from '../lib/generate-questions';
+import { useTaskStore } from '../model/store';
 
-import { useTaskStore } from '@/entities/task';
 import { parseError } from '@/shared/utils';
 
 function removeJsonMarkdown(text: string) {

@@ -1,4 +1,4 @@
-import { Topic } from '@/features/ai-questions';
+import { Topic } from '@/entities/ai';
 
 export async function ResearchPage() {
     return (

@@ -9,10 +9,11 @@ import { nanoid } from 'nanoid';
 
 import { useSearch } from '../model/use-search';
 
-import { CardCreationForm } from '@/src/features/card-creation';
-import { Tag } from '@/src/entities/tag';
-import { useCardStore } from '@/src/entities/card';
-import { useTagsStore } from '@/src/entities/tag';
+import { CardCreationForm } from './card-creation-form';
+
+import { Tag } from '@/entities/tag';
+import { useCardStore } from '@/entities/card';
+import { useTagsStore } from '@/entities/tag';
 
 type SearchInputProps = {
     selectedTags: Tag[];

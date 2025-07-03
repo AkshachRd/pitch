@@ -3,11 +3,10 @@
 import { Form, Button, Textarea } from '@heroui/react';
 import React, { FormEvent, useState } from 'react';
 
-import { useDeepResearch } from '../model/use-deep-research';
+import { useTaskStore } from '../model/store';
 
+import { useDeepResearch } from './use-deep-research';
 import { AIAnimationWrapper } from './ai-animation-wrapper';
-
-import { useTaskStore } from '@/entities/task';
 
 export function Topic() {
     const { askQuestions } = useDeepResearch();
