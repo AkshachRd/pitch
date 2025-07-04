@@ -11,7 +11,7 @@ type SearchBarProps = {
 
 export const SearchBar = ({ selectedTags, setSelectedTags }: SearchBarProps) => {
     return (
-        <div className="flex w-full items-center justify-center gap-2 rounded-full border-large bg-background p-4">
+        <div className="flex w-full items-center justify-center gap-2 rounded-full border-large bg-background p-4 px-20">
             {selectedTags.map((tag, index) => (
                 <TagComponent
                     key={index}
