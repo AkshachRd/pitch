@@ -1,1 +1,1 @@
-export { POST } from '@/pages/home/api';
+export { POST } from '@/pages/home/api/generate-tags';
