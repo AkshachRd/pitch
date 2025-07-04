@@ -1,4 +1,4 @@
-export function generateTagsPrompt(
+export function generatePrompt(
     cardFrontSide: string,
     cardBackSide: string,
     existingTags: string,
@@ -12,7 +12,7 @@ export function generateTagsPrompt(
     ].join('\n\n');
 }
 
-export function getTaggingSystemPrompt() {
+export function getSystemPrompt() {
     const now = new Date().toISOString();
 
     return `You are an expert taxonomist specializing in educational content organization. Today is ${now}. Follow these strict rules when generating tags:

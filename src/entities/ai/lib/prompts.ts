@@ -15,13 +15,9 @@ export function getSystemPrompt() {
   - You may use high levels of speculation or prediction, just flag it for me.`;
 }
 
-export function generateQuestionsPrompt(query: string) {
+export function generatePrompt(query: string) {
     return [
         `Given the following query from the user, ask at least 5 follow-up questions to clarify the research direction: <query>${query}</query>`,
         `Questions need to be brief and concise. No need to output content that is irrelevant to the question.`,
     ].join('\n\n');
-}
-
-export function getResponseLanguagePrompt(lang: string) {
-    return `**Respond in ${lang}**`;
 }

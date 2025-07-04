@@ -4,7 +4,9 @@ import { streamText, smoothStream } from 'ai';
 import { createStreamableValue } from 'ai/rsc';
 
 import { thinkingModel } from './models';
-import { generateQuestionsPrompt, getResponseLanguagePrompt, getSystemPrompt } from './prompts';
+import { generatePrompt, getSystemPrompt } from './prompts';
+
+import { getResponseLanguagePrompt } from '@/shared/ai/prompts';
 
 function smoothTextStream() {
     return smoothStream({
@@ -24,9 +26,7 @@ export async function generateQuestions(
         const { textStream } = streamText({
             model: thinkingModel,
             system: getSystemPrompt(),
-            prompt: [generateQuestionsPrompt(question), getResponseLanguagePrompt(language)].join(
-                '\n\n',
-            ),
+            prompt: [generatePrompt(question), getResponseLanguagePrompt(language)].join('\n\n'),
             experimental_transform: smoothTextStream(),
             onError,
         });

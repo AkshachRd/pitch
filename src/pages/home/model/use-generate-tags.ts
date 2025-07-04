@@ -2,7 +2,9 @@ import { useCompletion } from '@ai-sdk/react';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 
-import { Tag } from '@/entities/tag';
+import { generatePrompt } from '../lib/prompts';
+
+import { Tag, useTagsStore } from '@/entities/tag';
 import { Card } from '@/entities/card';
 
 export const parseAIGeneratedTags = (tags: string): Tag[] => {
@@ -41,7 +43,18 @@ export const useGenerateTags = (): UseGenerateTagsReturn => {
     );
 
     const generateTags = (card: Card) => {
-        complete(`card_front_side: ${card.frontSide}, card_back_side: ${card.backSide}`);
+        const { tags } = useTagsStore.getState();
+
+        const currentTags = tags.filter((tag) => card.tagIds.includes(tag.id));
+
+        complete(
+            generatePrompt(
+                card.frontSide,
+                card.backSide,
+                currentTags.map((tag) => tag.name).join(', '),
+                tags.map((tag) => tag.name).join(','),
+            ),
+        );
     };
 
     const stopGeneration = () => {
