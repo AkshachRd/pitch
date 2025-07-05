@@ -24,17 +24,6 @@ export const CardCreationForm = ({ frontSide, onCancel, onCreate }: CardCreation
             transition={{ type: 'tween' }}
         >
             <div className="relative">
-                <motion.div
-                    animate={{ x: 0, y: '-100%' }}
-                    className="absolute end-full-0.5 top-0"
-                    exit={{ x: '100%', y: 0 }}
-                    initial={{ x: '100%', y: 0 }}
-                    transition={{ type: 'tween' }}
-                >
-                    <Button isIconOnly radius="full" size="md" onPress={onCancel}>
-                        <CloseLogo />
-                    </Button>
-                </motion.div>
                 <Input
                     ref={inputRef}
                     placeholder="Back side"
@@ -52,6 +41,17 @@ export const CardCreationForm = ({ frontSide, onCancel, onCreate }: CardCreation
                 >
                     <Button isIconOnly radius="full" size="md" onPress={() => onCreate(backSide)}>
                         <ForwardLogo />
+                    </Button>
+                </motion.div>
+                <motion.div
+                    animate={{ x: 0, y: '-100%' }}
+                    className="absolute end-full-0.5 top-0"
+                    exit={{ x: '100%', y: 0 }}
+                    initial={{ x: '100%', y: 0 }}
+                    transition={{ type: 'tween' }}
+                >
+                    <Button isIconOnly radius="full" size="md" onPress={onCancel}>
+                        <CloseLogo />
                     </Button>
                 </motion.div>
             </div>
