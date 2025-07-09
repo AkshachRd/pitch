@@ -2,7 +2,6 @@
 
 import { Button, Card, CardBody, Input } from '@heroui/react';
 import { FC } from 'react';
-import { nanoid } from 'nanoid';
 
 import { useGenerateTags } from '../../../pages/home/model/use-generate-tags';
 
@@ -27,13 +26,15 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
         generateTags,
         isLoading,
         stopGeneration,
-        aiGeneratedTags,
+        generatedTagNames,
         clearCompletion,
         showSaveAndCancelButton,
         setShowSaveAndCancelButton,
     } = useGenerateTags();
 
-    const mergedTags = showSaveAndCancelButton ? aiGeneratedTags : tags;
+    const mergedTags = showSaveAndCancelButton
+        ? generatedTagNames.map((name) => ({ name, color: 'default' as const }))
+        : tags;
 
     const showGenButton = mergedTags.length === 0 && !isLoading;
     const showStopButton = isLoading;
@@ -41,27 +42,19 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const showAddTagButton = input.length > 0;
 
     const handleSaveGeneratedTags = async () => {
-        aiGeneratedTags.forEach((tag) => {
-            addTag(tag);
-        });
+        generatedTagNames.forEach((tagName) => {
+            const tag = addTag(tagName);
 
-        addTagsToCard(
-            card.id,
-            aiGeneratedTags.map((tag) => tag.id),
-        );
+            addTagsToCard(card.id, [tag.id]);
+        });
 
         setShowSaveAndCancelButton(false);
     };
 
     const handleAddManualTags = async () => {
-        const newTag: Tag = {
-            id: nanoid(),
-            name: input,
-            color: 'default',
-        };
+        const tag = addTag(input);
 
-        addTag(newTag);
-        addTagsToCard(card.id, [newTag.id]);
+        addTagsToCard(card.id, [tag.id]);
         setInput('');
     };
 

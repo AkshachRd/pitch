@@ -1,4 +1,13 @@
-export type TagColor = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+export const tagColors = [
+    'default',
+    'primary',
+    'secondary',
+    'success',
+    'warning',
+    'danger',
+] as const;
+
+export type TagColor = (typeof tagColors)[number];
 
 export type Tag = {
     id: string;

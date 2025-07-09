@@ -1,20 +1,15 @@
 import { useCompletion } from '@ai-sdk/react';
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 
 import { generatePrompt } from '../lib/prompts';
 
-import { Tag, useTagsStore } from '@/entities/tag';
+import { useTagsStore } from '@/entities/tag';
 import { Card } from '@/entities/card';
 
-export const parseAIGeneratedTags = (tags: string): Tag[] => {
+export const parseAIGeneratedTags = (tags: string): string[] => {
     if (!tags) return [];
 
-    return tags.split(',').map((tag) => ({
-        id: nanoid(),
-        name: tag,
-        color: 'default',
-    }));
+    return tags.split(',');
 };
 
 interface UseGenerateTagsReturn {
@@ -24,7 +19,7 @@ interface UseGenerateTagsReturn {
     generateTags: (card: Card) => void;
     isLoading: boolean;
     stopGeneration: () => void;
-    aiGeneratedTags: Tag[];
+    generatedTagNames: string[];
     clearCompletion: () => void;
     showSaveAndCancelButton: boolean;
     setShowSaveAndCancelButton: (show: boolean) => void;
@@ -65,7 +60,7 @@ export const useGenerateTags = (): UseGenerateTagsReturn => {
         setCompletion('');
     };
 
-    const aiGeneratedTags = parseAIGeneratedTags(completion);
+    const generatedTagNames = parseAIGeneratedTags(completion);
 
     return {
         completion,
@@ -74,7 +69,7 @@ export const useGenerateTags = (): UseGenerateTagsReturn => {
         generateTags,
         isLoading,
         stopGeneration,
-        aiGeneratedTags,
+        generatedTagNames,
         clearCompletion,
         showSaveAndCancelButton,
         setShowSaveAndCancelButton,
