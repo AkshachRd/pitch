@@ -2,6 +2,7 @@
 
 import { Button, Card, CardBody, Input } from '@heroui/react';
 import { FC } from 'react';
+import { nanoid } from 'nanoid';
 
 import { useGenerateTags } from '../../../pages/home/model/use-generate-tags';
 
@@ -37,8 +38,9 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
     const showGenButton = mergedTags.length === 0 && !isLoading;
     const showStopButton = isLoading;
     const showInput = !isLoading;
+    const showAddTagButton = input.length > 0;
 
-    const handleSaveTags = async () => {
+    const handleSaveGeneratedTags = async () => {
         aiGeneratedTags.forEach((tag) => {
             addTag(tag);
         });
@@ -46,6 +48,18 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
         addTagsToCard(card.id, aiGeneratedTags);
 
         setShowSaveAndCancelButton(false);
+    };
+
+    const handleAddManualTags = async () => {
+        const newTag: Tag = {
+            id: nanoid(),
+            name: input,
+            color: 'default',
+        };
+
+        addTag(newTag);
+        addTagsToCard(card.id, [newTag]);
+        setInput('');
     };
 
     return (
@@ -69,7 +83,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                     )}
                     {showSaveAndCancelButton && (
                         <div className="flex-grow flex-row gap-2">
-                            <Button type="button" onPress={handleSaveTags}>
+                            <Button type="button" onPress={handleSaveGeneratedTags}>
                                 Save
                             </Button>
                             <Button
@@ -83,15 +97,27 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                             </Button>
                         </div>
                     )}
-                    {showInput && (
-                        <Input
-                            className="flex-grow"
-                            fullWidth={false}
-                            placeholder="Enter tags"
-                            value={input}
-                            onInput={(e) => setInput(e.currentTarget.value)}
-                        />
-                    )}
+                    <div className="flex flex-grow flex-row gap-2">
+                        {showInput && (
+                            <Input
+                                className="flex-grow"
+                                fullWidth={false}
+                                placeholder="Enter tags"
+                                value={input}
+                                onInput={(e) => setInput(e.currentTarget.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && input.length > 0) {
+                                        handleAddManualTags();
+                                    }
+                                }}
+                            />
+                        )}
+                        {showAddTagButton && (
+                            <Button type="button" onPress={handleAddManualTags}>
+                                Add
+                            </Button>
+                        )}
+                    </div>
                 </CardBody>
             </Card>
         </AIAnimationWrapper>
