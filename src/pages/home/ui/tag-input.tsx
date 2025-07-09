@@ -45,7 +45,10 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
             addTag(tag);
         });
 
-        addTagsToCard(card.id, aiGeneratedTags);
+        addTagsToCard(
+            card.id,
+            aiGeneratedTags.map((tag) => tag.id),
+        );
 
         setShowSaveAndCancelButton(false);
     };
@@ -58,7 +61,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
         };
 
         addTag(newTag);
-        addTagsToCard(card.id, [newTag]);
+        addTagsToCard(card.id, [newTag.id]);
         setInput('');
     };
 
