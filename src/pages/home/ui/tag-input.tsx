@@ -18,8 +18,8 @@ interface TagInputProps {
 }
 
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
-    const { addTag } = useTagsStore();
-    const { addTagsToCard } = useCardStore();
+    const { addTag, removeTag } = useTagsStore();
+    const { addTagsToCard, removeTagsFromCard } = useCardStore();
     const {
         input,
         setInput,
@@ -58,12 +58,21 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
         setInput('');
     };
 
+    const handleRemoveTag = async (tagId: string) => {
+        removeTagsFromCard(card.id, [tagId]);
+        removeTag(tagId);
+    };
+
     return (
         <AIAnimationWrapper isLoading={isLoading}>
             <Card className="w-full">
                 <CardBody className="flex-row flex-wrap items-center gap-2">
                     {mergedTags.map((tag, index) => (
-                        <TagComponent key={index} color={tag.color}>
+                        <TagComponent
+                            key={index}
+                            color={tag.color}
+                            onClose={'id' in tag ? () => handleRemoveTag(tag.id) : undefined}
+                        >
                             {tag.name}
                         </TagComponent>
                     ))}
