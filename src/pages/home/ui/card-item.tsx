@@ -5,10 +5,10 @@ import { useDisclosure, Modal } from '@heroui/react';
 import { CardItemDropdown } from './card-item-dropdown';
 import { CardItemModal } from './card-item-modal';
 
-import { CardWithTags } from '@/entities/card';
+import { Card } from '@/entities/card';
 
 interface CardItemProps {
-    card: CardWithTags;
+    card: Card;
 }
 
 export function CardItem({ card }: CardItemProps) {

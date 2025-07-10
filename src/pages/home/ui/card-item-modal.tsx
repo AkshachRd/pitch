@@ -4,14 +4,17 @@ import { ModalContent, Button, ModalBody, Divider } from '@heroui/react';
 
 import { TagInput } from './tag-input';
 
-import { CardComponent } from '@/entities/card';
-import { CardWithTags } from '@/entities/card';
+import { Card, CardComponent } from '@/entities/card';
+import { useTagsStore } from '@/entities/tag';
 
 interface CardItemModalProps {
-    card: CardWithTags;
+    card: Card;
 }
 
 export function CardItemModal({ card }: CardItemModalProps) {
+    const { tags } = useTagsStore();
+    const cardTags = tags.filter((tag) => card.tagIds.includes(tag.id));
+
     return (
         <ModalContent>
             {(onClose) => (
@@ -26,7 +29,7 @@ export function CardItemModal({ card }: CardItemModalProps) {
                         </div>
                         <Divider orientation="vertical" />
                         <div className="flex w-80 flex-col gap-4 p-4">
-                            <TagInput card={card} tags={card.tags} />
+                            <TagInput card={card} tags={cardTags} />
                             <Button color="danger" variant="light" onPress={onClose}>
                                 Close
                             </Button>

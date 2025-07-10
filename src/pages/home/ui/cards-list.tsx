@@ -2,9 +2,7 @@
 
 import { CardItem } from './card-item';
 
-import { Tag, useTagsStore } from '@/entities/tag';
 import { useCardStore } from '@/entities/card';
-import { combineCardsWithTags } from '@/entities/card';
 
 type CardsListProps = {
     selectedTagIds: string[];
@@ -12,17 +10,11 @@ type CardsListProps = {
 
 export function CardsList({ selectedTagIds }: CardsListProps) {
     const { cards } = useCardStore();
-    const { tags } = useTagsStore();
 
-    const cardsWithTags = combineCardsWithTags(cards, tags);
     const filteredCards =
         selectedTagIds.length === 0
-            ? cardsWithTags
-            : cardsWithTags.filter((card) =>
-                  card.tags.some((cardTag: Tag) =>
-                      selectedTagIds.some((selectedTagId) => selectedTagId === cardTag.id),
-                  ),
-              );
+            ? cards
+            : cards.filter((card) => card.tagIds.some((tagId) => selectedTagIds.includes(tagId)));
 
     return (
         <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">

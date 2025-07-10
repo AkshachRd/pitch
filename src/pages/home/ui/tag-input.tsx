@@ -8,13 +8,13 @@ import { removeTagFromCard } from '../lib/removeTagFromCard';
 import { addTagToCard } from '../lib/addTagToCard';
 
 import { AIAnimationWrapper } from '@/entities/ai';
-import { TagComponent } from '@/entities/tag';
+import { Card as CardType } from '@/entities/card';
 import { Tag } from '@/entities/tag';
-import { CardWithTags } from '@/entities/card';
+import { TagComponent } from '@/entities/tag';
 
 interface TagInputProps {
     tags: Tag[];
-    card: CardWithTags;
+    card: CardType;
 }
 
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
