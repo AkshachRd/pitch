@@ -14,12 +14,11 @@ import {
     EditDocumentIcon,
     DeleteDocumentIcon,
 } from '@/shared/ui/icons';
-import { CardWithTags } from '@/entities/card';
 import { debounce } from '@/shared/lib/debounce';
-import { CardComponent } from '@/entities/card';
+import { Card, CardComponent } from '@/entities/card';
 
 interface CardItemDropdownProps {
-    card: CardWithTags;
+    card: Card;
     onModalOpen: () => void;
 }
 

@@ -22,7 +22,7 @@ export const HomeContent = ({ selectedTagIds }: HomeContentProps) => {
             <Tab key="tags" title="tags">
                 <div className="flex flex-wrap justify-center gap-2">
                     {tags.map((tag) => (
-                        <TagComponent key={tag.name} color={tag.color}>
+                        <TagComponent key={tag.id} color={tag.color}>
                             {tag.name}
                         </TagComponent>
                     ))}
