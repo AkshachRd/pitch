@@ -4,13 +4,13 @@ import { Button, Card, CardBody, Input } from '@heroui/react';
 import { FC } from 'react';
 
 import { useGenerateTags } from '../../../pages/home/model/use-generate-tags';
+import { removeTagFromCard } from '../lib/removeTagFromCard';
+import { addTagToCard } from '../lib/addTagToCard';
 
 import { AIAnimationWrapper } from '@/entities/ai';
 import { TagComponent } from '@/entities/tag';
 import { Tag } from '@/entities/tag';
 import { CardWithTags } from '@/entities/card';
-import { useTagsStore } from '@/entities/tag';
-import { useCardStore } from '@/entities/card';
 
 interface TagInputProps {
     tags: Tag[];
@@ -18,8 +18,6 @@ interface TagInputProps {
 }
 
 export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
-    const { addTag, removeTag } = useTagsStore();
-    const { addTagsToCard, removeTagsFromCard } = useCardStore();
     const {
         input,
         setInput,
@@ -43,24 +41,19 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
 
     const handleSaveGeneratedTags = async () => {
         generatedTagNames.forEach((tagName) => {
-            const tag = addTag(tagName);
-
-            addTagsToCard(card.id, [tag.id]);
+            addTagToCard(card.id, tagName);
         });
 
         setShowSaveAndCancelButton(false);
     };
 
     const handleAddManualTags = async () => {
-        const tag = addTag(input);
-
-        addTagsToCard(card.id, [tag.id]);
+        addTagToCard(card.id, input);
         setInput('');
     };
 
     const handleRemoveTag = async (tagId: string) => {
-        removeTagsFromCard(card.id, [tagId]);
-        removeTag(tagId);
+        removeTagFromCard(card.id, tagId);
     };
 
     return (
