@@ -39,11 +39,17 @@ export function CardItemDropdown({ card, onModalOpen }: CardItemDropdownProps) {
     return (
         <Dropdown
             className="w-fit min-w-0"
-            isOpen={isDropdownOpen || isMenuHovered || isCardHovered}
+            isOpen={isDropdownOpen || isMenuHovered}
             placement="right"
         >
             <DropdownTrigger>
-                <button {...cardHoverProps} onClick={onModalOpen}>
+                <button
+                    {...cardHoverProps}
+                    onClick={() => {
+                        onDropdownClose();
+                        onModalOpen();
+                    }}
+                >
                     <CardComponent
                         footerContent={card.backSide}
                         headerContent={card.frontSide}
