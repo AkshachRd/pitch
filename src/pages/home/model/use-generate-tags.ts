@@ -9,7 +9,7 @@ import { Card } from '@/entities/card';
 export const parseAIGeneratedTags = (tags: string): string[] => {
     if (!tags) return [];
 
-    return tags.split(',');
+    return tags.split(',').map((tag) => tag.trim());
 };
 
 interface UseGenerateTagsReturn {
