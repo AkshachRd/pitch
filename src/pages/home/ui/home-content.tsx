@@ -4,20 +4,20 @@ import { Tab, Tabs } from '@heroui/react';
 
 import { CardsList } from './cards-list';
 
-import { TagComponent, Tag } from '@/entities/tag';
+import { TagComponent } from '@/entities/tag';
 import { useTagsStore } from '@/entities/tag';
 
 type HomeContentProps = {
-    selectedTags: Tag[];
+    selectedTagIds: string[];
 };
 
-export const HomeContent = ({ selectedTags }: HomeContentProps) => {
+export const HomeContent = ({ selectedTagIds }: HomeContentProps) => {
     const { tags } = useTagsStore();
 
     return (
         <Tabs aria-label="Options" variant="underlined">
             <Tab key="cards" title="cards">
-                <CardsList selectedTags={selectedTags} />
+                <CardsList selectedTagIds={selectedTagIds} />
             </Tab>
             <Tab key="tags" title="tags">
                 <div className="flex flex-wrap justify-center gap-2">

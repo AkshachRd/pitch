@@ -5,18 +5,16 @@ import { useState } from 'react';
 import { SearchBar } from './search-bar';
 import { HomeContent } from './home-content';
 
-import { Tag } from '@/entities/tag';
-
 export function HomePage() {
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+    const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
     return (
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
             <div>
-                <SearchBar selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
+                <SearchBar selectedTagIds={selectedTagIds} setSelectedTagIds={setSelectedTagIds} />
             </div>
             <div>
-                <HomeContent selectedTags={selectedTags} />
+                <HomeContent selectedTagIds={selectedTagIds} />
             </div>
         </section>
     );

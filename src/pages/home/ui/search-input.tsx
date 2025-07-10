@@ -11,35 +11,30 @@ import { useSearch } from '../model/use-search';
 
 import { CardCreationForm } from './card-creation-form';
 
-import { Tag } from '@/entities/tag';
 import { useCardStore } from '@/entities/card';
-import { useTagsStore } from '@/entities/tag';
 
 type SearchInputProps = {
-    selectedTags: Tag[];
-    setSelectedTags: (tags: Tag[]) => void;
+    selectedTagIds: string[];
+    setSelectedTagIds: (tagIds: string[] | ((prev: string[]) => string[])) => void;
 };
 
-export const SearchInput = ({ selectedTags, setSelectedTags }: SearchInputProps) => {
+export const SearchInput = ({ selectedTagIds, setSelectedTagIds }: SearchInputProps) => {
     const { addCard } = useCardStore();
-    const { tags } = useTagsStore();
     const [isCreating, setIsCreating] = useState(false);
     const [items, setItems] = useState<Item[]>([]);
 
-    const { fieldState, availableItems, onInputChange, onSelectionChange } = useSearch(
-        tags,
-        selectedTags,
-    );
+    const { fieldState, availableItems, onInputChange, onSelectionChange } =
+        useSearch(selectedTagIds);
 
     const handleTagSelection = useCallback(
-        (tag: Tag) => {
-            if (selectedTags.some((t) => t.id === tag.id)) {
-                setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
+        (tagId: string) => {
+            if (selectedTagIds.includes(tagId)) {
+                setSelectedTagIds((prev) => prev.filter((id) => id !== tagId));
             } else {
-                setSelectedTags([...selectedTags, tag]);
+                setSelectedTagIds((prev) => [...prev, tagId]);
             }
         },
-        [selectedTags, setSelectedTags],
+        [selectedTagIds, setSelectedTagIds],
     );
 
     const handleSelectionChange = useCallback(
@@ -54,15 +49,11 @@ export const SearchInput = ({ selectedTags, setSelectedTags }: SearchInputProps)
                 const selectedItem = availableItems.find((option) => option.key === key);
 
                 if (selectedItem?.type === 'tag') {
-                    const tag = tags.find((t) => t.name === selectedItem.label);
-
-                    if (tag) {
-                        handleTagSelection(tag);
-                    }
+                    handleTagSelection(selectedItem.key);
                 }
             }
         },
-        [availableItems, handleTagSelection, onSelectionChange, tags],
+        [availableItems, onSelectionChange, setSelectedTagIds],
     );
 
     const handleInputChange = useCallback(

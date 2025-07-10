@@ -1,7 +1,7 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useFilter } from 'react-aria';
 
-import { Tag } from '@/entities/tag';
+import { useTagsStore } from '@/entities/tag';
 
 export type Item = {
     key: string;
@@ -20,7 +20,8 @@ const createItem: Item = {
     key: 'create',
 };
 
-export const useSearch = (tags: Tag[], selectedTags: Tag[]) => {
+export const useSearch = (selectedTagIds: string[]) => {
+    const { tags } = useTagsStore();
     const { startsWith } = useFilter({ sensitivity: 'base' });
     const [fieldState, setFieldState] = useState<FieldState>({
         selectedKey: '',
@@ -29,19 +30,17 @@ export const useSearch = (tags: Tag[], selectedTags: Tag[]) => {
 
     const availableItems = useMemo(() => {
         return tags
-            .filter((tag) => !selectedTags.some((t) => t.id === tag.id))
+            .filter((tag) => !selectedTagIds.includes(tag.id))
             .map<Item>((tag) => ({
-                key: tag.id.toString(),
+                key: tag.id,
                 type: 'tag',
                 label: tag.name,
             }));
-    }, [tags, selectedTags]);
+    }, [tags, selectedTagIds]);
 
     const filter = useCallback(
         (items: Item[], selectedLabel: string) => {
-            return items.filter((item) =>
-                item.label.split('/').some((labelPart) => startsWith(labelPart, selectedLabel)),
-            );
+            return items.filter((item) => startsWith(item.label, selectedLabel));
         },
         [startsWith],
     );
@@ -81,10 +80,10 @@ export const useSearch = (tags: Tag[], selectedTags: Tag[]) => {
             const filteredItems = filter(availableItems, selectedItem.label);
             const newItems = filteredItems.length > 0 ? filteredItems : [createItem];
 
-            setFieldState((prevState) => ({
-                inputValue: selectedItem.label || '',
+            setFieldState({
+                inputValue: '',
                 selectedKey: key,
-            }));
+            });
 
             return { shouldCreate: false, items: newItems };
         },

@@ -7,20 +7,20 @@ import { useCardStore } from '@/entities/card';
 import { combineCardsWithTags } from '@/entities/card';
 
 type CardsListProps = {
-    selectedTags: Tag[];
+    selectedTagIds: string[];
 };
 
-export function CardsList({ selectedTags }: CardsListProps) {
+export function CardsList({ selectedTagIds }: CardsListProps) {
     const { cards } = useCardStore();
     const { tags } = useTagsStore();
 
     const cardsWithTags = combineCardsWithTags(cards, tags);
     const filteredCards =
-        selectedTags.length === 0
+        selectedTagIds.length === 0
             ? cardsWithTags
             : cardsWithTags.filter((card) =>
                   card.tags.some((cardTag: Tag) =>
-                      selectedTags.some((selectedTag) => selectedTag.id === cardTag.id),
+                      selectedTagIds.some((selectedTagId) => selectedTagId === cardTag.id),
                   ),
               );
 
