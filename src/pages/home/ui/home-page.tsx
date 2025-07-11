@@ -13,9 +13,7 @@ export function HomePage() {
             <div>
                 <SearchBar selectedTagIds={selectedTagIds} setSelectedTagIds={setSelectedTagIds} />
             </div>
-            <div>
-                <HomeContent selectedTagIds={selectedTagIds} />
-            </div>
+            <HomeContent selectedTagIds={selectedTagIds} />
         </section>
     );
 }
