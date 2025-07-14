@@ -19,7 +19,7 @@ export function CardsTable() {
             <TableHeader>
                 <TableColumn>FRONT</TableColumn>
                 <TableColumn>BACK</TableColumn>
-                <TableColumn>WIDEN</TableColumn>
+                <TableColumn width="1fr">WIDEN</TableColumn>
             </TableHeader>
             <TableBody items={cards}>
                 {(card) => (
