@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react';
 import { useState } from 'react';
 
-import { TagComponent, useTagsStore } from '@/entities/tag';
+import { TagColor, TagComponent, useTagsStore } from '@/entities/tag';
 
 export function TagsTable() {
     const { tags } = useTagsStore();
@@ -17,21 +17,16 @@ export function TagsTable() {
         const tag = tags.find((t) => t.id === tagId);
         const tagColor = tag?.color ?? 'default';
 
-        switch (tagColor) {
-            case 'warning':
-                return `[--tag-color:hsl(var(--heroui-warning)/.2)]`;
-            case 'success':
-                return `[--tag-color:hsl(var(--heroui-success)/.2)]`;
-            case 'danger':
-                return `[--tag-color:hsl(var(--heroui-danger)/.2)]`;
-            case 'secondary':
-                return `[--tag-color:hsl(var(--heroui-secondary)/.2)]`;
-            case 'primary':
-                return `[--tag-color:hsl(var(--heroui-primary)/.2)]`;
-            case 'default':
-            default:
-                return `[--tag-color:hsl(var(--heroui-default)/.6)]`;
-        }
+        const variants: Record<TagColor, string> = {
+            warning: '[--tag-color:hsl(var(--heroui-warning)/.2)]',
+            success: '[--tag-color:hsl(var(--heroui-success)/.2)]',
+            danger: '[--tag-color:hsl(var(--heroui-danger)/.2)]',
+            secondary: '[--tag-color:hsl(var(--heroui-secondary)/.2)]',
+            primary: '[--tag-color:hsl(var(--heroui-primary)/.2)]',
+            default: '[--tag-color:hsl(var(--heroui-default)/.6)]',
+        };
+
+        return variants[tagColor];
     };
 
     return (
