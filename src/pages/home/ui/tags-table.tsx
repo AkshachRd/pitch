@@ -31,13 +31,12 @@ export function TagsTable() {
 
     return (
         <Table
+            isCompact
             aria-label="List of tags"
             className={setTegColorVar()}
             classNames={getClassNames()}
             fullWidth={false}
-            selectedKeys={selectedKeys}
             selectionMode="multiple"
-            onSelectionChange={(keys) => setSelectedKeys(new Set(keys as Set<string>))}
         >
             <TableHeader>
                 <TableColumn>TAG</TableColumn>
