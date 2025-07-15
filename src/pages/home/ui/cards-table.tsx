@@ -23,7 +23,7 @@ export function CardsTable() {
 
     return (
         <>
-            <Table aria-label="List of cards">
+            <Table aria-label="List of cards" selectionMode="multiple">
                 <TableHeader>
                     <TableColumn>FRONT</TableColumn>
                     <TableColumn>BACK</TableColumn>
