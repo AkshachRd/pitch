@@ -34,7 +34,7 @@ export const CardCreationForm = ({ frontSide, onCancel, onCreate }: CardCreation
                 />
                 <motion.div
                     animate={{ x: 0 }}
-                    className="absolute start-full-0.5 top-0"
+                    className="start-full-0.5 absolute top-0"
                     exit={{ x: '-100%' }}
                     initial={{ x: '-100%' }}
                     transition={{ type: 'tween', delay: 0.2 }}
@@ -45,7 +45,7 @@ export const CardCreationForm = ({ frontSide, onCancel, onCreate }: CardCreation
                 </motion.div>
                 <motion.div
                     animate={{ x: 0, y: '-100%' }}
-                    className="absolute end-full-0.5 top-0"
+                    className="end-full-0.5 absolute top-0"
                     exit={{ x: '100%', y: 0 }}
                     initial={{ x: '100%', y: 0 }}
                     transition={{ type: 'tween' }}

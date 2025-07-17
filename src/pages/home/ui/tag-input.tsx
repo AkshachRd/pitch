@@ -80,7 +80,7 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                         </Button>
                     )}
                     {showSaveAndCancelButton && (
-                        <div className="flex-grow flex-row gap-2">
+                        <div className="grow flex-row gap-2">
                             <Button type="button" onPress={handleSaveGeneratedTags}>
                                 Save
                             </Button>
@@ -95,10 +95,10 @@ export const TagInput: FC<TagInputProps> = ({ tags, card }: TagInputProps) => {
                             </Button>
                         </div>
                     )}
-                    <div className="flex flex-grow flex-row gap-2">
+                    <div className="flex grow flex-row gap-2">
                         {showInput && (
                             <Input
-                                className="flex-grow"
+                                className="grow"
                                 fullWidth={false}
                                 placeholder="Enter tags"
                                 value={input}

@@ -9,7 +9,7 @@ export function TagsTable() {
 
     const getClassNames = () => {
         return {
-            td: 'before:bg-[--tag-color] data-[selected=true]:text-[--tag-color]-600 dark:data-[selected=true]:text-[--tag-color]',
+            td: 'before:bg-(--tag-color) data-[selected=true]:text-[--tag-color]-600 dark:data-[selected=true]:text-(--tag-color)',
         };
     };
 

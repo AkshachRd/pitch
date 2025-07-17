@@ -25,12 +25,12 @@ export const Side: FC<SideProps> = ({
         >
             <div
                 className={clsx(
-                    'scale-120 absolute inset-0 left-0 right-0 top-0 h-full w-full bg-[length:200%_200%] blur-lg',
+                    'absolute inset-0 top-0 right-0 left-0 h-full w-full scale-120 bg-size-[200%_200%] blur-lg',
                     isActive && `bg-${color}`,
                 )}
             />
             <Button
-                className={`h-full w-full bg-background data-[hover=true]:bg-${color}/20`}
+                className={`bg-background h-full w-full data-[hover=true]:bg-${color}/20`}
                 variant="light"
             >
                 {children}

@@ -14,7 +14,7 @@ export const SearchBar = ({ selectedTagIds, setSelectedTagIds }: SearchBarProps)
     const selectedTags = tags.filter((tag) => selectedTagIds.includes(tag.id));
 
     return (
-        <div className="flex w-full items-center justify-center gap-2 rounded-full border-large bg-background p-4 px-20">
+        <div className="border-large bg-background flex w-full items-center justify-center gap-2 rounded-full p-4 px-20">
             {selectedTags.map((tag, index) => (
                 <TagComponent
                     key={index}

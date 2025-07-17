@@ -22,7 +22,7 @@ interface CardItemDropdownProps {
     onModalOpen: () => void;
 }
 
-const iconClasses = 'text-xl text-default-500 pointer-events-none flex-shrink-0';
+const iconClasses = 'text-xl text-default-500 pointer-events-none shrink-0';
 
 export function CardItemDropdown({ card, onModalOpen }: CardItemDropdownProps) {
     const {
@@ -82,7 +82,7 @@ export function CardItemDropdown({ card, onModalOpen }: CardItemDropdownProps) {
                 />
                 <DropdownItem
                     key="delete"
-                    className="gap-x-0 text-danger"
+                    className="text-danger gap-x-0"
                     color="danger"
                     endContent={<DeleteDocumentIcon className={cn(iconClasses, 'text-danger')} />}
                     textValue="Delete"
