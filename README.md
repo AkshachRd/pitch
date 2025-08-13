@@ -1,8 +1,8 @@
-## Pitch
+# Pitch
 
 An AI-powered study and research app built with Next.js. Create and organize flashcards with tags, generate tag suggestions and research questions using LLMs, and review with a learning UI. The project follows the Feature-Sliced Design (FSD) architecture for scalable front-end structure.
 
-### Table of Contents
+## Table of Contents
 
 -   [Overview](#overview)
 -   [Key Features](#key-features)
