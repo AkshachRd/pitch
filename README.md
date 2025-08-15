@@ -61,8 +61,6 @@ app → pages → widgets → features → entities → shared
 -   **pages**: Page-level composition and routing (`src/pages/*`)
 -   **app**: App-level config, providers, and App Router API routes (`src/app/*` and root `app/*`)
 
-See `FINAL_FSD_SETUP.md`, `FSD_ALIASES_EXAMPLES.md`, and `FSD_IMPORT_RULES.md` for details and examples.
-
 ## Getting Started
 
 ### Prerequisites
